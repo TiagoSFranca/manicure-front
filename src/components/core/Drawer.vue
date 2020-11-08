@@ -1,21 +1,26 @@
 <template>
   <v-navigation-drawer
-    floating
     permanent
+    :mini-variant.sync="mini"
     app
-    overflow
-    src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
-    v-if="isAuth"
+    color="primary"
+    dark
   >
-    <v-list-item dark>
+    <v-list-item class="px-2">
       <v-list-item-content>
-        <v-list-item-title class="title">PetÔmetro</v-list-item-title>
+        <v-list-item-title class="title">Manicure</v-list-item-title>
       </v-list-item-content>
+      <v-btn
+        icon
+        @click.stop="mini = !mini"
+      >
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
     </v-list-item>
 
     <v-divider></v-divider>
     <v-list>
-      <v-list-item v-for="item in links" :key="item.text" :to="item.to" color="white" link>
+      <v-list-item v-for="item in links" :key="item.text" :to="item.to" link>
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -33,9 +38,7 @@
           v-if="isAuth"
           large
           outlined
-          dark
           text
-          color="amber darken-1"
           @click="logout()"
         >Sair</v-btn>
       </div>
@@ -45,24 +48,41 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import routes from "@/router/routes";
 export default {
   data() {
     return {
+      mini: true,
       links: [
         {
-          to: "/dashboard",
+          to: routes.DASHBOARD,
           icon: "mdi-view-dashboard",
           text: "Dashboard"
         },
         {
-          to: "/pets",
-          icon: "mdi-paw",
-          text: "Pets"
+          to: routes.PRODUCTS,
+          icon: "mdi-cube-outline",
+          text: "Produtos"
         },
         {
-          to: "/solicitacoes-pet",
-          icon: "mdi-paw",
-          text: "Solicitações Pet"
+          to: routes.COMBOS,
+          icon: "mdi-cards-outline",
+          text: "Combos"
+        },
+        {
+          to: routes.PROMOTIONS,
+          icon: "mdi-sale",
+          text: "Promoções"
+        },
+        {
+          to: routes.AGENDA,
+          icon: "mdi-calendar-month-outline",
+          text: "Agenda"
+        },
+        {
+          to: routes.CUSTOMERS,
+          icon: "mdi-account-group-outline",
+          text: "Clientes"
         }
       ]
     };

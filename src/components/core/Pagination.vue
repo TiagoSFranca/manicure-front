@@ -1,31 +1,27 @@
 <template>
-  <v-card class="mx-auto" dark color="blue lighten-1">
-    <v-row>
-      <v-col cols="3" center>
-        <v-subheader>Exibindo {{ inicio }}-{{ fim }} de {{ totalItens }} itens</v-subheader>
-      </v-col>
-      <v-col cols="6">
-        <v-pagination
-          v-model="paginaAtual"
-          :length="totalPaginas"
-          :total-visible="7"
-          @input="onChangePagina"
-        ></v-pagination>
-      </v-col>
-      <v-col cols="3">
-        <v-subheader>
-          <v-autocomplete
-            :items="paginacaoList"
-            item-text="text"
-            item-value="value"
-            label="Itens por página"
-            v-model="paginacao.itensPorPagina"
-            @change="onChangeItensPorPagina"
-          ></v-autocomplete>
-        </v-subheader>
-      </v-col>
-    </v-row>
-  </v-card>
+  <v-row align="center">
+    <v-col cols="3" class="text-left">
+      <span class="caption">Exibindo {{ inicio }}-{{ fim }} de {{ totalItens }} itens</span>
+    </v-col>
+    <v-col cols="6">
+      <v-pagination
+        v-model="paginaAtual"
+        :length="totalPaginas"
+        :total-visible="7"
+        @input="onChangePagina"
+      ></v-pagination>
+    </v-col>
+    <v-col cols="3">
+        <v-autocomplete
+          :items="paginacaoList"
+          item-text="text"
+          item-value="value"
+          label="Itens por página"
+          v-model="paginacao.itensPorPagina"
+          @change="onChangeItensPorPagina"
+        ></v-autocomplete>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

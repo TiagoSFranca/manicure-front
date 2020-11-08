@@ -1,10 +1,11 @@
 // Middlewares
 import auth from '@/middleware/auth'
 import guest from '@/middleware/guest'
+import routes from './routes'
 
 export default [
   {
-    path: '/',
+    path: routes.INDEX,
     name: 'Inicio',
     view: 'Dashboard',
     meta: {
@@ -28,9 +29,17 @@ export default [
     }
   },
   {
-    path: '/dashboard',
+    path: routes.DASHBOARD,
     name: 'Dashboard',
     view: 'Dashboard',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
+    path: routes.PRODUCTS,
+    name: 'Produtos',
+    view: 'products.Index',
     meta: {
       middleware: guest
     }

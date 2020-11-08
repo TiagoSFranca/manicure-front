@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar dark app flat dense v-if="isAuth" hide-on-scroll color="blue lighten-1">
+  <v-app-bar dark app flat dense hide-on-scroll color="primary">
     <div class="flex-grow-1"></div>
     <template>
       <v-btn icon>
