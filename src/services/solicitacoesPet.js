@@ -3,7 +3,7 @@ import store from '@/store'
 import progressBar from '@/utils/progressBar'
 import toastr from '@/utils/toastr'
 import messages from '@/utils/messages'
-import paginacaoUtil from '@/utils/paginacao'
+// import paginacaoUtil from '@/utils/paginacao'
 
 const RESOURCE_NAME = '/SolicitacoesPet'
 

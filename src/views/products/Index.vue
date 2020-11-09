@@ -21,18 +21,42 @@
           <v-col cols="12">
             <v-data-table
               :headers="headers"
-              :items="desserts"
+              :items="products"
               class="elevation-1"
               loading-text="Loading... Please wait"
               hide-default-footer
-              :custom-sort="sort"
+              :custom-sort="onSort"
+              :disable-pagination="true"
+              :disable-filtering="true"
+              :disable-sort="!!loading"
+              :loading="loading"
+              :multi-sort="false"
             >
-              <template v-slot:item.calories="{ item }">
-                <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip>
+              <template v-slot:item.originalValue="{ item }">
+                <span>{{toCurrency(item.originalValue)}}</span>
+              </template>
+              <template v-slot:item.saleValue="{ item }">
+                <span>{{toCurrency(item.saleValue)}}</span>
+              </template>
+              <template v-slot:item.endSale="{ item }">
+                <span>{{new Date(item.endSale).toLocaleString()}}</span>
+              </template>
+              <template v-slot:item.onSale="{ item }">
+                <v-simple-checkbox v-model="item.onSale" disabled color="primary"></v-simple-checkbox>
+              </template>
+              <template v-slot:item.active="{ item }">
+                <v-simple-checkbox v-model="item.active" disabled color="primary"></v-simple-checkbox>
+              </template>
+              <template v-slot:item.comments="{ item }">
+                <v-icon
+                  @click="showComment(item)"
+                  color="accent"
+                  :disabled="loading"
+                >mdi-comment-eye</v-icon>
               </template>
               <template v-slot:item.actions="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-                <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+                <v-icon @click="editItem(item)" color="primary" :disabled="loading">mdi-pencil</v-icon>
+                <v-icon @click="deleteItem(item)" color="error" :disabled="loading">mdi-delete</v-icon>
               </template>
             </v-data-table>
           </v-col>
@@ -52,118 +76,91 @@
 </template>
 
 <script>
+import productsActions from "@/actions/productsActions";
+import axiosSourceToken from "@/utils/axiosSourceToken";
+import { mapState } from "vuex";
+import { ToCurrency } from "@/utils/methods";
+
 export default {
   data() {
     return {
+      loading: false,
       showAdd: false,
+      source: "",
       headers: [
-        {
-          text: "Nome",
-          align: "start",
-          value: "name"
-        },
-        { text: "Vl orignal", value: "calories" },
-        { text: "Vl Promocional", value: "fat" },
-        { text: "Em promoção", value: "carbs" },
-        { text: "Ativo", value: "protein" },
-        { text: "Iron (%)", value: "iron" },
+        { text: "Nome", align: "start", value: "name" },
+        { text: "Vl orignal", value: "originalValue", align: "center" },
+        { text: "Vl Promocional", value: "saleValue", align: "center" },
+        { text: "Em promoção", value: "onSale", align: "center" },
+        { text: "Fim da promoção", value: "endSale", align: "center" },
+        { text: "Ativo", value: "active", align: "center" },
+        { text: "Comentários", value: "comments", align: "center" },
         { text: "", value: "actions", sortable: false }
       ],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%"
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%"
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%"
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%"
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%"
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%"
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%"
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%"
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%"
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%"
-        }
-      ]
+      filter: {},
+      pagination: {},
+      sort: {}
     };
   },
   methods: {
-    getColor(calories) {
-      if (calories > 400) return "red";
-      else if (calories > 200) return "orange";
-      else return "green";
+    searchProducts() {
+      this.loading = true;
+      this.source = axiosSourceToken.obterToken();
+      productsActions
+        .get(this.source, this.filter, this.pagination, this.sort)
+        .then(res => {
+          if (res) {
+            this.successSearch = true;
+          } else {
+            this.successSearch = false;
+          }
+          this.loading = false;
+        });
     },
-    sort(items, index, isDesc) {
-      console.log("ASDA", index);
-      console.log("isDesc", isDesc);
+    onSort(items, index, isDesc) {
+      let prevSort = this.sort;
+
+      if (index && index.length > 0) {
+        this.sort = {
+          orderBy: index[0],
+          asc: !isDesc
+        };
+      }
+
+      if (
+        prevSort.orderBy !== this.sort.orderBy ||
+        prevSort.asc !== this.sort.asc
+      ) {
+        this.searchProducts();
+      }
 
       return items;
+    },
+    onChangePaginar(pagination) {
+      this.pagination = pagination;
+      this.searchProducts();
+    },
+    onFiltrar(filter) {
+      this.filter = filter;
+      this.searchProducts();
+    },
+    toCurrency(value) {
+      return ToCurrency(value);
+    }
+  },
+  created() {
+    this.searchProducts();
+  },
+  computed: {
+    ...mapState("products", ["products", "search"])
+  },
+  beforeRouteLeave(to, from, next) {
+    this.source.cancel();
+    next();
+  },
+  watch: {
+    search() {
+      this.searchProducts();
     }
   }
 };

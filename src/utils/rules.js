@@ -1,3 +1,5 @@
+import { ToDecimal } from './methods'
+
 export default {
     required(input) {
         return v => !!v || input + " é obrigatório"
@@ -7,5 +9,8 @@ export default {
     },
     minLength(min) {
         return v => (v ? v : '').trim().length >= min || `Mínimo ${min} caracteres`
+    },
+    greaterThan(value) {
+        return v => (v ? ToDecimal(v) : 0) > value || `Maior que ${value}`
     }
 }

@@ -13,78 +13,83 @@
                   <v-text-field
                     label="Nome"
                     required
-                    v-model="objeto.nome"
-                    :rules="nomeRules"
+                    v-model="object.name"
+                    :rules="nameRules"
                     counter="64"
                   ></v-text-field>
                 </v-col>
+              </v-row>
+              <v-row align="start">
                 <v-col cols="4">
-                  <v-text-field
-                    label="Espécie"
-                    v-model="objeto.especie"
-                    :rules="especieRacaRules"
-                    counter="64"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="4">
-                  <v-text-field
-                    label="Raça"
+                  <v-currency-field
+                    label="Valor original"
                     required
-                    v-model="objeto.raca"
-                    :rules="especieRacaRules"
-                    counter="64"
-                  ></v-text-field>
+                    v-model="object.originalValue"
+                    :rules="originalValueRules"
+                  />
                 </v-col>
+                <v-col cols="4">
+                  <v-currency-field
+                    label="Valor promocional"
+                    required
+                    v-model="object.saleValue"
+                    :rules="saleValueRules"
+                  />
+                </v-col>
+                <v-col cols="4">
+                  <v-checkbox
+                    v-model="object.onSale"
+                    label="Em promoção"
+                    color="primary"
+                    hide-details
+                  ></v-checkbox>
+                </v-col>
+              </v-row>
+              <v-row align="start">
+                <v-col cols="4">
+                  <v-checkbox v-model="object.active" label="Ativo" color="primary" hide-details></v-checkbox>
+                </v-col>
+                <v-col cols="4"></v-col>
                 <v-col cols="4">
                   <v-menu
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
-                    :return-value.sync="objeto.dtNascimento"
+                    :return-value.sync="object.endSale"
                     transition="scale-transition"
                     offset-y
                     full-width
                     min-width="290px"
+                    :disabled="!object.onSale"
                   >
                     <template v-slot:activator="{ on }">
                       <v-text-field
-                        v-model="objeto.dtNascimento"
-                        label="Nascimento"
+                        v-model="object.endSale"
+                        label="Fim da promoção"
                         prepend-icon="event"
                         readonly
                         v-on="on"
+                        :disabled="!object.onSale"
                       ></v-text-field>
                     </template>
-                    <v-date-picker v-model="objeto.dtNascimento" no-title scrollable>
+                    <v-date-picker v-model="object.endSale" no-title scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn text color="primary" @click="menu = false">Cancelar</v-btn>
-                      <v-btn text color="primary" @click="$refs.menu.save(objeto.dtNascimento)">OK</v-btn>
+                      <v-btn color="error" @click="menu = false" icon fab small>
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                      <v-btn color="accent" @click="$refs.menu.save(object.endSale)" icon fab small>
+                        <v-icon>mdi-check</v-icon>
+                      </v-btn>
                     </v-date-picker>
                   </v-menu>
                 </v-col>
-                <v-col cols="12" sm="12">
-                  <v-autocomplete
-                    :items="generos"
-                    item-text="nome"
-                    item-value="id"
-                    label="Gênero"
-                    v-model="objeto.idGeneroPet"
-                    :rules="generoRules"
-                  ></v-autocomplete>
-                </v-col>
-                <v-col cols="12">
-                  <v-file-input
-                    accept="image/png, image/jpeg, image/bmp"
-                    prepend-icon="mdi-camera"
-                    label="Imagem"
-                    v-model="imagem"
-                  ></v-file-input>
-                </v-col>
+              </v-row>
+              <v-row>
                 <v-col cols="12">
                   <v-textarea
                     label="Comentário"
-                    v-model="objeto.comentario"
-                    :rules="especieRacaRules"
+                    v-model="object.comments"
+                    :rules="commentsRules"
                     counter="512"
                   ></v-textarea>
                 </v-col>
@@ -98,7 +103,7 @@
           <v-btn color="error" @click="hide()" icon fab>
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-btn color="primary" submit @click="salvar()" icon fab>
+          <v-btn color="primary" submit @click="save()" icon fab>
             <v-icon>mdi-check</v-icon>
           </v-btn>
         </v-card-actions>
@@ -123,19 +128,25 @@ export default {
       valid: true,
       menu: false,
       source: "",
-      objeto: {
-        nome: "",
-        especie: "",
-        raca: "",
-        dtNascimento: "",
-        idGeneroPet: 0,
-        comentario: "",
-        imagem: ""
+      object: {
+        name: "",
+        originalValue: null,
+        saleValue: null,
+        onSale: false,
+        active: false,
+        endSale: "",
+        comments: "",
       },
-      nomeRules: [rules.required("Nome"), rules.maxLength(64)],
-      especieRacaRules: [rules.maxLength(64)],
-      comentarioRules: [rules.maxLength(512)],
-      generoRules: [rules.required("Gênero")]
+      nameRules: [rules.required("Nome"), rules.maxLength(64)],
+      originalValueRules: [
+        rules.required("Valor original"),
+        rules.greaterThan(0)
+      ],
+      saleValueRules: [
+        rules.required("Valor promocional"),
+        rules.greaterThan(0)
+      ],
+      commentsRules: [rules.maxLength(512)],
     };
   },
   methods: {
@@ -147,11 +158,11 @@ export default {
     show() {
       this.visible = true;
     },
-    salvar() {
+    save() {
       if (this.$refs.form.validate()) {
-          console.log("THIS OBJECT", this.objeto)
-        // this.objeto.imagem = this.imagem;
-        // petService.adicionar(this.objeto).then(res => {
+        console.log("THIS OBJECT", this.object);
+        // this.object.imagem = this.imagem;
+        // petService.adicionar(this.object).then(res => {
         //   if (res) {
         //     this.hide();
         //   }
