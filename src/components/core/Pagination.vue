@@ -1,7 +1,7 @@
 <template>
   <v-row align="center">
     <v-col cols="3" class="text-left">
-      <span class="caption">Exibindo {{ inicio }}-{{ fim }} de {{ totalItens }} itens</span>
+      <span class="caption white--text">Exibindo {{ inicio }}-{{ fim }} de {{ totalItens }} itens</span>
     </v-col>
     <v-col cols="6">
       <v-pagination

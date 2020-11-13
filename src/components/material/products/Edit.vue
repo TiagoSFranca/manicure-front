@@ -4,7 +4,9 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Produto</span>
+            <span class="headline">{{
+              `${isEdit ? "Editar" : "Visualizar"} Produto`
+            }}</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -18,9 +20,10 @@
                       <v-text-field
                         label="Nome"
                         required
-                        v-model="object.name"
+                        v-model="item.name"
                         :error-messages="errors"
                         counter="64"
+                        :readonly="!isEdit"
                       ></v-text-field>
                     </validation-provider>
                   </v-col>
@@ -33,35 +36,38 @@
                     >
                       <v-currency-field
                         label="Valor original"
-                        v-model="object.originalValue"
+                        v-model="item.originalValue"
                         :error-messages="errors"
+                        :readonly="!isEdit"
                       />
                     </validation-provider>
                   </v-col>
                   <v-col cols="4">
                     <validation-provider
                       :rules="`${
-                        object.onSale ? 'required|' : ''
+                        item.onSale ? 'required|' : ''
                       }greater_than:0|lower_than_other:${
-                        object.originalValue
+                        item.originalValue
                       },'Valor Original'`"
                       v-slot="{ errors }"
                     >
                       <v-currency-field
                         label="Valor promocional"
-                        v-model="object.saleValue"
+                        v-model="item.saleValue"
                         :error-messages="errors"
+                        :readonly="!isEdit"
                       />
                     </validation-provider>
                   </v-col>
                   <v-col cols="4">
                     <validation-provider v-slot="{ errors }">
                       <v-checkbox
-                        v-model="object.onSale"
+                        v-model="item.onSale"
                         label="Em promoção"
                         color="primary"
                         hide-details
                         :error-messages="errors"
+                        :readonly="!isEdit"
                       ></v-checkbox>
                     </validation-provider>
                   </v-col>
@@ -70,19 +76,21 @@
                   <v-col cols="4">
                     <validation-provider v-slot="{ errors }">
                       <v-checkbox
-                        v-model="object.active"
+                        v-model="item.active"
                         label="Ativo"
                         color="primary"
                         hide-details
                         :error-messages="errors"
+                        :readonly="!isEdit"
                       ></v-checkbox>
                     </validation-provider>
                   </v-col>
                   <v-col cols="4"></v-col>
                   <v-col cols="4">
                     <common-date-picker
-                      :date="object.endSale"
-                      :disabled="!object.onSale"
+                      :date="item.endSale"
+                      :disabled="!(isEdit && item.onSale)"
+                      :readonly="!isEdit"
                       label="Fim da Promoção"
                       @changeDate="changeDate"
                     />
@@ -93,9 +101,10 @@
                     <validation-provider rules="max:512" v-slot="{ errors }">
                       <v-textarea
                         label="Comentário"
-                        v-model="object.comments"
+                        v-model="item.comments"
                         :error-messages="errors"
                         counter="512"
+                        :readonly="!isEdit"
                       ></v-textarea>
                     </validation-provider>
                   </v-col>
@@ -120,6 +129,7 @@
               submit
               icon
               fab
+              :disabled="!isEdit"
               @click="handleSubmit(save)"
               :loading="loading[LOADING_IDENTIFIER]"
             >
@@ -139,23 +149,15 @@ import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 
 export default {
-  props: ["showAdd"],
+  props: ["showEdit", "object", "isEdit"],
   data() {
     return {
       imagem: null,
       visible: false,
       menu: false,
       source: "",
-      object: {
-        name: "",
-        originalValue: "",
-        saleValue: null,
-        onSale: false,
-        active: true,
-        endSale: "",
-        comments: "",
-      },
-      LOADING_IDENTIFIER: "addProduct",
+      LOADING_IDENTIFIER: "editProduct",
+      item: {},
     };
   },
   methods: {
@@ -163,20 +165,19 @@ export default {
       this.$refs.form.reset();
       this.$emit("fechar");
       this.visible = false;
-      this.object = { active: true };
     },
     show() {
       this.visible = true;
     },
     save() {
-      productsActions.add(this.object, this.LOADING_IDENTIFIER).then((res) => {
+      productsActions.edit(this.item, this.LOADING_IDENTIFIER).then((res) => {
         if (res) {
           this.hide();
         }
       });
     },
     changeDate(date) {
-      this.object.endSale = date;
+      this.item.endSale = date;
     },
   },
   mounted() {
@@ -186,9 +187,12 @@ export default {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
   watch: {
-    showAdd() {
-      if (this.showAdd && !this.visible) this.show();
-      else if (!this.showAdd && this.visible) this.hide();
+    showEdit() {
+      if (this.showEdit && !this.visible) this.show();
+      else if (!this.showEdit && this.visible) this.hide();
+    },
+    object() {
+      this.item = { ...this.object };
     },
   },
   beforeRouteLeave(to, from, next) {

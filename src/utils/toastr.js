@@ -1,9 +1,10 @@
 import store from '@/store'
+import mutationTypes from '@/store/mutationTypes'
 
 const timeout = 3000
 
 function show (toastr) {
-  store.commit('app/setToastr', toastr)
+  store.commit(mutationTypes.APP_SET_TOASTR, toastr)
 }
 
 export default {

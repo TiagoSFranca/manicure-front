@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <core-toolbar />
 
     <core-drawer />
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "app"
+  name: "app",
 };
 </script>
 

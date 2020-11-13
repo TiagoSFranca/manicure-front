@@ -1,52 +1,62 @@
-import axios from 'axios'
-import progressBar from '@/utils/progressBar'
 import toastr from '@/utils/toastr'
 import store from '@/store'
 import messages from '@/utils/messages'
-import { mountPaginationQuery } from '@/utils/methods'
+import { startLoading, endLoading } from '@/utils/methods'
 import productsService from '@/services/productsService'
+import actionTypes from '@/store/actionTypes'
+import mutationTypes from '@/store/mutationTypes'
 
-function montarQueryFiltro(filter) {
-    let query = ''
-    if (filter) {
-        if (filter.nome)
-            query += '&nome=' + filter.nome
-        if (filter.especie)
-            query += '&especie=' + filter.especie
-        if (filter.raca)
-            query += '&raca=' + filter.raca
-        if (filter.idsGeneroPet)
-            filter.idsGeneroPet.forEach((element) => {
-                query += '&idGeneros=' + element
-            })
+export const get = (source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
 
-    }
-    return query
-}
+    let query = { ...filter, ...pagination, ...sort }
 
-export const get = (source, filter, pagination, sort) => {
-    let queryFiltro = montarQueryFiltro(filter)
-    let queryPaginacao = mountPaginationQuery(pagination);
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
 
-    let query = '?';
-
-    query += queryFiltro
-    query += queryPaginacao
-
-    return productsService
+    productsService
         .get(query, source)
         .then((response) => {
             let data = response.data
-            store.dispatch('products/setProducts', data);
-            store.commit('products/setSearch', false)
-            return true
+            store.dispatch(actionTypes.PRODUCTS_SET_PRODUCTS, data);
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH, false)
         }).catch(() => {
-            return false
         }).finally(() => {
-            return true;
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
         })
 };
 
+export const add = (object, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    return productsService
+        .add(object)
+        .then(() => {
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH, true)
+            toastr.success(messages.sucesso.cadastro)
+            return true;
+        }).catch(() => {
+            return false;
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
+
+export const edit = (object, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    return productsService
+        .edit(object)
+        .then(() => {
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH, true)
+            toastr.success(messages.sucesso.edicao)
+            return true;
+        }).catch(() => {
+            return false;
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
 export default {
     get,
+    add,
+    edit
 }

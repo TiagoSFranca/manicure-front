@@ -11,15 +11,19 @@ export default new Vuetify({
     iconfont: 'mdi', // default - only for display purposes
   },
   theme: {
+    dark: true,
     themes: {
-      light:  {
-        primary: '#9c27b0',
-        secondary: '#673ab7',
+      dark:  {
+        primary: '#8E24AA',
+        primaryText: 'red',
+        // secondary: '#673ab7',
         accent: '#2196f3',
-        error: '#f44336',
-        warning: '#ffc107',
-        info: '#607d8b',
-        success: '#4caf50'
+        // error: '#f44336',
+        // warning: '#ffc107',
+        // info: '#607d8b',
+        // success: '#4caf50',
+        anchor: '#EA80FC',
+        text: 'red'
       }
     }
   }

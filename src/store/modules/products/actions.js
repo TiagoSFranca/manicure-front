@@ -1,5 +1,7 @@
+import constants from './constants';
+
 export default {
-    setProducts({ commit }, data) {
-        commit('setProducts', data)
+    [constants.ACTION_SET_PRODUCTS]({ commit }, data) {
+        commit(constants.MUTATION_SET_PRODUCTS, data)
     },
 }

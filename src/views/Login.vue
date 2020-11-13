@@ -47,16 +47,16 @@
 
 <script>
 import authService from "@/services/auth";
-import rules from "@/utils/rules";
+// import rules from "@/utils/rules";
 
 export default {
   data: () => ({
     showSenha: false,
     valid: true,
     login: "",
-    loginRules: [rules.required("E-mail")],
+    // loginRules: [rules.required("E-mail")],
     password: "",
-    passwordRules: [rules.required("Senha")]
+    // passwordRules: [rules.required("Senha")]
   }),
   methods: {
     submit() {

@@ -4,7 +4,9 @@ import products from '@/arr/products'
 const RESOURCE_NAME = '/Pets'
 
 export const get = (query, source) => {
-  return new Promise((resolve, reject) => {
+  console.log("TEST", new URLSearchParams(query).toString())
+
+  return new Promise((resolve) => {
     setTimeout(function () {
       resolve({ data: products })
     }, 3000);
@@ -15,6 +17,24 @@ export const get = (query, source) => {
   })
 };
 
+export const add = (object) => {
+  return new Promise((resolve) => {
+    setTimeout(function () {
+      resolve(object)
+    }, 3000);
+  })
+}
+
+export const edit = (object) => {
+  return new Promise((resolve) => {
+    setTimeout(function () {
+      resolve(object)
+    }, 3000);
+  })
+}
+
 export default {
   get,
+  add,
+  edit
 }

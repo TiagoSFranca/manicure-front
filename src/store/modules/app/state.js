@@ -8,4 +8,5 @@ export default {
     timeout: 3000
   },
   progressBar: false,
+  loading: {}
 }

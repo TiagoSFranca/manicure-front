@@ -91,7 +91,7 @@
 
 <script>
 import accountService from "@/services/account";
-import rules from "@/utils/rules";
+// import rules from "@/utils/rules";
 
 export default {
   data: () => ({
@@ -103,14 +103,14 @@ export default {
     nome: "",
     email: "",
     login: "",
-    passwordRules: [rules.required("Senha"), rules.minLength(8)],
-    confirm_passwordRules: [rules.required("Confirmar Senha")],
-    nomeRules: [rules.required("Nome"), rules.minLength(3)],
-    emailRules: [
-      rules.required("E-mail"),
-      v => /.+@.+\..+/.test(v) || "Insira um e-mail válido"
-    ],
-    loginRules: [rules.required("Nome de Usuário")]
+    // passwordRules: [rules.required("Senha"), rules.minLength(8)],
+    // confirm_passwordRules: [rules.required("Confirmar Senha")],
+    // nomeRules: [rules.required("Nome"), rules.minLength(3)],
+    // emailRules: [
+    //   rules.required("E-mail"),
+    //   v => /.+@.+\..+/.test(v) || "Insira um e-mail válido"
+    // ],
+    // loginRules: [rules.required("Nome de Usuário")]
   }),
   methods: {
     submit() {

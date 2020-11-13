@@ -107,7 +107,7 @@
 import generoPetService from "@/services/generoPet";
 import petService from "@/services/pets";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import rules from "@/utils/rules";
+// import rules from "@/utils/rules";
 import { mapState } from "vuex";
 
 export default {
@@ -119,10 +119,10 @@ export default {
       valid: true,
       menu: false,
       source: "",
-      nomeRules: [rules.required("Nome"), rules.maxLength(64)],
-      especieRacaRules: [rules.maxLength(64)],
-      comentarioRules: [rules.maxLength(512)],
-      generoRules: [rules.required("Gênero")]
+      // nomeRules: [rules.required("Nome"), rules.maxLength(64)],
+      // especieRacaRules: [rules.maxLength(64)],
+      // comentarioRules: [rules.maxLength(512)],
+      // generoRules: [rules.required("Gênero")]
     };
   },
   methods: {

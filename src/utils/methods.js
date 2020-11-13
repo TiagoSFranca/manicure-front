@@ -1,30 +1,10 @@
-import { paginacao } from '@/utils/constants/'
+import actionTypes from '@/store/actionTypes'
 
 export const ToDecimal = (value) => {
     value = value || "";
     value = value.replace(".", "");
     value = value.replace(",", ".");
     return Number(value);
-}
-
-
-export const mountPaginationQuery = (filtro) => {
-    let query = ''
-    if (filtro) {
-        if (filtro.itensPorPagina)
-            query += "&itensPorPagina=" + filtro.itensPorPagina
-        else
-            query += "&itensPorPagina=" + paginacao.MINIMO
-        if (filtro.pagina)
-            query += "&pagina=" + filtro.pagina
-        else
-            query += "&pagina=" + 1
-    }
-    else {
-        query += "&itensPorPagina=" + paginacao.MINIMO
-        query += "&pagina=" + 1
-    }
-    return query
 }
 
 export const ToCurrency = (value, showEmpty = true, removePrefix = true) => {
@@ -40,3 +20,7 @@ export const ToCurrency = (value, showEmpty = true, removePrefix = true) => {
 
     return removePrefix ? newValue.replace(/R\$/g, "").trim() : newValue;
 }
+
+export const startLoading = (identifier) => ({ type: actionTypes.APP_LOADING, loading: { [identifier]: true } });
+
+export const endLoading = (identifier) => ({ type: actionTypes.APP_LOADING, loading: { [identifier]: false } });

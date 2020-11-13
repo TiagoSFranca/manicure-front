@@ -4,31 +4,25 @@
     :color="toastr.color"
     :timeout="toastr.timeout"
     bottom
-    right>
+    right
+  >
     {{ toastr.text }}
-    <v-btn
-      color="primary"
-      text
-      @click="onClickBtn()">
-      Fechar
-    </v-btn>
+    <v-btn color="primary" text @click="onClickBtn()"> Fechar </v-btn>
   </v-snackbar>
 </template>
 <script>
-import {
-  mapMutations,
-  mapState
-} from 'vuex'
+import { mapMutations, mapState } from "vuex";
+import appConstants from "@/store/modules/app/constants";
 
 export default {
   computed: {
-    ...mapState('app', ['toastr'])
+    ...mapState(appConstants.MODULE_NAME, ["toastr"]),
   },
   methods: {
-    ...mapMutations('app', ['setToastr']),
-    onClickBtn () {
-      this.setToastr({ show: false })
-    }
-  }
-}
+    ...mapMutations(appConstants.MODULE_NAME, [appConstants.MUTATION_SET_TOASTR]),
+    onClickBtn() {
+      this.setToastr({ show: false });
+    },
+  },
+};
 </script>

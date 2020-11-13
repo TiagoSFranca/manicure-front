@@ -4,15 +4,33 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <v-toolbar-title>Produtos</v-toolbar-title>
+            <span class="title white--text">Produtos</span>
           </v-col>
+
           <v-col cols="auto" class="ml-auto">
-            <v-btn color="accent" elevation="2" fab outlined rounded small>
+            <v-btn
+              color="accent"
+              elevation="2"
+              fab
+              outlined
+              rounded
+              small
+              @click="onShowFilter()"
+              :disabled="showFilter"
+            >
               <v-icon>mdi-filter</v-icon>
             </v-btn>
           </v-col>
           <v-col cols="auto">
-            <v-btn color="accent" elevation="2" fab outlined rounded small @click="showAdd = true">
+            <v-btn
+              color="accent"
+              elevation="2"
+              fab
+              outlined
+              rounded
+              small
+              @click="showAdd = true"
+            >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-col>
@@ -28,35 +46,52 @@
               :custom-sort="onSort"
               :disable-pagination="true"
               :disable-filtering="true"
-              :disable-sort="!!loading"
-              :loading="loading"
+              :disable-sort="!!loading[LOADING_IDENTIFIER]"
+              :loading="loading[LOADING_IDENTIFIER] === true"
               :multi-sort="false"
             >
               <template v-slot:item.originalValue="{ item }">
-                <span>{{toCurrency(item.originalValue)}}</span>
+                <span>{{ toCurrency(item.originalValue) }}</span>
               </template>
               <template v-slot:item.saleValue="{ item }">
-                <span>{{toCurrency(item.saleValue)}}</span>
+                <span>{{ toCurrency(item.saleValue) }}</span>
               </template>
               <template v-slot:item.endSale="{ item }">
-                <span>{{new Date(item.endSale).toLocaleString()}}</span>
+                <span>{{ new Date(item.endSale).toLocaleString() }}</span>
               </template>
               <template v-slot:item.onSale="{ item }">
-                <v-simple-checkbox v-model="item.onSale" disabled color="primary"></v-simple-checkbox>
+                <v-simple-checkbox
+                  v-model="item.onSale"
+                  disabled
+                  color="primary"
+                ></v-simple-checkbox>
               </template>
               <template v-slot:item.active="{ item }">
-                <v-simple-checkbox v-model="item.active" disabled color="primary"></v-simple-checkbox>
-              </template>
-              <template v-slot:item.comments="{ item }">
-                <v-icon
-                  @click="showComment(item)"
-                  color="accent"
-                  :disabled="loading"
-                >mdi-comment-eye</v-icon>
+                <v-simple-checkbox
+                  v-model="item.active"
+                  disabled
+                  color="primary"
+                ></v-simple-checkbox>
               </template>
               <template v-slot:item.actions="{ item }">
-                <v-icon @click="editItem(item)" color="primary" :disabled="loading">mdi-pencil</v-icon>
-                <v-icon @click="deleteItem(item)" color="error" :disabled="loading">mdi-delete</v-icon>
+                <v-icon
+                  @click="seeItem(item, false)"
+                  dark
+                  :disabled="loading[LOADING_IDENTIFIER]"
+                  >mdi-eye-outline</v-icon
+                >
+                <v-icon
+                  @click="seeItem(item)"
+                  color="accent"
+                  :disabled="loading[LOADING_IDENTIFIER]"
+                  >mdi-pencil-outline</v-icon
+                >
+                <v-icon
+                  @click="deleteItem(item)"
+                  color="error"
+                  :disabled="loading[LOADING_IDENTIFIER]"
+                  >mdi-delete-outline</v-icon
+                >
               </template>
             </v-data-table>
           </v-col>
@@ -70,6 +105,22 @@
           @paginar="onChangePaginar"
         />
         <material-products-add :showAdd="showAdd" @fechar="showAdd = false" />
+        <material-products-edit
+          :showEdit="showEdit"
+          @fechar="
+            {
+              showEdit = false;
+              item = {};
+            }
+          "
+          :object="item"
+          :isEdit="isEdit"
+        />
+        <material-products-filter
+          @onFilter="onFilter"
+          :loading="loading[LOADING_IDENTIFIER]"
+          :filtered="filter"
+        />
       </v-flex>
     </v-layout>
   </v-container>
@@ -78,14 +129,18 @@
 <script>
 import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import { ToCurrency } from "@/utils/methods";
+import appConstants from "@/store/modules/app/constants";
+import productsConstants from "@/store/modules/products/constants";
 
 export default {
   data() {
     return {
-      loading: false,
+      email: "",
       showAdd: false,
+      showEdit: false,
+      isEdit: false,
       source: "",
       headers: [
         { text: "Nome", align: "start", value: "name" },
@@ -94,28 +149,31 @@ export default {
         { text: "Em promoção", value: "onSale", align: "center" },
         { text: "Fim da promoção", value: "endSale", align: "center" },
         { text: "Ativo", value: "active", align: "center" },
-        { text: "Comentários", value: "comments", align: "center" },
-        { text: "", value: "actions", sortable: false }
+        { text: "", value: "actions", sortable: false },
       ],
       filter: {},
       pagination: {},
-      sort: {}
+      sort: {},
+      LOADING_IDENTIFIER: "searchProducts",
+      item: {},
     };
   },
   methods: {
+    ...mapMutations(productsConstants.MODULE_NAME, [
+      productsConstants.MUTATION_SET_SHOW_FILTER,
+    ]),
+    onShowFilter() {
+      this[productsConstants.MUTATION_SET_SHOW_FILTER](true);
+    },
     searchProducts() {
-      this.loading = true;
       this.source = axiosSourceToken.obterToken();
-      productsActions
-        .get(this.source, this.filter, this.pagination, this.sort)
-        .then(res => {
-          if (res) {
-            this.successSearch = true;
-          } else {
-            this.successSearch = false;
-          }
-          this.loading = false;
-        });
+      productsActions.get(
+        this.source,
+        this.filter,
+        this.pagination,
+        this.sort,
+        this.LOADING_IDENTIFIER
+      );
     },
     onSort(items, index, isDesc) {
       let prevSort = this.sort;
@@ -123,7 +181,7 @@ export default {
       if (index && index.length > 0) {
         this.sort = {
           orderBy: index[0],
-          asc: !isDesc
+          asc: !isDesc[0],
         };
       }
 
@@ -140,19 +198,29 @@ export default {
       this.pagination = pagination;
       this.searchProducts();
     },
-    onFiltrar(filter) {
+    onFilter(filter) {
       this.filter = filter;
       this.searchProducts();
     },
     toCurrency(value) {
-      return ToCurrency(value);
-    }
+      return ToCurrency(value, true, false);
+    },
+    seeItem(item, isEdit = true) {
+      this.showEdit = true;
+      this.isEdit = isEdit;
+      this.item = item;
+    },
   },
   created() {
     this.searchProducts();
   },
   computed: {
-    ...mapState("products", ["products", "search"])
+    ...mapState(productsConstants.MODULE_NAME, [
+      "products",
+      "search",
+      "showFilter",
+    ]),
+    ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
   beforeRouteLeave(to, from, next) {
     this.source.cancel();
@@ -161,7 +229,7 @@ export default {
   watch: {
     search() {
       this.searchProducts();
-    }
-  }
+    },
+  },
 };
 </script>
