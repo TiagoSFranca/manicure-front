@@ -25,6 +25,7 @@ export default {
     sucesso: {
         cadastro: 'Cadastro realizado com sucesso!',
         exclusao: 'Exclusão realizada com sucesso!',
-        edicao: 'Edição realizada com sucesso!'
+        edicao: 'Edição realizada com sucesso!',
+        upload: 'Envio de arquivo realizado com sucesso!'
     }
 }

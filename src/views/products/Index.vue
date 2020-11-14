@@ -105,17 +105,6 @@
           @paginar="onChangePaginar"
         />
         <material-products-add :showAdd="showAdd" @fechar="showAdd = false" />
-        <material-products-edit
-          :showEdit="showEdit"
-          @fechar="
-            {
-              showEdit = false;
-              item = {};
-            }
-          "
-          :object="item"
-          :isEdit="isEdit"
-        />
         <material-products-filter
           @onFilter="onFilter"
           :loading="loading[LOADING_IDENTIFIER]"
@@ -133,14 +122,12 @@ import { mapState, mapMutations } from "vuex";
 import { ToCurrency } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
+import { PRODUCTS_EDIT, PRODUCTS_DETAILS } from "@/router/routes";
 
 export default {
   data() {
     return {
-      email: "",
       showAdd: false,
-      showEdit: false,
-      isEdit: false,
       source: "",
       headers: [
         { text: "Nome", align: "start", value: "name" },
@@ -155,7 +142,6 @@ export default {
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchProducts",
-      item: {},
     };
   },
   methods: {
@@ -167,7 +153,7 @@ export default {
     },
     searchProducts() {
       this.source = axiosSourceToken.obterToken();
-      productsActions.get(
+      productsActions.search(
         this.source,
         this.filter,
         this.pagination,
@@ -206,9 +192,10 @@ export default {
       return ToCurrency(value, true, false);
     },
     seeItem(item, isEdit = true) {
-      this.showEdit = true;
-      this.isEdit = isEdit;
-      this.item = item;
+      if (isEdit)
+        this.$router.push({ path: PRODUCTS_EDIT.replace(":id", item.id) });
+      else
+        this.$router.push({ path: PRODUCTS_DETAILS.replace(":id", item.id) });
     },
   },
   created() {

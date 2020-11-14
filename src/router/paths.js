@@ -45,6 +45,22 @@ export default [
     }
   },
   {
+    path: routes.PRODUCTS_EDIT,
+    name: 'EditProduct',
+    view: 'products.Edit',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
+    path: routes.PRODUCTS_DETAILS,
+    name: 'ProductDetails',
+    view: 'products.Details',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
     path: '/pets',
     name: 'Pets',
     view: 'Pets',

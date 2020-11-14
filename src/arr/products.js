@@ -1,4 +1,4 @@
-export default [
+export const products = [
     {
         id: 1,
         name: 'TESTE',
@@ -19,3 +19,26 @@ export default [
         comments: 'NCAONDOWQNUN '
     }
 ]
+
+export const combos = [
+    {
+        id: 1,
+        name: "COMBO APOCALIPSE NOME GIGANTE PRA CARALHO MAIOR AINDA POIS FICOU PEQUENO",
+        description: "COISAS E MAIS COISAS"
+    },
+    {
+        id: 2,
+        name: "COMBO APOCALIPSE NOME GIGANTE PRA CARALHO MAIOR AINDA POIS FICOU PEQUENO",
+        description: "COISAS E MAIS COISAS"
+    },
+    {
+        id: 3,
+        name: "COMBO APOCALIPSE NOME GIGANTE PRA CARALHO MAIOR AINDA POIS FICOU PEQUENO",
+        description: "COISAS E MAIS COISAS"
+    }
+]
+
+export default {
+    products,
+    combos
+}

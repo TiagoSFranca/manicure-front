@@ -16,6 +16,10 @@ export const PRODUCTS_SET_PRODUCTS = `${products.MODULE_NAME}/${products.MUTATIO
 export const PRODUCTS_SET_SEARCH = `${products.MODULE_NAME}/${products.MUTATION_SET_SEARCH}`;
 export const PRODUCTS_SET_SHOW_FILTER = `${products.MODULE_NAME}/${products.MUTATION_SET_SHOW_FILTER}`;
 export const PRODUCTS_TOGGLE_SHOW_FILTER = `${products.MODULE_NAME}/${products.MUTATION_TOGGLE_SHOW_FILTER}`;
+export const PRODUCTS_SET_PRODUCT = `${products.MODULE_NAME}/${products.MUTATION_SET_PRODUCT}`;
+export const PRODUCTS_SET_IMAGES = `${products.MODULE_NAME}/${products.MUTATION_SET_IMAGES}`;
+export const PRODUCTS_SET_SEARCH_IMAGES = `${products.MODULE_NAME}/${products.MUTATION_SET_SEARCH_IMAGES}`;
+export const PRODUCTS_SET_COMBOS = `${products.MODULE_NAME}/${products.MUTATION_SET_COMBOS}`;
 
 export default {
     APP_SET_LOADING,
@@ -30,4 +34,8 @@ export default {
     PRODUCTS_SET_SEARCH,
     PRODUCTS_SET_SHOW_FILTER,
     PRODUCTS_TOGGLE_SHOW_FILTER,
+    PRODUCTS_SET_PRODUCT,
+    PRODUCTS_SET_IMAGES,
+    PRODUCTS_SET_SEARCH_IMAGES,
+    PRODUCTS_SET_COMBOS
 }
