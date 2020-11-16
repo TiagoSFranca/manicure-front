@@ -55,11 +55,11 @@ export const get = (id, source, LOADING_IDENTIFIER = '') => {
         })
 }
 
-export const edit = (object, LOADING_IDENTIFIER = '') => {
+export const edit = (id, object, LOADING_IDENTIFIER = '') => {
     store.dispatch(startLoading(LOADING_IDENTIFIER));
 
     return productsService
-        .edit(object)
+        .edit(id, object)
         .then((response) => {
             let data = response.data
             store.commit(mutationTypes.PRODUCTS_SET_PRODUCT, data);
@@ -85,11 +85,11 @@ export const getImages = (id, source, LOADING_IDENTIFIER = '') => {
         })
 }
 
-export const deleteImage = (id, LOADING_IDENTIFIER = '') => {
+export const deleteImage = (id, idImage, LOADING_IDENTIFIER = '') => {
     store.dispatch(startLoading(LOADING_IDENTIFIER));
 
     return productsService
-        .deleteImage(id)
+        .deleteImage(id, idImage)
         .then(() => {
             store.commit(mutationTypes.PRODUCTS_SET_SEARCH_IMAGES, true);
             toastr.success(messages.sucesso.exclusao)
@@ -127,6 +127,65 @@ export const getCombos = (id, source, LOADING_IDENTIFIER = '') => {
         })
 }
 
+export const addMaterial = (id, object, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    return productsService
+        .addMaterial(id, object)
+        .then(() => {
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH_MATERIALS, true);
+            toastr.success(messages.sucesso.cadastro)
+            return true;
+        }).catch(() => {
+            return false;
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
+
+export const getMaterials = (id, source, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    productsService
+        .getMaterials(id, source)
+        .then((response) => {
+            let data = response.data
+            store.commit(mutationTypes.PRODUCTS_SET_MATERIALS, data);
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH_MATERIALS, false);
+        }).catch(() => {
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
+
+export const deleteMaterial = (id, idMaterial, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    return productsService
+        .deleteMaterial(id, idMaterial)
+        .then(() => {
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH_MATERIALS, true);
+            toastr.success(messages.sucesso.exclusao)
+        }).catch(() => {
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
+
+export const editMaterial = (id, idMaterial, object, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    return productsService
+        .editMaterial(id, idMaterial, object)
+        .then(() => {
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH_MATERIALS, true);
+            toastr.success(messages.sucesso.edicao)
+        }).catch(() => {
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
+
 export default {
     search,
     add,
@@ -135,5 +194,9 @@ export default {
     getImages,
     deleteImage,
     addImage,
-    getCombos
+    getCombos,
+    addMaterial,
+    getMaterials,
+    deleteMaterial,
+    editMaterial
 }

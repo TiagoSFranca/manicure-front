@@ -10,4 +10,6 @@ export default {
   [constants.MUTATION_SET_IMAGES]: set('images'),
   [constants.MUTATION_SET_SEARCH_IMAGES]: set('searchImages'),
   [constants.MUTATION_SET_COMBOS]: set('combos'),
+  [constants.MUTATION_SET_MATERIALS]: set('materials'),
+  [constants.MUTATION_SET_SEARCH_MATERIALS]: set('searchMaterials'),
 }

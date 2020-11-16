@@ -15,6 +15,7 @@
               :clear="isLoading || loading[LOADING_IDENTIFIER]"
               @upload="addImage"
               accept="image/*"
+              v-if="isEdit"
             />
           </v-col>
         </v-row>
@@ -104,11 +105,13 @@ export default {
       this.showDialog = false;
     },
     confirmDelete() {
-      productsActions.deleteImage(this.idSelected, this.LOADING_IDENTIFIER);
+      let id = this.$route.params.id;
+      productsActions.deleteImage(id, this.idSelected, this.LOADING_IDENTIFIER);
       this.cancel();
     },
     addImage(image) {
-      productsActions.addImage(this.idSelected, image, this.LOADING_IDENTIFIER);
+      let id = this.$route.params.id;
+      productsActions.addImage(id, image, this.LOADING_IDENTIFIER);
     },
   },
   computed: {

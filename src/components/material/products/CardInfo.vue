@@ -1,6 +1,9 @@
 <template>
   <validation-observer ref="form" v-slot="{ handleSubmit }">
-    <v-card :loading="isLoading || loading[LOADING_IDENTIFIER]">
+    <v-card
+      :loading="isLoading || loading[LOADING_IDENTIFIER]"
+      :height="height"
+    >
       <v-card-title>
         <span class="overline">DADOS GERAIS</span>
       </v-card-title>
@@ -81,8 +84,8 @@
                   ></v-checkbox>
                 </validation-provider>
               </v-col>
-              <v-col cols="4"></v-col>
-              <v-col cols="4">
+              <v-col cols="4" class="d-sm-none d-md-flex d-lg-flex"></v-col>
+              <v-col cols="4" sm="8" md="4" lg="4">
                 <common-date-picker
                   :date="item.endSale"
                   :disabled="!(isEdit && item.onSale)"
@@ -108,8 +111,8 @@
           </v-form>
         </v-container>
       </v-card-text>
-      <v-divider></v-divider>
-      <v-card-actions>
+      <v-divider v-if="showActions"></v-divider>
+      <v-card-actions v-if="showActions">
         <v-spacer></v-spacer>
         <v-btn
           color="error"
@@ -172,7 +175,7 @@ import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 
 export default {
-  props: ["object", "isEdit", "isLoading"],
+  props: ["object", "isEdit", "isLoading", "showActions", "height"],
   data() {
     return {
       showDialog: false,
@@ -190,7 +193,8 @@ export default {
       this.showDialog = true;
     },
     save() {
-      productsActions.edit(this.item, this.LOADING_IDENTIFIER);
+      let id = this.$route.params.id;
+      productsActions.edit(id, this.item, this.LOADING_IDENTIFIER);
       this.showDialog = false;
     },
     changeDate(date) {

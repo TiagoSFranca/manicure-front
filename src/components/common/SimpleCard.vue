@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="isLoading" height="100%">
+  <v-card :loading="isLoading">
     <v-card-title>
       <span class="overline">{{ title }}</span>
     </v-card-title>

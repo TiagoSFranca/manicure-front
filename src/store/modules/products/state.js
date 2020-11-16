@@ -5,5 +5,7 @@ export default {
   product: {},
   images: [],
   searchImages: false,
-  combos: []
+  combos: [],
+  materials: [],
+  searchMaterials: false,
 }

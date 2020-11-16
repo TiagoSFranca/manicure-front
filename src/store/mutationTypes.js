@@ -1,5 +1,6 @@
 import app from './modules/app/constants'
 import products from './modules/products/constants'
+import materials from './modules/materials/constants'
 
 // APP
 export const APP_SET_LOADING = `${app.MODULE_NAME}/${app.MUTATION_SET_LOADING}`;
@@ -20,6 +21,13 @@ export const PRODUCTS_SET_PRODUCT = `${products.MODULE_NAME}/${products.MUTATION
 export const PRODUCTS_SET_IMAGES = `${products.MODULE_NAME}/${products.MUTATION_SET_IMAGES}`;
 export const PRODUCTS_SET_SEARCH_IMAGES = `${products.MODULE_NAME}/${products.MUTATION_SET_SEARCH_IMAGES}`;
 export const PRODUCTS_SET_COMBOS = `${products.MODULE_NAME}/${products.MUTATION_SET_COMBOS}`;
+export const PRODUCTS_SET_MATERIALS = `${products.MODULE_NAME}/${products.MUTATION_SET_MATERIALS}`;
+export const PRODUCTS_SET_SEARCH_MATERIALS = `${products.MODULE_NAME}/${products.MUTATION_SET_SEARCH_MATERIALS}`;
+
+// MATERIALS
+export const MATERIALS_SET_MATERIALS = `${materials.MODULE_NAME}/${materials.MUTATION_SET_MATERIALS}`;
+export const MATERIALS_SET_SEARCH = `${materials.MODULE_NAME}/${materials.MUTATION_SET_SEARCH}`;
+
 
 export default {
     APP_SET_LOADING,
@@ -37,5 +45,9 @@ export default {
     PRODUCTS_SET_PRODUCT,
     PRODUCTS_SET_IMAGES,
     PRODUCTS_SET_SEARCH_IMAGES,
-    PRODUCTS_SET_COMBOS
+    PRODUCTS_SET_COMBOS,
+    PRODUCTS_SET_MATERIALS,
+    PRODUCTS_SET_SEARCH_MATERIALS,
+    MATERIALS_SET_MATERIALS,
+    MATERIALS_SET_SEARCH
 }

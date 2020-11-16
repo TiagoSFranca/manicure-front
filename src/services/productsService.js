@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { products, combos } from '@/arr/products'
+import { products, combos, materials } from '@/arr/products'
 import images from '@/arr/images'
 
 const RESOURCE_NAME = '/Pets'
@@ -26,7 +26,7 @@ export const add = (object) => {
   })
 }
 
-export const edit = (object) => {
+export const edit = (id, object) => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve({ data: object })
@@ -59,7 +59,7 @@ export const getImages = (id, source) => {
   })
 };
 
-export const deleteImage = (id) => {
+export const deleteImage = (id, idImage) => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve()
@@ -95,6 +95,54 @@ export const getCombos = (id, source) => {
   })
 }
 
+export const addMaterial = (id, object) => {
+  return new Promise((resolve) => {
+    setTimeout(function () {
+      resolve()
+    }, 2500);
+
+    // axios.get(RESOURCE_NAME + query, {
+    //   cancelToken: source.token
+    // })
+  })
+};
+
+export const getMaterials = (id, source) => {
+  return new Promise((resolve) => {
+    setTimeout(function () {
+      resolve({ data: materials })
+    }, 2000);
+
+    // axios.get(RESOURCE_NAME + query, {
+    //   cancelToken: source.token
+    // })
+  })
+}
+
+export const deleteMaterial = (id, idMaterial) => {
+  return new Promise((resolve) => {
+    setTimeout(function () {
+      resolve()
+    }, 2500);
+
+    // axios.get(RESOURCE_NAME + query, {
+    //   cancelToken: source.token
+    // })
+  })
+};
+
+export const editMaterial = (id, idMaterial, object) => {
+  return new Promise((resolve) => {
+    setTimeout(function () {
+      resolve()
+    }, 2500);
+
+    // axios.get(RESOURCE_NAME + query, {
+    //   cancelToken: source.token
+    // })
+  })
+};
+
 export default {
   search,
   add,
@@ -103,5 +151,9 @@ export default {
   getImages,
   deleteImage,
   addImage,
-  getCombos
+  getCombos,
+  addMaterial,
+  getMaterials,
+  deleteMaterial,
+  editMaterial
 }

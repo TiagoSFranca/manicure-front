@@ -1,5 +1,9 @@
 <template>
-  <v-card :loading="isLoading" height="100%">
+  <v-card
+    :loading="isLoading"
+    :height="height"
+    :class="`${height ? 'd-flex flex-column' : ''}`"
+  >
     <v-card-title>
       <span class="overline">COMBOS</span>
     </v-card-title>
@@ -45,10 +49,10 @@ import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 
 export default {
-  props: ["combos", "isLoading"],
+  props: ["combos", "isLoading", "height"],
   methods: {
     seeCombo(combo) {
-        this.$router.push({ path: "/GOOGLE".replace(":id", combo.id) });
+      this.$router.push({ path: "/GOOGLE".replace(":id", combo.id) });
     },
   },
 };

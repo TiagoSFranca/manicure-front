@@ -28,6 +28,16 @@
               :isEdit="true"
               :isLoading="loading[LOADING_IDENTIFIER]"
               :object="product"
+              :showActions="true"
+              :height="600"
+            />
+          </v-col>
+          <v-col cols="12" sm="12" lg="4" md="4">
+            <material-products-card-materials
+              :isEdit="true"
+              :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
+              :materials="materials"
+              :height="600"
             />
           </v-col>
         </v-row>
@@ -60,6 +70,7 @@ export default {
       source: "",
       LOADING_IDENTIFIER: "searchProduct",
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
+      LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
     };
   },
   methods: {
@@ -77,6 +88,15 @@ export default {
         this.LOADING_IDENTIFIER_IMAGES
       );
     },
+    getMaterials() {
+      let id = this.$route.params.id;
+      this.source = axiosSourceToken.obterToken();
+      productsActions.getMaterials(
+        id,
+        this.source,
+        this.LOADING_IDENTIFIER_MATERIALS
+      );
+    },
     comeBack() {
       this.$router.push({ path: PRODUCTS });
     },
@@ -84,13 +104,16 @@ export default {
   created() {
     this.searchProduct();
     this.getImages();
+    this.getMaterials();
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [
       "product",
       "images",
+      "materials",
       "search",
       "searchImages",
+      "searchMaterials",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
@@ -100,6 +123,9 @@ export default {
     },
     searchImages() {
       this.getImages();
+    },
+    searchMaterials() {
+      this.getMaterials();
     },
   },
   beforeRouteLeave(to, from, next) {
