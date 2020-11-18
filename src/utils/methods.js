@@ -1,4 +1,5 @@
 import actionTypes from '@/store/actionTypes'
+import moment from 'moment'
 
 export const ToDecimal = (value) => {
     value = value || "";
@@ -24,3 +25,5 @@ export const ToCurrency = (value, showEmpty = true, removePrefix = true) => {
 export const startLoading = (identifier) => ({ type: actionTypes.APP_LOADING, loading: { [identifier]: true } });
 
 export const endLoading = (identifier) => ({ type: actionTypes.APP_LOADING, loading: { [identifier]: false } });
+
+export const formatDate = (date, formatter = "DD/MM/YYYY") => moment(date).format(formatter)

@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { formatDate } from "@/utils/methods";
 import moment from "moment";
 
 export default {
@@ -56,7 +57,7 @@ export default {
   methods: {
     formatDate(date) {
       if (!date) return null;
-      return moment(date).format("DD/MM/YYYY");
+      return formatDate(date);
     },
     parseDate(date) {
       if (!date) return null;

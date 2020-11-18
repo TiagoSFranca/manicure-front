@@ -57,7 +57,7 @@
                 <span>{{ toCurrency(item.saleValue) }}</span>
               </template>
               <template v-slot:item.endSale="{ item }">
-                <span>{{ new Date(item.endSale).toLocaleString() }}</span>
+                <span>{{ item.endSale && formatDate(item.endSale) }}</span>
               </template>
               <template v-slot:item.onSale="{ item }">
                 <v-simple-checkbox
@@ -112,7 +112,7 @@
 import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
-import { ToCurrency } from "@/utils/methods";
+import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS_EDIT, PRODUCTS_DETAILS } from "@/router/routes";
@@ -135,6 +135,7 @@ export default {
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchProducts",
+      formatDate: formatDate
     };
   },
   methods: {

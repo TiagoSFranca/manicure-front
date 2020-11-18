@@ -30,7 +30,10 @@
 
       <v-card-text>
         <v-container>
-          <material-products-material-list :materials="materials" />
+          <material-products-material-list
+            :materials="materials"
+            :isEdit="isEdit"
+          />
         </v-container>
       </v-card-text>
     </v-card>

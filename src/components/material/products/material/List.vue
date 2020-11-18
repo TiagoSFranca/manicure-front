@@ -4,7 +4,7 @@
       v-for="material in materials"
       :key="material.id"
       v-bind:material="material"
-      :showActions="!isEdit"
+      :showActions="isEdit"
     />
   </v-expansion-panels>
 </template>
