@@ -61,6 +61,14 @@ export default [
     }
   },
   {
+    path: routes.MATERIALS,
+    name: 'Materiais',
+    view: 'materials.Index',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
     path: '/pets',
     name: 'Pets',
     view: 'Pets',

@@ -6,7 +6,7 @@ export const PRODUCTS_EDIT = `${PRODUCTS}/edit/:id`;
 export const PRODUCTS_DETAILS = `${PRODUCTS}/details/:id`;
 
 export const COMBOS = "/combos"
-export const PROMOTIONS = "/promotions"
+export const MATERIALS = "/materials"
 export const AGENDA = "/agenda"
 export const CUSTOMERS = "/customers"
 
@@ -15,7 +15,7 @@ export default {
     DASHBOARD,
     PRODUCTS,
     COMBOS,
-    PROMOTIONS,
+    MATERIALS,
     AGENDA,
     CUSTOMERS,
     PRODUCTS_EDIT,

@@ -4,29 +4,41 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Material ao Produto</span>
+            <span class="headline">Adicionar Material</span>
           </v-card-title>
           <v-card-text>
             <v-container>
               <v-form>
                 <v-row>
-                  <v-col cols="9">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <common-autocomplete-remote
-                        :loading="loading[LOADING_IDENTIFIER_SEARCH_MATERIALS]"
-                        :items="materials"
-                        :errors="errors"
-                        label="Material"
-                        :placeholder="`Digite ao menos ${minLength} chars para pesquisar`"
-                        option-text="name"
-                        option-value="id"
-                        @search="searchMaterials"
-                        @select="selectMaterial"
-                        v-model="object.idMaterial"
+                  <v-col cols="12">
+                    <validation-provider
+                      rules="required|max:64"
+                      v-slot="{ errors }"
+                    >
+                      <v-text-field
+                        label="Nome"
+                        required
+                        v-model="object.name"
+                        :error-messages="errors"
+                        counter="64"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+                <v-row align="start">
+                  <v-col cols="4">
+                    <validation-provider
+                      rules="required|greater_than:0"
+                      v-slot="{ errors }"
+                    >
+                      <v-currency-field
+                        label="Preço"
+                        v-model="object.price"
+                        :error-messages="errors"
                       />
                     </validation-provider>
                   </v-col>
-                  <v-col cols="3">
+                  <v-col cols="4">
                     <validation-provider
                       rules="required|greater_than:0"
                       v-slot="{ errors }"
@@ -50,23 +62,17 @@
               @click="hide()"
               icon
               fab
-              :loading="
-                loading[LOADING_IDENTIFIER] ||
-                loading[LOADING_IDENTIFIER_SEARCH_MATERIALS]
-              "
+              :loading="loading[LOADING_IDENTIFIER]"
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-btn
-              color="success"
+              color="primary"
               submit
               icon
               fab
               @click="handleSubmit(save)"
-              :loading="
-                loading[LOADING_IDENTIFIER] ||
-                loading[LOADING_IDENTIFIER_SEARCH_MATERIALS]
-              "
+              :loading="loading[LOADING_IDENTIFIER]"
             >
               <v-icon>mdi-check</v-icon>
             </v-btn>
@@ -78,67 +84,44 @@
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
 import materialsActions from "@/actions/materialsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
-import materialsConstants from "@/store/modules/materials/constants";
 
 export default {
   props: ["showAdd"],
   data() {
     return {
-      minLength: 3,
       visible: false,
+      menu: false,
       source: "",
       object: {
-        idMaterial: "",
+        name: "",
+        price: "",
         qty: "",
       },
-      LOADING_IDENTIFIER: "addProductMaterial",
-      LOADING_IDENTIFIER_SEARCH_MATERIALS: "searchMaterialsAsync",
+      LOADING_IDENTIFIER: "addMaterial",
     };
   },
   methods: {
-    ...mapMutations(materialsConstants.MODULE_NAME, [
-      materialsConstants.MUTATION_CLEAR_MATERIALS,
-    ]),
     hide() {
       this.$refs.form.reset();
       this.$emit("fechar");
       this.visible = false;
-      this.object = { active: true };
     },
     show() {
       this.visible = true;
     },
     save() {
-      let id = this.$route.params.id;
-      productsActions
-        .addMaterial(id, this.object, this.LOADING_IDENTIFIER)
-        .then((res) => {
-          if (res) {
-            this.hide();
-          }
-        });
+      materialsActions.add(this.object, this.LOADING_IDENTIFIER).then((res) => {
+        if (res) {
+          this.hide();
+        }
+      });
     },
-    searchMaterials(term) {
-      if ((term || "").length < this.minLength) {
-        this[materialsConstants.MUTATION_CLEAR_MATERIALS]();
-        return;
-      }
-
-      materialsActions.search(
-        this.source,
-        { name: term },
-        null,
-        null,
-        this.LOADING_IDENTIFIER_SEARCH_MATERIALS
-      );
-    },
-    selectMaterial(val) {
-      this.object.idMaterial = val ? val.id : null;
+    changeDate(date) {
+      this.object.endSale = date;
     },
   },
   mounted() {
@@ -146,7 +129,6 @@ export default {
   },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-    ...mapState(materialsConstants.MODULE_NAME, ["materials"]),
   },
   watch: {
     showAdd() {

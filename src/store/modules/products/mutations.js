@@ -12,4 +12,5 @@ export default {
   [constants.MUTATION_SET_COMBOS]: set('combos'),
   [constants.MUTATION_SET_MATERIALS]: set('materials'),
   [constants.MUTATION_SET_SEARCH_MATERIALS]: set('searchMaterials'),
+  [constants.MUTATION_SET_PAGE]: set('page'),
 }

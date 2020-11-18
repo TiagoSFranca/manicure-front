@@ -4,7 +4,7 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Produtos</span>
+            <span class="title white--text">Materiais</span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -39,7 +39,7 @@
           <v-col cols="12">
             <v-data-table
               :headers="headers"
-              :items="products"
+              :items="materials"
               class="elevation-1"
               loading-text="Loading... Please wait"
               hide-default-footer
@@ -50,28 +50,8 @@
               :loading="loading[LOADING_IDENTIFIER] === true"
               :multi-sort="false"
             >
-              <template v-slot:item.originalValue="{ item }">
-                <span>{{ toCurrency(item.originalValue) }}</span>
-              </template>
-              <template v-slot:item.saleValue="{ item }">
-                <span>{{ toCurrency(item.saleValue) }}</span>
-              </template>
-              <template v-slot:item.endSale="{ item }">
-                <span>{{ new Date(item.endSale).toLocaleString() }}</span>
-              </template>
-              <template v-slot:item.onSale="{ item }">
-                <v-simple-checkbox
-                  v-model="item.onSale"
-                  disabled
-                  color="primary"
-                ></v-simple-checkbox>
-              </template>
-              <template v-slot:item.active="{ item }">
-                <v-simple-checkbox
-                  v-model="item.active"
-                  disabled
-                  color="primary"
-                ></v-simple-checkbox>
+              <template v-slot:item.price="{ item }">
+                <span>{{ toCurrency(item.price) }}</span>
               </template>
               <template v-slot:item.actions="{ item }">
                 <v-icon
@@ -97,8 +77,8 @@
           </v-col>
         </v-row>
         <core-pagination :page="page" @onPaging="onPaging" />
-        <material-products-add :showAdd="showAdd" @fechar="showAdd = false" />
-        <material-products-filter
+        <material-materials-add :showAdd="showAdd" @fechar="showAdd = false" />
+        <material-materials-filter
           @onFilter="onFilter"
           :loading="loading[LOADING_IDENTIFIER]"
           :filtered="filter"
@@ -109,13 +89,13 @@
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
+import materialsActions from "@/actions/materialsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import { ToCurrency } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
-import productsConstants from "@/store/modules/products/constants";
-import { PRODUCTS_EDIT, PRODUCTS_DETAILS } from "@/router/routes";
+import materialsConstants from "@/store/modules/materials/constants";
+import { MATERIALS_EDIT, MATERIALS_DETAILS } from "@/router/routes";
 
 export default {
   data() {
@@ -124,29 +104,28 @@ export default {
       source: "",
       headers: [
         { text: "Nome", align: "start", value: "name" },
-        { text: "Vl orignal", value: "originalValue", align: "center" },
-        { text: "Vl Promocional", value: "saleValue", align: "center" },
-        { text: "Em promoção", value: "onSale", align: "center" },
-        { text: "Fim da promoção", value: "endSale", align: "center" },
-        { text: "Ativo", value: "active", align: "center" },
+        { text: "Preço", value: "price", align: "center" },
+        { text: "Qtd Disponível", value: "qty", align: "center" },
+        { text: "Qtd Reservada", value: "reservedQty", align: "center" },
+        { text: "Qtd Total", value: "qtyTotal", align: "center" },
         { text: "", value: "actions", sortable: false },
       ],
       filter: {},
       pagination: {},
       sort: {},
-      LOADING_IDENTIFIER: "searchProducts",
+      LOADING_IDENTIFIER: "searchMaterials",
     };
   },
   methods: {
-    ...mapMutations(productsConstants.MODULE_NAME, [
-      productsConstants.MUTATION_SET_SHOW_FILTER,
+    ...mapMutations(materialsConstants.MODULE_NAME, [
+      materialsConstants.MUTATION_SET_SHOW_FILTER,
     ]),
     onShowFilter() {
-      this[productsConstants.MUTATION_SET_SHOW_FILTER](true);
+      this[materialsConstants.MUTATION_SET_SHOW_FILTER](true);
     },
-    searchProducts() {
+    searchMaterials() {
       this.source = axiosSourceToken.obterToken();
-      productsActions.search(
+      materialsActions.search(
         this.source,
         this.filter,
         this.pagination,
@@ -168,35 +147,35 @@ export default {
         prevSort.orderBy !== this.sort.orderBy ||
         prevSort.asc !== this.sort.asc
       ) {
-        this.searchProducts();
+        this.searchMaterials();
       }
 
       return items;
     },
     onPaging(pagination) {
       this.pagination = pagination;
-      this.searchProducts();
+      this.searchMaterials();
     },
     onFilter(filter) {
       this.filter = filter;
-      this.searchProducts();
+      this.searchMaterials();
     },
     toCurrency(value) {
       return ToCurrency(value, true, false);
     },
     seeItem(item, isEdit = true) {
       if (isEdit)
-        this.$router.push({ path: PRODUCTS_EDIT.replace(":id", item.id) });
+        this.$router.push({ path: MATERIALS_EDIT.replace(":id", item.id) });
       else
-        this.$router.push({ path: PRODUCTS_DETAILS.replace(":id", item.id) });
+        this.$router.push({ path: MATERIALS_DETAILS.replace(":id", item.id) });
     },
   },
   created() {
-    this.searchProducts();
+    this.searchMaterials();
   },
   computed: {
-    ...mapState(productsConstants.MODULE_NAME, [
-      "products",
+    ...mapState(materialsConstants.MODULE_NAME, [
+      "materials",
       "search",
       "showFilter",
       "page",
@@ -209,7 +188,7 @@ export default {
   },
   watch: {
     search() {
-      this.searchProducts();
+      this.searchMaterials();
     },
   },
 };

@@ -60,9 +60,8 @@ export const edit = (id, object, LOADING_IDENTIFIER = '') => {
 
     return productsService
         .edit(id, object)
-        .then((response) => {
-            let data = response.data
-            store.commit(mutationTypes.PRODUCTS_SET_PRODUCT, data);
+        .then(() => {
+            store.commit(mutationTypes.PRODUCTS_SET_SEARCH, true)
             toastr.success(messages.sucesso.edicao)
         }).catch(() => {
         }).finally(() => {

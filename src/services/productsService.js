@@ -2,48 +2,44 @@ import axios from 'axios'
 import { products, combos, materials } from '@/arr/products'
 import images from '@/arr/images'
 
-const RESOURCE_NAME = '/Pets'
+const RESOURCE_NAME = '/products'
+const MATERIALS = "/materials"
 
 export const search = (query, source) => {
-  console.log("TEST", new URLSearchParams(query).toString())
+  let strQuery = new URLSearchParams(query).toString();
 
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve({ data: products })
-    }, 3000);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}?${strQuery}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 
 export const add = (object) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve(object)
-    }, 3000);
+  return new Promise((resolve, reject) => {
+    return axios.post(RESOURCE_NAME, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 }
 
 export const edit = (id, object) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve({ data: object })
-    }, 3000);
+  return new Promise((resolve, reject) => {
+    return axios.put(`${RESOURCE_NAME}/${id}`, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 }
 
 export const get = (id, source) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      let product = products.filter(e => e.id === parseInt(id))
-      resolve({ data: product.length > 0 ? product[0] : null })
-    }, 3000);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 
@@ -96,50 +92,36 @@ export const getCombos = (id, source) => {
 }
 
 export const addMaterial = (id, object) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve()
-    }, 2500);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.post(`${RESOURCE_NAME}/${id}${MATERIALS}`, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 
 export const getMaterials = (id, source) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve({ data: materials })
-    }, 2000);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${MATERIALS}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 }
 
 export const deleteMaterial = (id, idMaterial) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve()
-    }, 2500);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.delete(`${RESOURCE_NAME}/${id}${MATERIALS}/${idMaterial}`)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 
 export const editMaterial = (id, idMaterial, object) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve()
-    }, 2500);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.put(`${RESOURCE_NAME}/${id}${MATERIALS}/${idMaterial}`, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 

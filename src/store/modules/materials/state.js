@@ -1,5 +1,6 @@
 export default {
-    materials: [],
-    search: false,
-  }
-  
+  materials: [],
+  search: false,
+  showFilter: false,
+  page: {}
+}

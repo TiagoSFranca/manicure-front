@@ -8,4 +8,5 @@ export default {
   combos: [],
   materials: [],
   searchMaterials: false,
+  page: {}
 }

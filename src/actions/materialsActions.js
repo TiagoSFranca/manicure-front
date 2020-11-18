@@ -2,7 +2,7 @@ import toastr from '@/utils/toastr'
 import store from '@/store'
 import messages from '@/utils/messages'
 import { startLoading, endLoading } from '@/utils/methods'
-import productsService from '@/services/materialsService'
+import materialsService from '@/services/materialsService'
 import actionTypes from '@/store/actionTypes'
 import mutationTypes from '@/store/mutationTypes'
 
@@ -12,7 +12,7 @@ export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = ''
 
     store.dispatch(startLoading(LOADING_IDENTIFIER));
 
-    productsService
+    materialsService
         .search(query, source)
         .then((response) => {
             let data = response.data
@@ -24,6 +24,23 @@ export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = ''
         })
 };
 
+export const add = (object, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    return materialsService
+        .add(object)
+        .then(() => {
+            store.commit(mutationTypes.MATERIALS_SET_SEARCH, true)
+            toastr.success(messages.sucesso.cadastro)
+            return true;
+        }).catch(() => {
+            return false;
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
+
 export default {
-    search
+    search,
+    add
 }

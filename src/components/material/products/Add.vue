@@ -142,7 +142,6 @@ export default {
   props: ["showAdd"],
   data() {
     return {
-      imagem: null,
       visible: false,
       menu: false,
       source: "",
@@ -152,7 +151,7 @@ export default {
         saleValue: null,
         onSale: false,
         active: true,
-        endSale: "",
+        endSale: null,
         comments: "",
       },
       LOADING_IDENTIFIER: "addProduct",

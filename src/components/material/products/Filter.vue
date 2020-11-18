@@ -115,6 +115,14 @@ export default {
   watch: {
     showFilter(val) {
       if (val === true) {
+        if (this.filtered.onSale == undefined) {
+          this.filtered.onSale = NOT_SELECTED;
+        }
+
+        if (this.filtered.active == undefined) {
+          this.filtered.active = NOT_SELECTED;
+        }
+
         this.filter = { ...this.filtered };
       } else {
         this.limparFiltro();
@@ -145,8 +153,7 @@ export default {
     changeDate(date, begin) {
       if (begin) this.filter.beginEndSale = date;
       else this.filter.endEndSale = date;
-    }
+    },
   },
-  
 };
 </script>

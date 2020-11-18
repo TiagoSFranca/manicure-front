@@ -56,9 +56,9 @@ export default {
           text: "Combos",
         },
         {
-          to: routes.PROMOTIONS,
-          icon: "mdi-sale",
-          text: "Promoções",
+          to: routes.MATERIALS,
+          icon: "mdi-hexagon-slice-1",
+          text: "Materiais",
         },
         {
           to: routes.AGENDA,

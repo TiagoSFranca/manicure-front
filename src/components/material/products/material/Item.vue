@@ -3,7 +3,7 @@
     <v-expansion-panel-header v-slot="{ open }">
       {{ isOpen(open) }}
       <span class="overline text-truncate">
-        {{ material.name }}
+        {{ material.material.name }}
       </span>
     </v-expansion-panel-header>
     <v-expansion-panel-content v-if="!isEdit">
@@ -14,7 +14,9 @@
         </v-col>
         <v-col cols="12" class="text-left pt-0">
           <span class="overline">Valor unitário:</span>
-          <span class="ml-2 caption">{{ toCurrency(material.price) }}</span>
+          <span class="ml-2 caption">{{
+            toCurrency(material.material.price)
+          }}</span>
         </v-col>
       </v-row>
 
@@ -142,6 +144,8 @@ export default {
         this.object,
         this.LOADING_IDENTIFIER
       );
+      this.showDialog = false;
+      this.isEdit = false;
     },
     delete(id) {
       productsActions.deleteMaterial(
@@ -149,6 +153,7 @@ export default {
         this.material.id,
         this.LOADING_IDENTIFIER
       );
+      this.showDialog = false;
     },
     confirmDialog() {
       let id = this.$route.params.id;
