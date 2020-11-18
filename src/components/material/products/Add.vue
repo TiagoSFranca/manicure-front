@@ -129,6 +129,22 @@
         </v-card>
       </validation-observer>
     </v-dialog>
+    <common-confirm-dialog
+      :showDialog="showDialog"
+      title="Atenção!"
+      message="Produto adicionado! Deseja ir para a tela de edição?"
+      @close="showDialog = false"
+    >
+      <template slot="actions">
+        <v-spacer></v-spacer>
+        <v-btn color="error" @click="redirect(false)" icon fab>
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-btn color="success" icon fab @click="redirect(true)">
+          <v-icon>mdi-check</v-icon>
+        </v-btn>
+      </template>
+    </common-confirm-dialog>
   </v-row>
 </template>
 
@@ -137,6 +153,7 @@ import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
+import { PRODUCTS_EDIT } from "@/router/routes";
 
 export default {
   props: ["showAdd"],
@@ -144,6 +161,7 @@ export default {
     return {
       visible: false,
       menu: false,
+      showDialog: false,
       source: "",
       object: {
         name: "",
@@ -155,6 +173,7 @@ export default {
         comments: "",
       },
       LOADING_IDENTIFIER: "addProduct",
+      idProduct: "",
     };
   },
   methods: {
@@ -169,13 +188,23 @@ export default {
     },
     save() {
       productsActions.add(this.object, this.LOADING_IDENTIFIER).then((res) => {
-        if (res) {
-          this.hide();
+        if (res.success) {
+          this.showDialog = true;
+          this.visible = false;
+          this.idProduct = res.id;
         }
       });
     },
     changeDate(date) {
       this.object.endSale = date;
+    },
+    redirect(toEdit) {
+      this.hide();
+      if (toEdit) {
+        this.$router.push({
+          path: PRODUCTS_EDIT.replace(":id", this.idProduct),
+        });
+      }
     },
   },
   mounted() {

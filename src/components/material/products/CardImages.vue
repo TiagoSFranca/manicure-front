@@ -14,7 +14,7 @@
               label="Adicionar imagem"
               :clear="isLoading || loading[LOADING_IDENTIFIER]"
               @upload="addImage"
-              accept="image/*"
+              accept=".png,.jpg"
               v-if="isEdit"
             />
           </v-col>
@@ -27,11 +27,11 @@
             cols="12"
             sm="4"
             lg="2"
-            md="2"
+            md="3"
           >
             <common-hover-image
               :image="{
-                src: n.src,
+                src: n.url,
               }"
               :lazy="true"
               :disabled="!isEdit"

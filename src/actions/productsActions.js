@@ -29,12 +29,12 @@ export const add = (object, LOADING_IDENTIFIER = '') => {
 
     return productsService
         .add(object)
-        .then(() => {
+        .then((response) => {
             store.commit(mutationTypes.PRODUCTS_SET_SEARCH, true)
             toastr.success(messages.sucesso.cadastro)
-            return true;
+            return { success: true, id: response.data.id };
         }).catch(() => {
-            return false;
+            return { success: false };
         }).finally(() => {
             store.dispatch(endLoading(LOADING_IDENTIFIER));
         })

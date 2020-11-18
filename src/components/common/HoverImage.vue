@@ -1,7 +1,13 @@
 <template>
   <v-hover v-slot="{ hover }">
     <v-card>
-      <v-img :src="image.src" :lazy-src="lazy ? image.src : ''">
+      <v-img
+        :src="image.src"
+        :lazy-src="lazy ? image.src : ''"
+        contain
+        width="100%"
+        aspect-ratio="1"
+      >
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">
             <v-progress-circular

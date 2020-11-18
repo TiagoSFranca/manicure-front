@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { products, combos, materials } from '@/arr/products'
 import images from '@/arr/images'
+import { formatDate } from '../utils/methods'
 
 const RESOURCE_NAME = '/products'
 const MATERIALS = "/materials"
+const IMAGES = "/images"
 
 export const search = (query, source) => {
   let strQuery = new URLSearchParams(query).toString();
@@ -44,38 +46,36 @@ export const get = (id, source) => {
 };
 
 export const getImages = (id, source) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve({ data: images.getImages() })
-    }, 2500);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${IMAGES}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 
 export const deleteImage = (id, idImage) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve()
-    }, 2500);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.delete(`${RESOURCE_NAME}/${id}${IMAGES}/${idImage}`)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 
 export const addImage = (id, file) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve()
-    }, 2500);
+  let formData = new FormData();
+  formData.append("image", file);
 
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.post(`${RESOURCE_NAME}/${id}${IMAGES}`, formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 };
 
