@@ -1,9 +1,9 @@
 <template>
-  <v-content>
+  <v-main>
     <router-view />
 
     <core-toastr />
     <core-progress-bar />
     <core-logout />
-  </v-content>
+  </v-main>
 </template>

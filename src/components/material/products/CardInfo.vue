@@ -2,7 +2,6 @@
   <validation-observer ref="form" v-slot="{ handleSubmit }">
     <v-card
       :loading="isLoading || loading[LOADING_IDENTIFIER]"
-      :height="height"
     >
       <v-card-title>
         <span class="overline">DADOS GERAIS</span>

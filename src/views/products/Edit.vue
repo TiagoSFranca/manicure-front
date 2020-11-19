@@ -23,21 +23,19 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="12" lg="8" md="8">
+          <v-col cols="12" sm="12" lg="12" md="12">
             <material-products-card-info
               :isEdit="true"
               :isLoading="loading[LOADING_IDENTIFIER]"
               :object="product"
               :showActions="true"
-              :height="600"
             />
           </v-col>
-          <v-col cols="12" sm="12" lg="4" md="4">
+          <v-col cols="12" sm="12" lg="12" md="12">
             <material-products-card-materials
               :isEdit="true"
               :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
               :materials="materials"
-              :height="600"
             />
           </v-col>
         </v-row>

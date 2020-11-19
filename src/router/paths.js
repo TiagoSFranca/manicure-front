@@ -69,6 +69,14 @@ export default [
     }
   },
   {
+    path: routes.AGENDA,
+    name: 'Agenda',
+    view: 'agenda.Index',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
     path: '/pets',
     name: 'Pets',
     view: 'Pets',

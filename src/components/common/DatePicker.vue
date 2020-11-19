@@ -53,6 +53,9 @@ export default {
     dateValue() {
       this.dateFormatted = this.formatDate(this.dateValue);
     },
+    date(){
+      this.dateValue = this.date
+    }
   },
   methods: {
     formatDate(date) {

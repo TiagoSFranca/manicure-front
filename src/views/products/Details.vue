@@ -23,7 +23,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="12" lg="4" md="4">
+          <v-col cols="12">
             <material-products-card-info
               :isEdit="false"
               :isLoading="loading[LOADING_IDENTIFIER]"
@@ -31,7 +31,7 @@
               height="600"
             />
           </v-col>
-          <v-col cols="12" sm="12" lg="4" md="4">
+          <v-col cols="12">
             <material-products-card-materials
               :isEdit="false"
               :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
@@ -39,7 +39,7 @@
               height="600"
             />
           </v-col>
-          <v-col cols="12" sm="12" lg="4" md="4">
+          <v-col cols="12">
             <material-products-card-combos
               :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
               :combos="combos"

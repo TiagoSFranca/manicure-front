@@ -1,47 +1,52 @@
 <template>
-  <div>
-    <v-card
-      :loading="isLoading"
-      :height="height"
-      :class="`${height ? 'd-flex flex-column' : ''}`"
-    >
-      <v-card-title class="d-flex align-start">
-        <span class="overline">materiais</span>
-        <v-spacer></v-spacer>
-        <v-btn
-          v-if="isEdit"
-          color="accent"
-          outlined
-          rounded
-          dark
-          small
-          icon
-          @click="showAdd = true"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-card-title>
+  <v-card :loading="isLoading">
+    <v-card-title class="d-flex align-start">
+      <span class="overline">materiais</span>
+      <v-spacer></v-spacer>
+      <v-btn
+        v-if="isEdit"
+        color="accent"
+        outlined
+        rounded
+        dark
+        small
+        icon
+        @click="showAdd = true"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-card-title>
 
-      <div v-if="materials.length > 0">
-        <span class="overline">Total:</span>
+    <div v-if="materials.length > 0">
+      <span class="overline">Total:</span>
 
-        <span class="overline ml-2">{{ calcTotal() }}</span>
-      </div>
+      <span class="overline ml-2">{{ calcTotal() }}</span>
+    </div>
 
-      <v-card-text>
-        <v-container>
-          <material-products-material-list
-            :materials="materials"
-            :isEdit="isEdit"
-          />
-        </v-container>
-      </v-card-text>
-    </v-card>
+    <v-card-text>
+      <v-container>
+        <v-row>
+          <v-col
+            v-for="material in materials"
+            :key="material.id"
+            cols="12"
+            sm="12"
+            md="4"
+            lg="3"
+          >
+            <material-products-material-item
+              v-bind:material="material"
+              :showActions="isEdit"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card-text>
     <material-products-material-add
       :showAdd="showAdd"
       @fechar="showAdd = false"
     />
-  </div>
+  </v-card>
 </template>
 
 <script>
