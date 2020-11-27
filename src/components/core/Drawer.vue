@@ -46,6 +46,11 @@ export default {
           text: "Dashboard",
         },
         {
+          to: routes.AGENDA,
+          icon: "mdi-calendar-month-outline",
+          text: "Agenda",
+        },
+        {
           to: routes.PRODUCTS,
           icon: "mdi-cube-outline",
           text: "Produtos",
@@ -59,11 +64,6 @@ export default {
           to: routes.MATERIALS,
           icon: "mdi-hexagon-slice-1",
           text: "Materiais",
-        },
-        {
-          to: routes.AGENDA,
-          icon: "mdi-calendar-month-outline",
-          text: "Agenda",
         },
         {
           to: routes.CUSTOMERS,

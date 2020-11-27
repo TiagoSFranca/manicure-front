@@ -1,6 +1,7 @@
 import app from './modules/app/constants'
 import products from './modules/products/constants'
 import materials from './modules/materials/constants'
+import combos from './modules/combos/constants'
 
 // APP
 export const APP_LOADING = `${app.MODULE_NAME}/${app.ACTION_LOADING}`;
@@ -11,8 +12,12 @@ export const PRODUCTS_SET_PRODUCTS = `${products.MODULE_NAME}/${products.ACTION_
 // MATERIALS
 export const MATERIALS_SET_MATERIALS = `${materials.MODULE_NAME}/${materials.ACTION_SET_MATERIALS}`;
 
+// COMBOS
+export const COMBOS_SET_COMBOS = `${combos.MODULE_NAME}/${combos.ACTION_SET_COMBOS}`;
+
 export default {
     APP_LOADING,
     PRODUCTS_SET_PRODUCTS,
-    MATERIALS_SET_MATERIALS
+    MATERIALS_SET_MATERIALS,
+    COMBOS_SET_COMBOS
 }

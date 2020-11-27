@@ -1,6 +1,7 @@
 import app from './modules/app/constants'
 import products from './modules/products/constants'
 import materials from './modules/materials/constants'
+import combos from './modules/combos/constants'
 
 // APP
 export const APP_SET_LOADING = `${app.MODULE_NAME}/${app.MUTATION_SET_LOADING}`;
@@ -30,6 +31,16 @@ export const MATERIALS_SET_SEARCH = `${materials.MODULE_NAME}/${materials.MUTATI
 export const MATERIALS_SET_SHOW_FILTER = `${materials.MODULE_NAME}/${materials.MUTATION_SET_SHOW_FILTER}`;
 export const MATERIALS_TOGGLE_SHOW_FILTER = `${materials.MODULE_NAME}/${materials.MUTATION_TOGGLE_SHOW_FILTER}`;
 
+// COMBOS
+export const COMBOS_SET_COMBOS = `${combos.MODULE_NAME}/${combos.MUTATION_SET_COMBOS}`;
+export const COMBOS_SET_SEARCH = `${combos.MODULE_NAME}/${combos.MUTATION_SET_SEARCH}`;
+export const COMBOS_SET_SHOW_FILTER = `${combos.MODULE_NAME}/${combos.MUTATION_SET_SHOW_FILTER}`;
+export const COMBOS_TOGGLE_SHOW_FILTER = `${combos.MODULE_NAME}/${combos.MUTATION_TOGGLE_SHOW_FILTER}`;
+export const COMBOS_SET_COMBO = `${combos.MODULE_NAME}/${combos.MUTATION_SET_COMBO}`;
+export const COMBOS_SET_IMAGES = `${combos.MODULE_NAME}/${combos.MUTATION_SET_IMAGES}`;
+export const COMBOS_SET_SEARCH_IMAGES = `${combos.MODULE_NAME}/${combos.MUTATION_SET_SEARCH_IMAGES}`;
+export const COMBOS_SET_PRODUCTS = `${combos.MODULE_NAME}/${combos.MUTATION_SET_PRODUCTS}`;
+export const COMBOS_SET_SEARCH_PRODUCTS = `${combos.MODULE_NAME}/${combos.MUTATION_SET_SEARCH_PRODUCTS}`;
 
 export default {
     APP_SET_LOADING,
@@ -40,6 +51,7 @@ export default {
     APP_SET_TOASTR,
     APP_SET_PROGRESS_BAR,
     APP_TOGGLE_PROGRESS_BAR,
+
     PRODUCTS_SET_PRODUCTS,
     PRODUCTS_SET_SEARCH,
     PRODUCTS_SET_SHOW_FILTER,
@@ -50,8 +62,19 @@ export default {
     PRODUCTS_SET_COMBOS,
     PRODUCTS_SET_MATERIALS,
     PRODUCTS_SET_SEARCH_MATERIALS,
+
     MATERIALS_SET_MATERIALS,
     MATERIALS_SET_SEARCH,
     MATERIALS_SET_SHOW_FILTER,
-    MATERIALS_TOGGLE_SHOW_FILTER
+    MATERIALS_TOGGLE_SHOW_FILTER,
+    
+    COMBOS_SET_COMBOS,
+    COMBOS_SET_SEARCH,
+    COMBOS_SET_SHOW_FILTER,
+    COMBOS_TOGGLE_SHOW_FILTER,
+    COMBOS_SET_COMBO,
+    COMBOS_SET_IMAGES,
+    COMBOS_SET_SEARCH_IMAGES,
+    COMBOS_SET_PRODUCTS,
+    COMBOS_SET_SEARCH_PRODUCTS,
 }

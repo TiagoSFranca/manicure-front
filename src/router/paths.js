@@ -77,6 +77,30 @@ export default [
     }
   },
   {
+    path: routes.COMBOS,
+    name: 'Combos',
+    view: 'combos.Index',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
+    path: routes.COMBOS_EDIT,
+    name: 'EditCombo',
+    view: 'combos.Edit',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
+    path: routes.COMBOS_DETAILS,
+    name: 'ComboDetails',
+    view: 'combos.Details',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
     path: '/pets',
     name: 'Pets',
     view: 'Pets',

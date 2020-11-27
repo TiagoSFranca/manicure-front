@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="isLoading">
     <v-card-title class="d-flex align-start">
-      <span class="overline">materiais</span>
+      <span class="overline">produtos</span>
       <v-spacer></v-spacer>
       <v-btn
         v-if="isEdit"
@@ -17,8 +17,8 @@
       </v-btn>
     </v-card-title>
 
-    <div v-if="materials.length > 0">
-      <span class="overline">Total:</span>
+    <div v-if="products.length > 0">
+      <span class="overline">Soma dos produtos:</span>
 
       <span class="overline ml-2">{{ calcTotal() }}</span>
     </div>
@@ -27,30 +27,27 @@
       <v-container>
         <v-row>
           <v-col
-            v-for="material in materials"
-            :key="material.id"
+            v-for="product in products"
+            :key="product.id"
             cols="12"
             sm="12"
             md="4"
             lg="3"
           >
-            <material-products-material-item
-              v-bind:material="material"
+            <material-combos-product-item
+              v-bind:product="product"
               :showActions="isEdit"
             />
           </v-col>
         </v-row>
       </v-container>
     </v-card-text>
-    <material-products-material-add
-      :showAdd="showAdd"
-      @fechar="showAdd = false"
-    />
+    <material-combos-product-add :showAdd="showAdd" @fechar="showAdd = false" />
   </v-card>
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
+import combosActions from "@/actions/combosActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
@@ -61,11 +58,14 @@ export default {
       showAdd: false,
     };
   },
-  props: ["materials", "isLoading", "isEdit", "height"],
+  props: ["products", "isLoading", "isEdit", "height"],
   methods: {
+    getCurrPrice(product) {
+      return product.onSale ? product.saleValue : product.originalValue;
+    },
     calcTotal() {
-      let p = this.materials.map((cur) => {
-        return cur.qty * cur.material.price;
+      let p = this.products.map((cur) => {
+        return cur.qty * this.getCurrPrice(cur.product);
       });
 
       return ToCurrency(

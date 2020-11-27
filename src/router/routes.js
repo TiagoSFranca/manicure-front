@@ -6,6 +6,9 @@ export const PRODUCTS_EDIT = `${PRODUCTS}/edit/:id`;
 export const PRODUCTS_DETAILS = `${PRODUCTS}/details/:id`;
 
 export const COMBOS = "/combos"
+export const COMBOS_EDIT = `${COMBOS}/edit/:id`;
+export const COMBOS_DETAILS = `${COMBOS}/details/:id`;
+
 export const MATERIALS = "/materials"
 export const AGENDA = "/agenda"
 export const CUSTOMERS = "/customers"
@@ -13,11 +16,16 @@ export const CUSTOMERS = "/customers"
 export default {
     INDEX,
     DASHBOARD,
+    
     PRODUCTS,
+    PRODUCTS_EDIT,
+    PRODUCTS_DETAILS,
+
     COMBOS,
+    COMBOS_EDIT,
+    COMBOS_DETAILS,
+
     MATERIALS,
     AGENDA,
     CUSTOMERS,
-    PRODUCTS_EDIT,
-    PRODUCTS_DETAILS
 }
