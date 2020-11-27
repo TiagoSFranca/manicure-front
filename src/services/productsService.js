@@ -1,11 +1,9 @@
 import axios from 'axios'
-import { products, combos, materials } from '@/arr/products'
-import images from '@/arr/images'
-import { formatDate } from '../utils/methods'
 
 const RESOURCE_NAME = '/products'
 const MATERIALS = "/materials"
 const IMAGES = "/images"
+const COMBOS = "/combos"
 
 export const search = (query, source) => {
   let strQuery = new URLSearchParams(query).toString();
@@ -80,14 +78,12 @@ export const addImage = (id, file) => {
 };
 
 export const getCombos = (id, source) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve({ data: combos })
-    }, 2500);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${COMBOS}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
   })
 }
 

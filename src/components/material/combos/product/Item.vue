@@ -8,81 +8,90 @@
           {{ product.product.name }}
         </span>
       </v-expansion-panel-header>
-      <v-expansion-panel-content v-if="!isEdit">
-        <v-row align="center" justify="space-between">
-          <v-col cols="auto" class="text-left pt-0">
-            <span class="overline"> {{ product.product.name }}</span>
-          </v-col>
-          <v-col cols="auto" v-if="product.product.onSale" class="pa-0">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-icon color="warning" v-bind="attrs" v-on="on">
-                  mdi-sale
-                </v-icon>
-              </template>
-              <span>Em promoção</span>
-            </v-tooltip>
-          </v-col>
-          <v-col cols="12" class="text-left">
-            <span class="overline">Quantidade:</span>
-            <span class="ml-2 caption">{{ product.qty }}</span>
-          </v-col>
-          <v-col cols="12" class="text-left pt-0">
-            <span class="overline">Valor atual:</span>
-            <span class="ml-2 caption">{{
-              toCurrency(
-                product.product.onSale
-                  ? product.product.saleValue
-                  : product.product.originalValue
-              )
-            }}</span>
-          </v-col>
-        </v-row>
-
-        <v-card-actions v-if="showActions">
+      <v-expansion-panel-content>
+        <v-card-title>
+          <span class="overline text-justify"> {{ product.product.name }}</span>
           <v-spacer></v-spacer>
-          <v-btn dark icon color="accent" @click="onEdit">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn dark icon color="error" @click="onShowDialog()">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-expansion-panel-content>
-      <v-expansion-panel-content v-else>
-        <validation-observer ref="form" v-slot="{ handleSubmit }">
-          <v-form>
-            <v-row class="py-0">
-              <v-col cols="12" class="py-0">
-                <validation-provider
-                  rules="required|greater_than:0"
-                  v-slot="{ errors }"
-                >
-                  <v-currency-field
-                    label="Quantidade"
-                    v-model="object.qty"
-                    :error-messages="errors"
-                  />
-                </validation-provider>
+          <v-tooltip bottom v-if="product.product.onSale">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon color="warning" v-bind="attrs" v-on="on">
+                mdi-sale
+              </v-icon>
+            </template>
+            <span>Em promoção</span>
+          </v-tooltip>
+        </v-card-title>
+        <div v-if="!isEdit">
+          <v-card-text>
+            <v-row align="center" justify="space-between">
+              <v-col cols="12" class="text-left">
+                <span class="overline">Quantidade:</span>
+                <span class="ml-2 caption">{{ product.qty }}</span>
+              </v-col>
+              <v-col cols="12" class="text-left pt-0">
+                <span class="overline">Valor atual:</span>
+                <span class="ml-2 caption">{{
+                  toCurrency(
+                    product.product.onSale
+                      ? product.product.saleValue
+                      : product.product.originalValue
+                  )
+                }}</span>
               </v-col>
             </v-row>
-          </v-form>
-
+          </v-card-text>
           <v-card-actions v-if="showActions">
             <v-spacer></v-spacer>
-            <v-btn dark icon color="error" @click="isEdit = false">
-              <v-icon>mdi-cancel</v-icon>
+            <v-btn dark icon color="accent" @click="onEdit">
+              <v-icon>mdi-pencil</v-icon>
             </v-btn>
-            <v-btn
-              dark
-              icon
-              color="success"
-              @click="handleSubmit(onShowDialog(true))"
-            >
-              <v-icon>mdi-check</v-icon>
+            <v-btn dark icon color="error" @click="onShowDialog()">
+              <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-card-actions>
-        </validation-observer>
+        </div>
+        <div v-else>
+          <validation-observer ref="form" v-slot="{ handleSubmit }">
+            <v-card-text>
+              <v-form>
+                <v-row class="py-0">
+                  <v-col cols="12" class="py-0">
+                    <validation-provider
+                      rules="required|greater_than:0"
+                      v-slot="{ errors }"
+                    >
+                      <v-currency-field
+                        label="Quantidade"
+                        v-model="object.qty"
+                        :error-messages="errors"
+                      />
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+            <v-card-actions v-if="showActions">
+              <v-spacer></v-spacer>
+              <v-btn dark icon color="error" @click="isEdit = false">
+                <v-icon>mdi-cancel</v-icon>
+              </v-btn>
+              <v-btn
+                dark
+                icon
+                color="success"
+                @click="handleSubmit(() => onShowDialog(true))"
+              >
+                <v-icon>mdi-check</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </validation-observer>
+        </div>
+        <v-card-actions v-if="!showActions">
+          <v-spacer></v-spacer>
+          <v-btn dark icon @click="seeProduct(product.product)">
+            <v-icon>mdi-eye-outline</v-icon>
+          </v-btn>
+        </v-card-actions>
       </v-expansion-panel-content>
 
       <common-confirm-dialog
@@ -123,6 +132,7 @@ import combosActions from "@/actions/combosActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
+import { PRODUCTS_DETAILS } from "@/router/routes";
 
 export default {
   props: ["product", "showActions"],
@@ -178,8 +188,11 @@ export default {
     isOpen(open) {
       if (!open) this.isEdit = false;
     },
-    seeCombo(combo) {
-      this.$router.push({ path: "/GOOGLE".replace(":id", combo.id) });
+    seeProduct(combo) {
+      let routeData = this.$router.resolve({
+        path: PRODUCTS_DETAILS.replace(":id", combo.id),
+      });
+      window.open(routeData.href, "_blank");
     },
   },
 };

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import materials from '@/arr/materials'
 
 const RESOURCE_NAME = '/materials'
 

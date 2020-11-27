@@ -4,7 +4,7 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Product ao Produto</span>
+            <span class="headline">Adicionar Produto ao Combo</span>
           </v-card-title>
           <v-card-text>
             <v-container>

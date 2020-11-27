@@ -8,67 +8,74 @@
           {{ material.material.name }}
         </span>
       </v-expansion-panel-header>
-      <v-expansion-panel-content v-if="!isEdit">
-        <v-row align="start">
-          <v-col cols="12" class="text-left pt-0">
-            <span class="overline"> {{ material.material.name }}</span>
-          </v-col>
-          <v-col cols="12" class="text-left">
-            <span class="overline">Quantidade:</span>
-            <span class="ml-2 caption">{{ material.qty }}</span>
-          </v-col>
-          <v-col cols="12" class="text-left pt-0">
-            <span class="overline">Valor unitário:</span>
-            <span class="ml-2 caption">{{
-              toCurrency(material.material.price)
-            }}</span>
-          </v-col>
-        </v-row>
-
-        <v-card-actions v-if="showActions">
-          <v-spacer></v-spacer>
-          <v-btn dark icon color="accent" @click="onEdit">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn dark icon color="error" @click="onShowDialog()">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-expansion-panel-content>
-      <v-expansion-panel-content v-else>
-        <validation-observer ref="form" v-slot="{ handleSubmit }">
-          <v-form>
-            <v-row class="py-0">
-              <v-col cols="12" class="py-0">
-                <validation-provider
-                  rules="required|greater_than:0"
-                  v-slot="{ errors }"
-                >
-                  <v-currency-field
-                    label="Quantidade"
-                    v-model="object.qty"
-                    :error-messages="errors"
-                  />
-                </validation-provider>
+      <v-expansion-panel-content>
+        <v-card-title>
+          <span class="overline text-justify">
+            {{ material.material.name }}
+          </span>
+        </v-card-title>
+        <div v-if="!isEdit">
+          <v-card-text>
+            <v-row align="center" justify="space-between">
+              <v-col cols="12" class="text-left">
+                <span class="overline">Quantidade:</span>
+                <span class="ml-2 caption">{{ material.qty }}</span>
+              </v-col>
+              <v-col cols="12" class="text-left pt-0">
+                <span class="overline">Valor unitário:</span>
+                <span class="ml-2 caption">{{
+                  toCurrency(material.material.price)
+                }}</span>
               </v-col>
             </v-row>
-          </v-form>
-
+          </v-card-text>
           <v-card-actions v-if="showActions">
             <v-spacer></v-spacer>
-            <v-btn dark icon color="error" @click="isEdit = false">
-              <v-icon>mdi-cancel</v-icon>
+            <v-btn dark icon color="accent" @click="onEdit">
+              <v-icon>mdi-pencil</v-icon>
             </v-btn>
-            <v-btn
-              dark
-              icon
-              color="success"
-              @click="handleSubmit(onShowDialog(true))"
-            >
-              <v-icon>mdi-check</v-icon>
+            <v-btn dark icon color="error" @click="onShowDialog()">
+              <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-card-actions>
-        </validation-observer>
+        </div>
+        <div v-else>
+          <validation-observer ref="form" v-slot="{ handleSubmit }">
+            <v-card-text>
+              <v-form>
+                <v-row class="py-0">
+                  <v-col cols="12" class="py-0">
+                    <validation-provider
+                      rules="required|greater_than:0"
+                      v-slot="{ errors }"
+                    >
+                      <v-currency-field
+                        label="Quantidade"
+                        v-model="object.qty"
+                        :error-messages="errors"
+                      />
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+            <v-card-actions v-if="showActions">
+              <v-spacer></v-spacer>
+              <v-btn dark icon color="error" @click="isEdit = false">
+                <v-icon>mdi-cancel</v-icon>
+              </v-btn>
+              <v-btn
+                submit
+                dark
+                icon
+                color="success"
+                @click="handleSubmit(() => onShowDialog(true))"
+              >
+                <v-icon>mdi-check</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </validation-observer>
+        </div>
       </v-expansion-panel-content>
 
       <common-confirm-dialog

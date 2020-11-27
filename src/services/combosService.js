@@ -1,7 +1,4 @@
 import axios from 'axios'
-import { combos,  products } from '@/arr/combos'
-import images from '@/arr/images'
-import { formatDate } from '../utils/methods'
 
 const RESOURCE_NAME = '/combos'
 const PRODUCTS = "/products"
@@ -79,18 +76,6 @@ export const addImage = (id, file) => {
   })
 };
 
-export const getCombos = (id, source) => {
-  return new Promise((resolve) => {
-    setTimeout(function () {
-      resolve({ data: combos })
-    }, 2500);
-
-    // axios.get(RESOURCE_NAME + query, {
-    //   cancelToken: source.token
-    // })
-  })
-}
-
 export const addProduct = (id, object) => {
   return new Promise((resolve, reject) => {
     return axios.post(`${RESOURCE_NAME}/${id}${PRODUCTS}`, object)
@@ -133,7 +118,6 @@ export default {
   getImages,
   deleteImage,
   addImage,
-  getCombos,
   addProduct,
   getProducts,
   deleteProduct,
