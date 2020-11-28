@@ -17,7 +17,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title>{{ item.text }}</v-list-item-title>
+          <v-list-item-title class="text-left">{{ item.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -49,6 +49,11 @@ export default {
           to: routes.AGENDA,
           icon: "mdi-calendar-month-outline",
           text: "Agenda",
+        },
+        {
+          to: routes.SCHEDULES,
+          icon: "mdi-calendar-multiple",
+          text: "Agendamentos",
         },
         {
           to: routes.PRODUCTS,

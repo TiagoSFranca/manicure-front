@@ -101,63 +101,19 @@ export default [
     }
   },
   {
-    path: '/pets',
-    name: 'Pets',
-    view: 'Pets',
+    path: routes.SCHEDULES,
+    name: 'Agendamentos',
+    view: 'schedules.Index',
     meta: {
-      middleware: auth
-    },
-    children: [
-      {
-        path: '/',
-        name: 'Todos',
-        view: 'pets.Todos',
-        meta: {
-          middleware: auth
-        }
-      },
-      {
-        path: 'meus-pets',
-        name: 'Meus Pets',
-        view: 'pets.MeusPets',
-        meta: {
-          middleware: auth
-        }
-      }
-    ]
-  },
-  {
-    path: '/pets/:id',
-    name: 'Pet',
-    view: 'pets.Info',
-    meta: {
-      middleware: auth
+      middleware: guest
     }
   },
   {
-    path: '/solicitacoes-pet',
-    name: 'Solicitações Pet',
-    view: 'Solicitacoes-Pet',
+    path: routes.SCHEDULES_ADD,
+    name: 'Adicionar Agendamento',
+    view: 'schedules.Add',
     meta: {
-      middleware: auth
-    },
-    children: [
-      {
-        path: '/',
-        name: 'Enviadas',
-        view: 'solicitacoesPet.Enviadas',
-        meta: {
-          middleware: auth
-        }
-      },
-      // {
-      //   path: 'recebidas',
-      //   name: 'Recebidas',
-      //   view: 'solicitacoesPet.Recebidas',
-      //   meta: {
-      //     middleware: auth
-      //   }
-      // }
-    ]
+      middleware: guest
+    }
   },
 ]

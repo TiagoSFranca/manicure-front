@@ -4,7 +4,7 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Produto ao Combo</span>
+            <span class="headline">Adicionar Produto ao Agendamento</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -23,6 +23,7 @@
                         @search="searchProducts"
                         @select="selectProduct"
                         v-model="object.idProduct"
+                        ref="autocomplete"
                       />
                     </validation-provider>
                   </v-col>
@@ -58,7 +59,7 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-btn
-              color="success"
+              color="accent"
               submit
               icon
               fab
@@ -68,7 +69,7 @@
                 loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]
               "
             >
-              <v-icon>mdi-check</v-icon>
+              <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -78,7 +79,6 @@
 </template>
 
 <script>
-import combosActions from "@/actions/combosActions";
 import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
@@ -94,9 +94,14 @@ export default {
       source: "",
       object: {
         idProduct: "",
-        qty: "",
+        qty: "1",
       },
-      LOADING_IDENTIFIER: "addComboProduct",
+      defObject: {
+        idProduct: "",
+        qty: "1",
+      },
+      productSelected: {},
+      LOADING_IDENTIFIER: "addProductSchedule",
       LOADING_IDENTIFIER_SEARCH_PRODUCTS: "searchProductsAsync",
     };
   },
@@ -108,20 +113,17 @@ export default {
       this.$refs.form.reset();
       this.$emit("fechar");
       this.visible = false;
-      this.object = { active: true };
+      this.object = this.defObject;
+      this.$refs.autocomplete.clear();
     },
     show() {
       this.visible = true;
     },
     save() {
-      let id = this.$route.params.id;
-      combosActions
-        .addProduct(id, this.object, this.LOADING_IDENTIFIER)
-        .then((res) => {
-          if (res) {
-            this.hide();
-          }
-        });
+      this.$emit("addProduct", {
+        ...this.object,
+        product: this.productSelected,
+      });
     },
     searchProducts(term) {
       if ((term || "").length < this.minLength) {
@@ -139,6 +141,7 @@ export default {
     },
     selectProduct(val) {
       this.object.idProduct = val ? val.id : null;
+      this.productSelected = val;
     },
   },
   mounted() {

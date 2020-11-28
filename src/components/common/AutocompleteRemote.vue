@@ -13,7 +13,11 @@
     :label="label"
     :placeholder="placeholder"
     return-object
-  ></v-autocomplete>
+  >
+    <template v-slot:append-outer>
+      <slot name="append-outer" />
+    </template>
+  </v-autocomplete>
 </template>
 
 <script>
@@ -40,6 +44,11 @@ export default {
     },
     model(val) {
       this.$emit("select", val);
+    },
+  },
+  methods: {
+    clear() {
+      this.model = "";
     },
   },
 };

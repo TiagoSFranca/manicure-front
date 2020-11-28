@@ -20,6 +20,7 @@
         v-on="on"
         :disabled="!readonly && disabled"
         :readonly="readonly"
+        :error-messages="errors"
       ></v-text-field>
     </template>
     <v-date-picker
@@ -36,7 +37,7 @@ import { formatDate } from "@/utils/methods";
 import moment from "moment";
 
 export default {
-  props: ["disabled", "label", "date", "readonly"],
+  props: ["disabled", "label", "date", "readonly", "errors"],
   data() {
     return {
       menu: false,
