@@ -42,5 +42,10 @@ export default {
       this.$emit("select", val);
     },
   },
+  methods: {
+    clear() {
+      this.model = "";
+    },
+  },
 };
 </script>

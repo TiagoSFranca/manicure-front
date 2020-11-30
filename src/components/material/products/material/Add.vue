@@ -23,6 +23,7 @@
                         @search="searchMaterials"
                         @select="selectMaterial"
                         v-model="object.idMaterial"
+                        ref="autoComplete"
                       />
                     </validation-provider>
                   </v-col>
@@ -108,7 +109,8 @@ export default {
       this.$refs.form.reset();
       this.$emit("fechar");
       this.visible = false;
-      this.object = { active: true };
+      this.object = {};
+      this.$refs.autoComplete.clear()
     },
     show() {
       this.visible = true;
