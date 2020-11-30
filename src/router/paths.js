@@ -101,63 +101,11 @@ export default [
     }
   },
   {
-    path: '/pets',
-    name: 'Pets',
-    view: 'Pets',
+    path: routes.CLIENTS,
+    name: 'Clientes',
+    view: 'clients.Index',
     meta: {
-      middleware: auth
-    },
-    children: [
-      {
-        path: '/',
-        name: 'Todos',
-        view: 'pets.Todos',
-        meta: {
-          middleware: auth
-        }
-      },
-      {
-        path: 'meus-pets',
-        name: 'Meus Pets',
-        view: 'pets.MeusPets',
-        meta: {
-          middleware: auth
-        }
-      }
-    ]
-  },
-  {
-    path: '/pets/:id',
-    name: 'Pet',
-    view: 'pets.Info',
-    meta: {
-      middleware: auth
+      middleware: guest
     }
-  },
-  {
-    path: '/solicitacoes-pet',
-    name: 'Solicitações Pet',
-    view: 'Solicitacoes-Pet',
-    meta: {
-      middleware: auth
-    },
-    children: [
-      {
-        path: '/',
-        name: 'Enviadas',
-        view: 'solicitacoesPet.Enviadas',
-        meta: {
-          middleware: auth
-        }
-      },
-      // {
-      //   path: 'recebidas',
-      //   name: 'Recebidas',
-      //   view: 'solicitacoesPet.Recebidas',
-      //   meta: {
-      //     middleware: auth
-      //   }
-      // }
-    ]
   },
 ]

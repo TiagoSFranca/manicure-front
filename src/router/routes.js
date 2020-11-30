@@ -11,7 +11,7 @@ export const COMBOS_DETAILS = `${COMBOS}/details/:id`;
 
 export const MATERIALS = "/materials"
 export const AGENDA = "/agenda"
-export const CUSTOMERS = "/customers"
+export const CLIENTS = "/clients"
 
 export default {
     INDEX,
@@ -27,5 +27,5 @@ export default {
 
     MATERIALS,
     AGENDA,
-    CUSTOMERS,
+    CLIENTS,
 }

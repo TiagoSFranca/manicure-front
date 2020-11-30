@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
-import { required, email, max, max_value } from 'vee-validate/dist/rules';
+import { required, email, max, max_value, length, min } from 'vee-validate/dist/rules';
 import { ToDecimal } from '@/utils/methods'
 
 // Add a rule.
@@ -27,6 +27,11 @@ extend('required', {
     message: 'Campo obrigatório'
 });
 
+extend('email', {
+    ...email,
+    message: 'Formato de e-mail inválido'
+});
+
 extend('max', {
     ...max,
     message: "Máximo de {length} characteres"
@@ -37,6 +42,15 @@ extend('max_value', {
     message: "Máximo de {max} characteres"
 });
 
+extend('length', {
+    ...length,
+    message: "Necessário {length} characteres"
+});
+
+extend('min', {
+    ...min,
+    message: "Mínimo de {length} characteres"
+});
 // Register it globally
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);

@@ -17,7 +17,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title>{{ item.text }}</v-list-item-title>
+          <v-list-item-title class="text-left">{{ item.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -66,7 +66,7 @@ export default {
           text: "Materiais",
         },
         {
-          to: routes.CUSTOMERS,
+          to: routes.CLIENTS,
           icon: "mdi-account-group-outline",
           text: "Clientes",
         },

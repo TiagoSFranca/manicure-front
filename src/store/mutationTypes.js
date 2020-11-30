@@ -2,6 +2,8 @@ import app from './modules/app/constants'
 import products from './modules/products/constants'
 import materials from './modules/materials/constants'
 import combos from './modules/combos/constants'
+import clients from './modules/clients/constants'
+import address from './modules/address/constants'
 
 // APP
 export const APP_SET_LOADING = `${app.MODULE_NAME}/${app.MUTATION_SET_LOADING}`;
@@ -42,6 +44,17 @@ export const COMBOS_SET_SEARCH_IMAGES = `${combos.MODULE_NAME}/${combos.MUTATION
 export const COMBOS_SET_PRODUCTS = `${combos.MODULE_NAME}/${combos.MUTATION_SET_PRODUCTS}`;
 export const COMBOS_SET_SEARCH_PRODUCTS = `${combos.MODULE_NAME}/${combos.MUTATION_SET_SEARCH_PRODUCTS}`;
 
+// CLIENTS
+export const CLIENTS_SET_CLIENTS = `${clients.MODULE_NAME}/${clients.MUTATION_SET_CLIENTS}`;
+export const CLIENTS_SET_SEARCH = `${clients.MODULE_NAME}/${clients.MUTATION_SET_SEARCH}`;
+export const CLIENTS_SET_SHOW_FILTER = `${clients.MODULE_NAME}/${clients.MUTATION_SET_SHOW_FILTER}`;
+export const CLIENTS_TOGGLE_SHOW_FILTER = `${clients.MODULE_NAME}/${clients.MUTATION_TOGGLE_SHOW_FILTER}`;
+export const CLIENTS_SET_CLIENT = `${clients.MODULE_NAME}/${clients.MUTATION_SET_CLIENT}`;
+
+// ADDRESS
+export const ADDRESS_SET_CITIES = `${address.MODULE_NAME}/${address.MUTATION_SET_CITIES}`;
+export const ADDRESS_SET_COUNTRIES = `${address.MODULE_NAME}/${address.MUTATION_SET_COUNTRIES}`;
+
 export default {
     APP_SET_LOADING,
     APP_SET_DRAWER,
@@ -77,4 +90,13 @@ export default {
     COMBOS_SET_SEARCH_IMAGES,
     COMBOS_SET_PRODUCTS,
     COMBOS_SET_SEARCH_PRODUCTS,
+
+    CLIENTS_SET_CLIENTS,
+    CLIENTS_SET_SEARCH,
+    CLIENTS_SET_SHOW_FILTER,
+    CLIENTS_TOGGLE_SHOW_FILTER,
+    CLIENTS_SET_CLIENT,
+
+    ADDRESS_SET_CITIES,
+    ADDRESS_SET_COUNTRIES
 }
