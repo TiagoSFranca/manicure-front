@@ -13,7 +13,7 @@ export const MATERIALS = "/materials"
 
 export const AGENDA = "/agenda"
 
-export const CUSTOMERS = "/customers"
+export const CLIENTS = "/clients"
 
 export const SCHEDULES = "/schedules"
 export const SCHEDULES_ADD = "/schedules/add"
@@ -21,7 +21,7 @@ export const SCHEDULES_ADD = "/schedules/add"
 export default {
     INDEX,
     DASHBOARD,
-    
+
     PRODUCTS,
     PRODUCTS_EDIT,
     PRODUCTS_DETAILS,
@@ -34,7 +34,7 @@ export default {
 
     AGENDA,
 
-    CUSTOMERS,
+    CLIENTS,
 
     SCHEDULES,
     SCHEDULES_ADD,

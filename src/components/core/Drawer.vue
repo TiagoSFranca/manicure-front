@@ -71,7 +71,7 @@ export default {
           text: "Materiais",
         },
         {
-          to: routes.CUSTOMERS,
+          to: routes.CLIENTS,
           icon: "mdi-account-group-outline",
           text: "Clientes",
         },

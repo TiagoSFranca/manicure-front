@@ -101,6 +101,14 @@ export default [
     }
   },
   {
+    path: routes.CLIENTS,
+    name: 'Clientes',
+    view: 'clients.Index',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
     path: routes.SCHEDULES,
     name: 'Agendamentos',
     view: 'schedules.Index',

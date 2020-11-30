@@ -27,6 +27,10 @@
                   toCurrency(material.material.price)
                 }}</span>
               </v-col>
+              <v-col cols="12" class="text-left pt-0">
+                <span class="overline">Total:</span>
+                <span class="ml-2 caption">{{ calcTotal(material) }}</span>
+              </v-col>
             </v-row>
           </v-card-text>
           <v-card-actions v-if="showActions">
@@ -174,6 +178,9 @@ export default {
     },
     isOpen(open) {
       if (!open) this.isEdit = false;
+    },
+    calcTotal(material) {
+      return this.toCurrency(material.qty * material.material.price);
     },
   },
 };

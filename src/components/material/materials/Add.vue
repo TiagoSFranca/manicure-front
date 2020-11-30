@@ -109,6 +109,7 @@ export default {
       this.$refs.form.reset();
       this.$emit("fechar");
       this.visible = false;
+      this.object = {};
     },
     show() {
       this.visible = true;

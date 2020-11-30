@@ -110,7 +110,6 @@
           </v-form>
         </v-container>
       </v-card-text>
-      <v-divider v-if="showActions"></v-divider>
       <v-card-actions v-if="showActions">
         <v-spacer></v-spacer>
         <v-btn
