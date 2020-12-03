@@ -1,8 +1,6 @@
 <template>
   <validation-observer ref="form" v-slot="{ handleSubmit }">
-    <v-card
-      :loading="isLoading || loading[LOADING_IDENTIFIER]"
-    >
+    <v-card :loading="isLoading || loading[LOADING_IDENTIFIER]">
       <v-card-title>
         <span class="overline">DADOS GERAIS</span>
       </v-card-title>
@@ -110,7 +108,6 @@
           </v-form>
         </v-container>
       </v-card-text>
-      <v-divider v-if="showActions"></v-divider>
       <v-card-actions v-if="showActions">
         <v-spacer></v-spacer>
         <v-btn

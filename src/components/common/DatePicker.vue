@@ -15,7 +15,7 @@
         persistent-hint
         prepend-icon="mdi-calendar"
         v-bind="attrs"
-        @blur="dateValue = parseDate(dateFormatted)"
+        @blur="blur"
         v-on="on"
         :disabled="!readonly && disabled"
         :readonly="readonly"
@@ -27,6 +27,9 @@
       no-title
       @input="menu = false"
       @click:date="changeDate"
+      @change="change"
+      @blur="blur"
+      :min="min"
     />
   </v-menu>
 </template>
@@ -36,7 +39,7 @@ import { formatDate } from "@/utils/methods";
 import moment from "moment";
 
 export default {
-  props: ["disabled", "label", "date", "readonly", "errors"],
+  props: ["disabled", "label", "date", "readonly", "errors", "min"],
   data() {
     return {
       menu: false,
@@ -50,16 +53,20 @@ export default {
     },
   },
   watch: {
-    dateValue() {
+    dateValue(curr, old) {
       this.dateFormatted = this.formatDate(this.dateValue);
+      // if (this.date && !this.curr) this.changeDate(null);
     },
-    date(){
-      this.dateValue = this.date
-    }
+    date() {
+      this.dateValue = this.date;
+    },
   },
   methods: {
     formatDate(date) {
-      if (!date) return null;
+      if (!date) {
+        this.changeDate();
+        return null;
+      }
       return formatDate(date);
     },
     parseDate(date) {
@@ -69,6 +76,13 @@ export default {
     changeDate(date) {
       let newDate = moment(date, "YYYY-MM-DD").toJSON();
       this.$emit("changeDate", newDate);
+    },
+    blur() {
+      this.dateValue = this.parseDate(this.dateFormatted);
+      this.$emit("blur");
+    },
+    change() {
+      this.$emit("change");
     },
   },
   mounted() {

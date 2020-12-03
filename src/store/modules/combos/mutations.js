@@ -12,4 +12,5 @@ export default {
   [constants.MUTATION_SET_PRODUCTS]: set('products'),
   [constants.MUTATION_SET_SEARCH_PRODUCTS]: set('searchProducts'),
   [constants.MUTATION_SET_PAGE]: set('page'),
+  [constants.MUTATION_CLEAR_COMBOS]: set('combos', []),
 }

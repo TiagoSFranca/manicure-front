@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="loading" :disabled="disabled">
     <v-card-title class="d-flex align-start">
-      <span class="overline">produtos</span>
+      <span class="overline">combos</span>
       <v-spacer></v-spacer>
       <v-btn
         color="accent"
@@ -16,8 +16,8 @@
       </v-btn>
     </v-card-title>
 
-    <div v-if="products.length > 0">
-      <span class="overline">Soma dos produtos:</span>
+    <div v-if="combos.length > 0">
+      <span class="overline">Soma dos combos:</span>
 
       <span class="overline ml-2">{{ toCurrency(calcTotal()) }}</span>
     </div>
@@ -26,25 +26,25 @@
       <v-container>
         <v-row>
           <v-col
-            v-for="product in products"
-            :key="product.product.id"
+            v-for="combo in combos"
+            :key="combo.combo.id"
             cols="12"
             sm="12"
             md="12"
             lg="12"
           >
-            <material-schedules-add-product-item
-              v-bind:product="product"
-              @delete="removeProduct"
+            <material-schedules-add-combo-item
+              v-bind:combo="combo"
+              @delete="removeCombo"
             />
           </v-col>
         </v-row>
       </v-container>
     </v-card-text>
-    <material-schedules-add-product-add
+    <material-schedules-add-combo-add
       :showAdd="showAdd"
       @fechar="showAdd = false"
-      @addProduct="addProduct"
+      @addCombo="addCombo"
     />
   </v-card>
 </template>
@@ -57,22 +57,22 @@ import { ToCurrency } from "@/utils/methods";
 import toastr from "@/utils/toastr";
 
 export default {
+  props: ["loading", "disabled"],
   data() {
     return {
       showAdd: false,
-      products: [],
+      combos: [],
     };
   },
-  props: ["loading", "disabled"],
   methods: {
-    getCurrPrice(product) {
-      return product.onSale ? product.saleValue : product.originalValue;
+    getCurrPrice(combo) {
+      return combo.onSale ? combo.saleValue : combo.originalValue;
     },
     calcTotal() {
-      if (this.products.length == 0) return 0;
+      if (this.combos.length == 0) return 0;
 
-      let p = this.products.map((cur) => {
-        return cur.qty * this.getCurrPrice(cur.product);
+      let p = this.combos.map((cur) => {
+        return cur.qty * this.getCurrPrice(cur.combo);
       });
 
       return p.reduce((acc, cur) => acc + cur);
@@ -80,22 +80,21 @@ export default {
     toCurrency(value) {
       return ToCurrency(value, true, false);
     },
-    addProduct(object) {
+    addCombo(object) {
       let keep =
-        this.products.filter((e) => e.product.id == object.product.id).length >
-        0;
+        this.combos.filter((e) => e.combo.id == object.combo.id).length > 0;
       this.showAdd = keep;
-      if (!keep) this.products.push(object);
-      else toastr.error("Este produto já foi adicionado");
+      if (!keep) this.combos.push(object);
+      else toastr.error("Este combo já foi adicionado");
     },
-    removeProduct(id) {
-      let items = this.products.filter((e) => e.product.id != id);
-      this.products = items;
+    removeCombo(id) {
+      let items = this.combos.filter((e) => e.combo.id != id);
+      this.combos = items;
     },
   },
   watch: {
-    products() {
-      this.$emit("changeProducts", this.products);
+    combos() {
+      this.$emit("changeCombos", this.combos);
     },
   },
 };

@@ -6,13 +6,15 @@
     :items="items"
     :loading="loading"
     :search-input.sync="search"
-    hide-no-data
     hide-selected
+    :no-data-text="loading ? 'Procurando...' : 'Nenhum resultado encontrado'"
     :item-text="optionText"
     :item-value="optionValue"
     :label="label"
     :placeholder="placeholder"
     return-object
+    @blur="blur"
+    @change="change"
   >
     <template v-slot:append-outer>
       <slot name="append-outer" />
@@ -49,6 +51,12 @@ export default {
   methods: {
     clear() {
       this.model = "";
+    },
+    blur() {
+      this.$emit("blur");
+    },
+    change() {
+      this.$emit("change");
     },
   },
 };

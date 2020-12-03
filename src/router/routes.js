@@ -14,6 +14,8 @@ export const MATERIALS = "/materials"
 export const AGENDA = "/agenda"
 
 export const CLIENTS = "/clients"
+export const CLIENTS_EDIT = `${CLIENTS}/edit/:id`;
+export const CLIENTS_DETAILS = `${CLIENTS}/details/:id`;
 
 export const SCHEDULES = "/schedules"
 export const SCHEDULES_ADD = "/schedules/add"
@@ -35,6 +37,8 @@ export default {
     AGENDA,
 
     CLIENTS,
+    CLIENTS_EDIT,
+    CLIENTS_DETAILS,
 
     SCHEDULES,
     SCHEDULES_ADD,

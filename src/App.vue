@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "app"
+  name: "app",
 };
 </script>
 
@@ -24,5 +24,8 @@ export default {
 }
 .v-card__text {
   overflow-y: auto;
+}
+.bgcolor-unset {
+  background-color: unset !important;
 }
 </style>

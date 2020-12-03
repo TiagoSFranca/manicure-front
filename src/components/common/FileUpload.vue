@@ -49,7 +49,6 @@ export default {
   watch: {
     clear(value) {
       this.currentFile = null;
-      console.log("limpar", value);
     },
   },
 };

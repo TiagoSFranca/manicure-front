@@ -4,7 +4,7 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Produto ao Combo</span>
+            <span class="headline">Adicionar Combo ao Agendamento</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -13,16 +13,17 @@
                   <v-col cols="9">
                     <validation-provider rules="required" v-slot="{ errors }">
                       <common-autocomplete-remote
-                        :loading="loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]"
-                        :items="products"
+                        :loading="loading[LOADING_IDENTIFIER_SEARCH_COMBOS]"
+                        :items="combos"
                         :errors="errors"
-                        label="Produto"
+                        label="Combo"
                         :placeholder="`Digite ao menos ${minLength} chars para pesquisar`"
                         option-text="name"
                         option-value="id"
-                        @search="searchProducts"
-                        @select="selectProduct"
-                        v-model="object.idProduct"
+                        @search="searchCombos"
+                        @select="selectCombo"
+                        v-model="object.idCombo"
+                        ref="autocomplete"
                       />
                     </validation-provider>
                   </v-col>
@@ -49,25 +50,19 @@
               @click="hide()"
               icon
               fab
-              :loading="
-                loading[LOADING_IDENTIFIER] ||
-                loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]
-              "
+              :loading="loading[LOADING_IDENTIFIER_SEARCH_COMBOS]"
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-btn
-              color="success"
+              color="accent"
               submit
               icon
               fab
               @click="handleSubmit(save)"
-              :loading="
-                loading[LOADING_IDENTIFIER] ||
-                loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]
-              "
+              :loading="loading[LOADING_IDENTIFIER_SEARCH_COMBOS]"
             >
-              <v-icon>mdi-check</v-icon>
+              <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -78,11 +73,10 @@
 
 <script>
 import combosActions from "@/actions/combosActions";
-import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
-import productsConstants from "@/store/modules/products/constants";
+import combosConstants from "@/store/modules/combos/constants";
 
 export default {
   props: ["showAdd"],
@@ -92,52 +86,54 @@ export default {
       visible: false,
       source: "",
       object: {
-        idProduct: "",
-        qty: "",
+        idCombo: "",
+        qty: 1,
       },
-      LOADING_IDENTIFIER: "addComboProduct",
-      LOADING_IDENTIFIER_SEARCH_PRODUCTS: "searchProductsAsync",
+      defObject: {
+        idCombo: "",
+        qty: 1,
+      },
+      comboSelected: {},
+      LOADING_IDENTIFIER_SEARCH_COMBOS: "searchCombosAsync",
     };
   },
   methods: {
-    ...mapMutations(productsConstants.MODULE_NAME, [
-      productsConstants.MUTATION_CLEAR_PRODUCTS,
+    ...mapMutations(combosConstants.MODULE_NAME, [
+      combosConstants.MUTATION_CLEAR_COMBOS,
     ]),
     hide() {
       this.$refs.form.reset();
       this.$emit("fechar");
       this.visible = false;
-      this.object = { active: true };
+      this.object = this.defObject;
+      this.$refs.autocomplete.clear();
     },
     show() {
       this.visible = true;
     },
     save() {
-      let id = this.$route.params.id;
-      combosActions
-        .addProduct(id, this.object, this.LOADING_IDENTIFIER)
-        .then((res) => {
-          if (res) {
-            this.hide();
-          }
-        });
+      this.$emit("addCombo", {
+        ...this.object,
+        combo: this.comboSelected,
+      });
     },
-    searchProducts(term) {
+    searchCombos(term) {
       if ((term || "").length < this.minLength) {
-        this[productsConstants.MUTATION_CLEAR_PRODUCTS]();
+        this[combosConstants.MUTATION_CLEAR_COMBOS]();
         return;
       }
 
-      productsActions.search(
+      combosActions.search(
         this.source,
         { name: term },
         null,
         null,
-        this.LOADING_IDENTIFIER_SEARCH_PRODUCTS
+        this.LOADING_IDENTIFIER_SEARCH_COMBOS
       );
     },
-    selectProduct(val) {
-      this.object.idProduct = val ? val.id : null;
+    selectCombo(val) {
+      this.object.idCombo = val ? val.id : null;
+      this.comboSelected = val;
     },
   },
   mounted() {
@@ -145,7 +141,7 @@ export default {
   },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-    ...mapState(productsConstants.MODULE_NAME, ["products"]),
+    ...mapState(combosConstants.MODULE_NAME, ["combos"]),
   },
   watch: {
     showAdd() {

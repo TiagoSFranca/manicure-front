@@ -43,7 +43,6 @@
               </v-form>
             </v-container>
           </v-card-text>
-          <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
@@ -51,10 +50,7 @@
               @click="hide()"
               icon
               fab
-              :loading="
-                loading[LOADING_IDENTIFIER] ||
-                loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]
-              "
+              :loading="loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]"
             >
               <v-icon>mdi-close</v-icon>
             </v-btn>
@@ -64,10 +60,7 @@
               icon
               fab
               @click="handleSubmit(save)"
-              :loading="
-                loading[LOADING_IDENTIFIER] ||
-                loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]
-              "
+              :loading="loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]"
             >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
@@ -94,14 +87,13 @@ export default {
       source: "",
       object: {
         idProduct: "",
-        qty: "1",
+        qty: 1,
       },
       defObject: {
         idProduct: "",
-        qty: "1",
+        qty: 1,
       },
       productSelected: {},
-      LOADING_IDENTIFIER: "addProductSchedule",
       LOADING_IDENTIFIER_SEARCH_PRODUCTS: "searchProductsAsync",
     };
   },
