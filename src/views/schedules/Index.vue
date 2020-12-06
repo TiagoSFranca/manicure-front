@@ -50,11 +50,11 @@
               :loading="loading[LOADING_IDENTIFIER] === true"
               :multi-sort="false"
             >
-              <template v-slot:item.originalValue="{ item }">
-                <span>{{ toCurrency(item.originalValue) }}</span>
+              <template v-slot:item.price="{ item }">
+                <span>{{ toCurrency(item.price) }}</span>
               </template>
-              <template v-slot:item.saleValue="{ item }">
-                <span>{{ toCurrency(item.saleValue) }}</span>
+              <template v-slot:item.promotionalPrice="{ item }">
+                <span>{{ toCurrency(item.promotionalPrice) }}</span>
               </template>
               <template v-slot:item.endSale="{ item }">
                 <span>{{ item.endSale && formatDate(item.endSale) }}</span>
@@ -124,8 +124,8 @@ export default {
       source: "",
       headers: [
         { text: "Nome", align: "start", value: "name" },
-        { text: "Vl orignal", value: "originalValue", align: "center" },
-        { text: "Vl Promocional", value: "saleValue", align: "center" },
+        { text: "Vl orignal", value: "price", align: "center" },
+        { text: "Vl Promocional", value: "promotionalPrice", align: "center" },
         { text: "Em promoção", value: "onSale", align: "center" },
         { text: "Fim da promoção", value: "endSale", align: "center" },
         { text: "Ativo", value: "active", align: "center" },

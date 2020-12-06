@@ -125,7 +125,7 @@ export default {
 
       productsActions.search(
         this.source,
-        { name: term },
+        { name: term, active: true },
         null,
         null,
         this.LOADING_IDENTIFIER_SEARCH_PRODUCTS

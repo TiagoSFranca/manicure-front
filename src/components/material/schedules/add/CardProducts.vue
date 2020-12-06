@@ -66,7 +66,7 @@ export default {
   props: ["loading", "disabled"],
   methods: {
     getCurrPrice(product) {
-      return product.onSale ? product.saleValue : product.originalValue;
+      return product.onSale ? product.promotionalPrice : product.price;
     },
     calcTotal() {
       if (this.products.length == 0) return 0;

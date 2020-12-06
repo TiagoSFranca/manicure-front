@@ -32,8 +32,8 @@
               <span class="ml-2 caption">{{
                 toCurrency(
                   combo.combo.onSale
-                    ? combo.combo.saleValue
-                    : combo.combo.originalValue
+                    ? combo.combo.promotionalPrice
+                    : combo.combo.price
                 )
               }}</span>
             </v-col>

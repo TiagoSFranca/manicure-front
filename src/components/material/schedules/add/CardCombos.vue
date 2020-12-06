@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     getCurrPrice(combo) {
-      return combo.onSale ? combo.saleValue : combo.originalValue;
+      return combo.onSale ? combo.promotionalPrice : combo.price;
     },
     calcTotal() {
       if (this.combos.length == 0) return 0;

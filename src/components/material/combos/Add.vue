@@ -33,7 +33,7 @@
                     >
                       <v-currency-field
                         label="Valor original"
-                        v-model="object.originalValue"
+                        v-model="object.price"
                         :error-messages="errors"
                       />
                     </validation-provider>
@@ -43,13 +43,13 @@
                       :rules="`${
                         object.onSale ? 'required|' : ''
                       }greater_than:0|lower_than_other:${
-                        object.originalValue
+                        object.price
                       },'Valor Original'`"
                       v-slot="{ errors }"
                     >
                       <v-currency-field
                         label="Valor promocional"
-                        v-model="object.saleValue"
+                        v-model="object.promotionalPrice"
                         :error-messages="errors"
                       />
                     </validation-provider>
@@ -164,8 +164,8 @@ export default {
       source: "",
       object: {
         name: "",
-        originalValue: "",
-        saleValue: null,
+        price: "",
+        promotionalPrice: null,
         onSale: false,
         active: true,
         endSale: null,

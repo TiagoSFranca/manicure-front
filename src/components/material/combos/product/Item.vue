@@ -33,8 +33,8 @@
                 <span class="ml-2 caption">{{
                   toCurrency(
                     product.product.onSale
-                      ? product.product.saleValue
-                      : product.product.originalValue
+                      ? product.product.promotionalPrice
+                      : product.product.price
                   )
                 }}</span>
               </v-col>

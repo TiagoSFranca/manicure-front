@@ -34,7 +34,7 @@
                 >
                   <v-currency-field
                     label="Valor original"
-                    v-model="item.originalValue"
+                    v-model="item.price"
                     :error-messages="errors"
                     :readonly="!isEdit"
                   />
@@ -45,13 +45,13 @@
                   :rules="`${
                     item.onSale ? 'required|' : ''
                   }greater_than:0|lower_than_other:${
-                    item.originalValue
+                    item.price
                   },'Valor Original'`"
                   v-slot="{ errors }"
                 >
                   <v-currency-field
                     label="Valor promocional"
-                    v-model="item.saleValue"
+                    v-model="item.promotionalPrice"
                     :error-messages="errors"
                     :readonly="!isEdit"
                   />

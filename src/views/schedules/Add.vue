@@ -172,8 +172,16 @@ export default {
       }
     },
     save() {
-      console.log("REQ", this.requestObject);
       this.showError = false;
+      agendaActions
+        .add(this.requestObject, this.LOADING_IDENTIFIER)
+        .then((res) => {
+          if (res.success) {
+            console.log("SALVOU");
+          } else {
+            console.log("NÂO SALVOU");
+          }
+        });
     },
     comeBack() {
       this.$router.push({ path: SCHEDULES });
@@ -192,7 +200,7 @@ export default {
       return ToCurrency(value, false, false);
     },
     getCurrPriceProduct(product) {
-      return product.onSale ? product.saleValue : product.originalValue;
+      return product.onSale ? product.promotionalPrice : product.price;
     },
     calcTotalProducts() {
       if (this.products.length == 0) return 0;
@@ -204,7 +212,7 @@ export default {
       return p.reduce((acc, cur) => acc + cur);
     },
     getCurrPriceCombo(combo) {
-      return combo.onSale ? combo.saleValue : combo.originalValue;
+      return combo.onSale ? combo.promotionalPrice : combo.price;
     },
     calcTotalCombos() {
       if (this.combos.length == 0) return 0;

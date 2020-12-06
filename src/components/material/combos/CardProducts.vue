@@ -61,7 +61,7 @@ export default {
   props: ["products", "isLoading", "isEdit", "height"],
   methods: {
     getCurrPrice(product) {
-      return product.onSale ? product.saleValue : product.originalValue;
+      return product.onSale ? product.promotionalPrice : product.price;
     },
     calcTotal() {
       let p = this.products.map((cur) => {

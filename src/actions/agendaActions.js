@@ -16,7 +16,23 @@ export const checkStock = (object, LOADING_IDENTIFIER = '') => {
         })
 }
 
+export const add = (object, LOADING_IDENTIFIER = '') => {
+    store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+    return agendaService
+        .add(object)
+        .then((response) => {
+            // store.commit(mutationTypes.PRODUCTS_SET_SEARCH, true)
+            toastr.success(messages.sucesso.cadastro)
+            return { success: true, id: response.data.id };
+        }).catch(() => {
+            return { success: false };
+        }).finally(() => {
+            store.dispatch(endLoading(LOADING_IDENTIFIER));
+        })
+}
 
 export default {
-    checkStock
+    checkStock,
+    add
 }
