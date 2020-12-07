@@ -4,7 +4,7 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Combos</span>
+            <span class="title white--text">Agendamentos</span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -29,7 +29,7 @@
               outlined
               rounded
               small
-              @click="showAdd = true"
+              :to="SCHEDULES_ADD"
             >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
@@ -39,7 +39,7 @@
           <v-col cols="12">
             <v-data-table
               :headers="headers"
-              :items="combos"
+              :items="agenda"
               class="elevation-1"
               loading-text="Loading... Please wait"
               hide-default-footer
@@ -50,25 +50,31 @@
               :loading="loading[LOADING_IDENTIFIER] === true"
               :multi-sort="false"
             >
-              <template v-slot:item.price="{ item }">
-                <span>{{ toCurrency(item.price) }}</span>
+              <template v-slot:item.status="{ item }">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :color="getColor(item)"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      fab
+                      x-small
+                    >
+                    </v-btn>
+                  </template>
+                  <span>{{ getText(item) }}</span>
+                </v-tooltip>
               </template>
-              <template v-slot:item.promotionalPrice="{ item }">
-                <span>{{ toCurrency(item.promotionalPrice) }}</span>
+              <template v-slot:item.id="{ item }">
+                <span>{{ "#" + item.id }}</span>
               </template>
-              <template v-slot:item.endSale="{ item }">
-                <span>{{ item.endSale && formatDate(item.endSale) }}</span>
+              <template v-slot:item.date="{ item }">
+                <span>{{ formatDate(item.date) }}</span>
               </template>
-              <template v-slot:item.onSale="{ item }">
+              <template v-slot:item.inLoco="{ item }">
                 <v-simple-checkbox
-                  v-model="item.onSale"
-                  disabled
-                  color="primary"
-                ></v-simple-checkbox>
-              </template>
-              <template v-slot:item.active="{ item }">
-                <v-simple-checkbox
-                  v-model="item.active"
+                  v-model="item.inLoco"
                   disabled
                   color="primary"
                 ></v-simple-checkbox>
@@ -87,6 +93,12 @@
                   >mdi-pencil-outline</v-icon
                 >
                 <v-icon
+                  @click="seeItem(item)"
+                  color="success"
+                  :disabled="loading[LOADING_IDENTIFIER]"
+                  >mdi-check</v-icon
+                >
+                <v-icon
                   @click="deleteItem(item)"
                   color="error"
                   :disabled="loading[LOADING_IDENTIFIER]"
@@ -97,8 +109,7 @@
           </v-col>
         </v-row>
         <core-pagination :page="page" @onPaging="onPaging" />
-        <material-combos-add :showAdd="showAdd" @fechar="showAdd = false" />
-        <material-combos-filter
+        <material-agenda-filter
           @onFilter="onFilter"
           :loading="loading[LOADING_IDENTIFIER]"
           :filtered="filter"
@@ -109,13 +120,14 @@
 </template>
 
 <script>
-import combosActions from "@/actions/combosActions";
+import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
-import combosConstants from "@/store/modules/combos/constants";
-import { COMBOS_EDIT, COMBOS_DETAILS } from "@/router/routes";
+import agendaConstants from "@/store/modules/agenda/constants";
+import { AGENDA_EDIT, AGENDA_DETAILS, SCHEDULES_ADD } from "@/router/routes";
+import moment from "moment";
 
 export default {
   data() {
@@ -123,31 +135,32 @@ export default {
       showAdd: false,
       source: "",
       headers: [
-        { text: "Nome", align: "start", value: "name" },
-        { text: "Vl orignal", value: "price", align: "center" },
-        { text: "Vl Promocional", value: "promotionalPrice", align: "center" },
-        { text: "Em promoção", value: "onSale", align: "center" },
-        { text: "Fim da promoção", value: "endSale", align: "center" },
-        { text: "Ativo", value: "active", align: "center" },
-        { text: "", value: "actions", sortable: false },
+        { text: "", value: "status", sortable: false, align: "center" },
+        { text: "Identificador", align: "start", value: "id" },
+        { text: "Cliente", value: "client.name", align: "center" },
+        { text: "Situação", value: "scheduleStatus.name", align: "center" },
+        { text: "Data a realizar", value: "date", align: "center" },
+        { text: "In loco", value: "inLoco", align: "center" },
+        { text: "", value: "actions", sortable: false, align: "end" },
       ],
       filter: {},
       pagination: {},
       sort: {},
-      LOADING_IDENTIFIER: "searchCombos",
-      formatDate: formatDate
+      LOADING_IDENTIFIER: "searchAgenda",
+      formatDate: formatDate,
+      SCHEDULES_ADD: SCHEDULES_ADD,
     };
   },
   methods: {
-    ...mapMutations(combosConstants.MODULE_NAME, [
-      combosConstants.MUTATION_SET_SHOW_FILTER,
+    ...mapMutations(agendaConstants.MODULE_NAME, [
+      agendaConstants.MUTATION_SET_SHOW_FILTER,
     ]),
     onShowFilter() {
-      this[combosConstants.MUTATION_SET_SHOW_FILTER](true);
+      this[agendaConstants.MUTATION_SET_SHOW_FILTER](true);
     },
-    searchCombos() {
+    searchAgenda() {
       this.source = axiosSourceToken.obterToken();
-      combosActions.search(
+      agendaActions.search(
         this.source,
         this.filter,
         this.pagination,
@@ -169,35 +182,60 @@ export default {
         prevSort.orderBy !== this.sort.orderBy ||
         prevSort.asc !== this.sort.asc
       ) {
-        this.searchCombos();
+        this.searchAgenda();
       }
 
       return items;
     },
     onPaging(pagination) {
       this.pagination = pagination;
-      this.searchCombos();
+      this.searchAgenda();
     },
     onFilter(filter) {
       this.filter = filter;
-      this.searchCombos();
+      this.searchAgenda();
     },
     toCurrency(value) {
       return ToCurrency(value, true, false);
     },
     seeItem(item, isEdit = true) {
       if (isEdit)
-        this.$router.push({ path: COMBOS_EDIT.replace(":id", item.id) });
-      else
-        this.$router.push({ path: COMBOS_DETAILS.replace(":id", item.id) });
+        this.$router.push({ path: AGENDA_EDIT.replace(":id", item.id) });
+      else this.$router.push({ path: AGENDA_DETAILS.replace(":id", item.id) });
+    },
+    getColor(item) {
+      if (
+        (item.idScheduleStatus == 1 || item.idScheduleStatus == 4) &&
+        !moment(item.date).isAfter(moment(), "day")
+      )
+        return "error";
+      if (item.idScheduleStatus == 1 || item.idScheduleStatus == 4)
+        return "blue";
+      else if (item.idScheduleStatus == 2) return "warning";
+      else if (item.idScheduleStatus == 3) return "grey";
+      else if (item.idScheduleStatus == 5) return "success";
+      return "blue";
+    },
+    getText(item) {
+      console.log();
+      if (
+        (item.idScheduleStatus == 1 || item.idScheduleStatus == 4) &&
+        !moment(item.date).isAfter(moment(), "day")
+      )
+        return "Atrasado";
+      if (item.idScheduleStatus == 1 || item.idScheduleStatus == 4)
+        return "Nenhum problema";
+      else if (item.idScheduleStatus == 2) return "Necessário itens no estoque";
+      else if (item.idScheduleStatus == 3) return "Cancelado";
+      else if (item.idScheduleStatus == 5) return "Realizado";
     },
   },
   created() {
-    this.searchCombos();
+    this.searchAgenda();
   },
   computed: {
-    ...mapState(combosConstants.MODULE_NAME, [
-      "combos",
+    ...mapState(agendaConstants.MODULE_NAME, [
+      "agenda",
       "search",
       "showFilter",
       "page",
@@ -210,7 +248,7 @@ export default {
   },
   watch: {
     search() {
-      this.searchCombos();
+      this.searchAgenda();
     },
   },
 };

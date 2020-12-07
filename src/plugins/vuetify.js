@@ -13,7 +13,7 @@ export default new Vuetify({
   theme: {
     dark: true,
     themes: {
-      dark:  {
+      dark: {
         primary: '#8E24AA',
         primaryText: 'red',
         // secondary: '#673ab7',

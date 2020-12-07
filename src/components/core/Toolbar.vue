@@ -25,8 +25,8 @@ export default {
     return {};
   },
   computed: {
-    ...mapState("auth", ["isAuth"])
+    ...mapState("auth", ["isAuth"]),
   },
-  methods: {}
+  methods: {},
 };
 </script>

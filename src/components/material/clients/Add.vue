@@ -76,10 +76,7 @@
                 </v-row>
                 <v-row>
                   <v-col cols="4">
-                    <validation-provider
-                      rules="min:14"
-                      v-slot="{ errors }"
-                    >
+                    <validation-provider rules="min:14" v-slot="{ errors }">
                       <v-text-field
                         label="Telefone"
                         v-model="object.phone"
@@ -89,10 +86,7 @@
                     </validation-provider>
                   </v-col>
                   <v-col cols="4">
-                    <validation-provider
-                      rules="min:14"
-                      v-slot="{ errors }"
-                    >
+                    <validation-provider rules="min:14" v-slot="{ errors }">
                       <v-text-field
                         label="Celular"
                         v-model="object.cellPhone"

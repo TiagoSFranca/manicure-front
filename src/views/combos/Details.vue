@@ -222,11 +222,7 @@ export default {
     getImages() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      combosActions.getImages(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_IMAGES
-      );
+      combosActions.getImages(id, this.source, this.LOADING_IDENTIFIER_IMAGES);
     },
     getProducts() {
       let id = this.$route.params.id;

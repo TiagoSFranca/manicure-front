@@ -135,7 +135,7 @@ export default {
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchProducts",
-      formatDate: formatDate
+      formatDate: formatDate,
     };
   },
   methods: {

@@ -5,51 +5,51 @@ import { ToDecimal } from '@/utils/methods'
 
 // Add a rule.
 extend('greater_than', {
-    params: ["compare"],
-    validate: (value, { compare }) => {
-        let compareNumb = ToDecimal(compare)
-        return (value ? value : 0) > compareNumb
-    },
-    message: 'Valor deve ser maior que {compare}'
+  params: ["compare"],
+  validate: (value, { compare }) => {
+    let compareNumb = ToDecimal(compare)
+    return (value ? value : 0) > compareNumb
+  },
+  message: 'Valor deve ser maior que {compare}'
 });
 extend('lower_than_other', {
-    params: ["compare", "other"],
-    validate: (value, { compare }) => {
-        let compareNumb = parseFloat(compare)
-        return (value ? value : 0) < compareNumb
-    },
-    message: 'Valor deve ser menor que {other}'
+  params: ["compare", "other"],
+  validate: (value, { compare }) => {
+    let compareNumb = parseFloat(compare)
+    return (value ? value : 0) < compareNumb
+  },
+  message: 'Valor deve ser menor que {other}'
 });
 
 // Override the default message.
 extend('required', {
-    ...required,
-    message: 'Campo obrigatório'
+  ...required,
+  message: 'Campo obrigatório'
 });
 
 extend('email', {
-    ...email,
-    message: 'Formato de e-mail inválido'
+  ...email,
+  message: 'Formato de e-mail inválido'
 });
 
 extend('max', {
-    ...max,
-    message: "Máximo de {length} characteres"
+  ...max,
+  message: "Máximo de {length} characteres"
 });
 
 extend('max_value', {
-    ...max_value,
-    message: "Máximo de {max} characteres"
+  ...max_value,
+  message: "Máximo de {max} characteres"
 });
 
 extend('length', {
-    ...length,
-    message: "Necessário {length} characteres"
+  ...length,
+  message: "Necessário {length} characteres"
 });
 
 extend('min', {
-    ...min,
-    message: "Mínimo de {length} characteres"
+  ...min,
+  message: "Mínimo de {length} characteres"
 });
 // Register it globally
 Vue.component('ValidationProvider', ValidationProvider);

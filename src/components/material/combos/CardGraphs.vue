@@ -27,6 +27,6 @@ export default {
         datasets: this.datasets,
       },
     };
-  }
+  },
 };
 </script>

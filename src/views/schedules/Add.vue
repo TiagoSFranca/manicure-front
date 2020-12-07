@@ -92,15 +92,15 @@
             />
           </v-col>
         </v-row>
+        <material-schedules-add-verify-stock-error
+          :showError="showError"
+          :stockErrors="stockErrors"
+          @fechar="showError = false"
+          @confirm="save"
+          :disabled="loading[LOADING_IDENTIFIER]"
+          :isLoading="loading[LOADING_IDENTIFIER]"
+        />
       </v-flex>
-      <material-schedules-add-verify-stock-error
-        :showError="showError"
-        :stockErrors="stockErrors"
-        @fechar="showError = false"
-        @confirm="save"
-        :disabled="loading[LOADING_IDENTIFIER]"
-        :isLoading="loading[LOADING_IDENTIFIER]"
-      />
     </v-layout>
   </v-container>
 </template>

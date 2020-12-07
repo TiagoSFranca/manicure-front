@@ -1,8 +1,8 @@
 import constants from './constants';
 
 export default {
-  [constants.ACTION_SET_COMBOS]({ commit }, data) {
+  [constants.ACTION_SET_AGENDA]({ commit }, data) {
     commit(constants.MUTATION_SET_PAGE, data.page)
-    commit(constants.MUTATION_SET_COMBOS, data.content)
+    commit(constants.MUTATION_SET_AGENDA, data.content)
   },
 }

@@ -13,11 +13,11 @@
 
 <script>
 import { mapState } from "vuex";
-import appConstants from '@/store/modules/app/constants'
+import appConstants from "@/store/modules/app/constants";
 
 export default {
   computed: {
-    ...mapState(appConstants.MODULE_NAME, ["progressBar"])
-  }
+    ...mapState(appConstants.MODULE_NAME, ["progressBar"]),
+  },
 };
 </script>

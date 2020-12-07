@@ -6,10 +6,15 @@
           <v-toolbar dark flat color="blue lighten-1">
             <v-toolbar-title class="white--text">Cadastre-se</v-toolbar-title>
           </v-toolbar>
-          <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submit">
-            <v-card-title
-              class="fill-height overline blue-grey--text"
-            >Preencha os campos abaixo para realizar o cadastro.</v-card-title>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+            @submit.prevent="submit"
+          >
+            <v-card-title class="fill-height overline blue-grey--text"
+              >Preencha os campos abaixo para realizar o cadastro.</v-card-title
+            >
             <v-card-text>
               <v-row>
                 <v-col cols="12">
@@ -71,7 +76,9 @@
                     name="confirm_password"
                     label="Confirmar Senha"
                     :type="showConfirmacao ? 'text' : 'password'"
-                    :append-icon="showConfirmacao ? 'visibility' : 'visibility_off'"
+                    :append-icon="
+                      showConfirmacao ? 'visibility' : 'visibility_off'
+                    "
                     @click:append="showConfirmacao = !showConfirmacao"
                   />
                 </v-col>
@@ -80,7 +87,9 @@
             <v-card-actions>
               <v-btn color="teal lighten-1" text dark to="/login">Entrar</v-btn>
               <v-spacer />
-              <v-btn :disabled="!valid" color="primary" type="submit">Cadastrar</v-btn>
+              <v-btn :disabled="!valid" color="primary" type="submit"
+                >Cadastrar</v-btn
+              >
             </v-card-actions>
           </v-form>
         </v-card>
@@ -122,12 +131,12 @@ export default {
           this.login
         );
       }
-    }
+    },
   },
   mounted() {
     this.confirm_passwordRules.push(
-      v => (!!v && v) === this.password || "Confirmação de senha diferente"
+      (v) => (!!v && v) === this.password || "Confirmação de senha diferente"
     );
-  }
+  },
 };
 </script>

@@ -6,10 +6,15 @@
           <v-toolbar dark flat color="blue lighten-1">
             <v-toolbar-title class="white--text">Entrar</v-toolbar-title>
           </v-toolbar>
-          <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submit">
-            <v-card-title
-              class="fill-height overline blue-grey--text"
-            >Insira seus dados para autenticar.</v-card-title>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+            @submit.prevent="submit"
+          >
+            <v-card-title class="fill-height overline blue-grey--text"
+              >Insira seus dados para autenticar.</v-card-title
+            >
             <v-card-text>
               <v-text-field
                 v-model="login"
@@ -34,9 +39,13 @@
               />
             </v-card-text>
             <v-card-actions>
-              <v-btn color="teal lighten-1" text dark to="/register">Cadastre-se</v-btn>
+              <v-btn color="teal lighten-1" text dark to="/register"
+                >Cadastre-se</v-btn
+              >
               <v-spacer />
-              <v-btn :disabled="!valid" color="primary" type="submit">Entrar</v-btn>
+              <v-btn :disabled="!valid" color="primary" type="submit"
+                >Entrar</v-btn
+              >
             </v-card-actions>
           </v-form>
         </v-card>
@@ -63,7 +72,7 @@ export default {
       if (this.$refs.form.validate()) {
         authService.auth(this.login, this.password);
       }
-    }
-  }
+    },
+  },
 };
 </script>

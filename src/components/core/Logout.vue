@@ -8,7 +8,9 @@
         <v-card-text>Tem certeza que deseja sair?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" text outlined @click="closeModal">Cancelar</v-btn>
+          <v-btn color="error" text outlined @click="closeModal"
+            >Cancelar</v-btn
+          >
           <v-btn color="primary" text outlined @click="logout">Sair</v-btn>
         </v-card-actions>
       </v-card>
@@ -21,7 +23,7 @@ import authService from "@/services/auth";
 import { mapState, mapMutations } from "vuex";
 export default {
   computed: {
-    ...mapState("auth", ["showLogout"])
+    ...mapState("auth", ["showLogout"]),
   },
   methods: {
     ...mapMutations("auth", ["setShowLogout"]),
@@ -31,7 +33,7 @@ export default {
     },
     closeModal() {
       this.setShowLogout(false);
-    }
-  }
+    },
+  },
 };
 </script>

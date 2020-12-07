@@ -197,8 +197,8 @@ export default {
       nativeEvent.stopPropagation();
     },
     updateRange({ start, end }) {
-      console.log("START", start)
-      console.log("END", end)
+      console.log("START", start);
+      console.log("END", end);
       const events = [];
 
       const min = new Date(`${start.date}T00:00:00`);

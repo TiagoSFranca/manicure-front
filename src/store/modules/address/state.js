@@ -1,4 +1,4 @@
 export default {
-    cities: [],
-    countries: [],
+  cities: [],
+  countries: [],
 }

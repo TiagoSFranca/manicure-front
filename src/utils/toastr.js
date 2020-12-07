@@ -3,12 +3,12 @@ import mutationTypes from '@/store/mutationTypes'
 
 const timeout = 3000
 
-function show (toastr) {
+function show(toastr) {
   store.commit(mutationTypes.APP_SET_TOASTR, toastr)
 }
 
 export default {
-  success (text) {
+  success(text) {
     show({
       show: true,
       text: text,
@@ -16,7 +16,7 @@ export default {
       timeout: timeout
     })
   },
-  error (text) {
+  error(text) {
     show({
       show: true,
       text: text,

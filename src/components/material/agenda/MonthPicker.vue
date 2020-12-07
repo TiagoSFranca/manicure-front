@@ -44,7 +44,7 @@ export default {
       this.dateFormatted = this.formatDate(this.dateValue);
     },
     menu() {
-      this.dateValue = ""
+      this.dateValue = "";
     },
   },
   methods: {

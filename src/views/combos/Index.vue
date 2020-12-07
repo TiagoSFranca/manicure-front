@@ -135,7 +135,7 @@ export default {
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchCombos",
-      formatDate: formatDate
+      formatDate: formatDate,
     };
   },
   methods: {
@@ -188,8 +188,7 @@ export default {
     seeItem(item, isEdit = true) {
       if (isEdit)
         this.$router.push({ path: COMBOS_EDIT.replace(":id", item.id) });
-      else
-        this.$router.push({ path: COMBOS_DETAILS.replace(":id", item.id) });
+      else this.$router.push({ path: COMBOS_DETAILS.replace(":id", item.id) });
     },
   },
   created() {

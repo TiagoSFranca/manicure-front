@@ -1,7 +1,6 @@
 export default {
-  clients: [],
+  agenda: [],
   search: false,
   showFilter: false,
-  client: {},
   page: {}
 }

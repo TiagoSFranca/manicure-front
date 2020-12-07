@@ -19,7 +19,9 @@ export default {
     ...mapState(appConstants.MODULE_NAME, ["toastr"]),
   },
   methods: {
-    ...mapMutations(appConstants.MODULE_NAME, [appConstants.MUTATION_SET_TOASTR]),
+    ...mapMutations(appConstants.MODULE_NAME, [
+      appConstants.MUTATION_SET_TOASTR,
+    ]),
     onClickBtn() {
       this.setToastr({ show: false });
     },

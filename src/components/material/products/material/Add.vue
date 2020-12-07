@@ -109,7 +109,7 @@ export default {
       this.$emit("fechar");
       this.visible = false;
       this.object = {};
-      this.$refs.autoComplete.clear()
+      this.$refs.autoComplete.clear();
     },
     show() {
       this.visible = true;
