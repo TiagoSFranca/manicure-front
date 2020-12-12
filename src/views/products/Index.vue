@@ -4,7 +4,9 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Produtos</span>
+            <span class="title white--text">
+              {{ $tc(i18nConstants.PRODUCT.NAME, 2) }}
+            </span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -41,7 +43,7 @@
               :headers="headers"
               :items="products"
               class="elevation-1"
-              loading-text="Loading... Please wait"
+              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
               hide-default-footer
               :custom-sort="onSort"
               :disable-pagination="true"
@@ -116,6 +118,7 @@ import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS_EDIT, PRODUCTS_DETAILS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -123,13 +126,37 @@ export default {
       showAdd: false,
       source: "",
       headers: [
-        { text: "Nome", align: "start", value: "name" },
-        { text: "Vl orignal", value: "price", align: "center" },
-        { text: "Vl Promocional", value: "promotionalPrice", align: "center" },
-        { text: "Em promoção", value: "onSale", align: "center" },
-        { text: "Fim da promoção", value: "endSale", align: "center" },
-        { text: "Ativo", value: "active", align: "center" },
-        { text: "", value: "actions", sortable: false },
+        {
+          text: this.$t(i18nConstants.PRODUCT.LIST.NAME),
+          align: "start",
+          value: "name",
+        },
+        {
+          text: this.$t(i18nConstants.PRODUCT.LIST.PRICE),
+          value: "price",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.PRODUCT.LIST.PROMOTIONAL_PRICE),
+          value: "promotionalPrice",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.PRODUCT.LIST.ON_SALE),
+          value: "onSale",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.PRODUCT.LIST.END_SALE),
+          value: "endSale",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.PRODUCT.LIST.ACTIVE),
+          value: "active",
+          align: "center",
+        },
+        { text: "", value: "actions", align: "end", sortable: false },
       ],
       filter: {},
       pagination: {},
@@ -194,6 +221,7 @@ export default {
   },
   created() {
     this.searchProducts();
+    this.i18nConstants = { ...i18nConstants };
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [

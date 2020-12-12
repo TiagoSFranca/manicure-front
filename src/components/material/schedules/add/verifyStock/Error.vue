@@ -3,7 +3,9 @@
     <v-dialog v-model="visible" scrollable persistent max-width="800px">
       <v-card :loading="loading" :disabled="disabled">
         <v-card-title>
-          <span class="headline">Falta Materiais no Estoque</span>
+          <span class="headline">
+            {{ $t(SCHEDULE.ADD.VERIFY_STOCK.ERROR.NAME) }}
+          </span>
         </v-card-title>
         <v-card-text>
           <v-row v-if="(stockErrors.combos || []).length > 0">
@@ -37,8 +39,10 @@
     </v-dialog>
     <common-confirm-dialog
       :showDialog="showDialog"
-      title="Atenção!"
-      message="Deseja realizar o agendamento mesmo faltando materiais no estoque?"
+      :title="$t(SCHEDULE.ADD.VERIFY_STOCK.ERROR.MESSAGES.CONFIRM_ADD.TITLE)"
+      :message="
+        $t(SCHEDULE.ADD.VERIFY_STOCK.ERROR.MESSAGES.CONFIRM_ADD.MESSAGE)
+      "
       @close="showDialog = false"
     >
       <template slot="actions">
@@ -57,6 +61,7 @@
 <script>
 import CardProducts from "./CardProducts.vue";
 import CardCombos from "./CardCombos.vue";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   components: { CardProducts, CardCombos },
@@ -91,6 +96,9 @@ export default {
       if (this.showError && !this.visible) this.show();
       else if (!this.showError && this.visible) this.hide();
     },
+  },
+  created() {
+    this.SCHEDULE = i18nConstants.SCHEDULE;
   },
 };
 </script>

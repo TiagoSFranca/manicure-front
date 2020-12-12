@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="isLoading">
     <v-card-title class="d-flex align-start">
-      <span class="overline">produtos</span>
+      <span class="overline">{{ $t(COMBO.CARD_PRODUCTS.NAME) }}</span>
       <v-spacer></v-spacer>
       <v-btn
         v-if="isEdit"
@@ -18,29 +18,29 @@
     </v-card-title>
 
     <div v-if="products.length > 0">
-      <span class="overline">Soma dos produtos:</span>
+      <span class="overline">
+        {{ $t(COMBO.CARD_PRODUCTS.LABELS.TOTAL) }}:
+      </span>
 
       <span class="overline ml-2">{{ calcTotal() }}</span>
     </div>
 
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col
-            v-for="product in products"
-            :key="product.id"
-            cols="12"
-            sm="12"
-            md="4"
-            lg="3"
-          >
-            <material-combos-product-item
-              v-bind:product="product"
-              :showActions="isEdit"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-row>
+        <v-col
+          v-for="product in products"
+          :key="product.id"
+          cols="12"
+          sm="12"
+          md="4"
+          lg="4"
+        >
+          <material-combos-product-item
+            v-bind:product="product"
+            :showActions="isEdit"
+          />
+        </v-col>
+      </v-row>
     </v-card-text>
     <material-combos-product-add :showAdd="showAdd" @fechar="showAdd = false" />
   </v-card>
@@ -51,6 +51,7 @@ import combosActions from "@/actions/combosActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -74,6 +75,9 @@ export default {
         false
       );
     },
+  },
+  created() {
+    this.COMBO = i18nConstants.COMBO;
   },
 };
 </script>

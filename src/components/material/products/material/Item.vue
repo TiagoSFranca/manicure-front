@@ -18,17 +18,23 @@
           <v-card-text>
             <v-row align="center" justify="space-between">
               <v-col cols="12" class="text-left">
-                <span class="overline">Quantidade:</span>
+                <span class="overline">
+                  {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.QTY) }}:
+                </span>
                 <span class="ml-2 caption">{{ material.qty }}</span>
               </v-col>
               <v-col cols="12" class="text-left pt-0">
-                <span class="overline">Valor unitário:</span>
+                <span class="overline">
+                  {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.PRICE) }}:
+                </span>
                 <span class="ml-2 caption">{{
                   toCurrency(material.material.price)
                 }}</span>
               </v-col>
               <v-col cols="12" class="text-left pt-0">
-                <span class="overline">Total:</span>
+                <span class="overline">
+                  {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.TOTAL) }}:
+                </span>
                 <span class="ml-2 caption">{{ calcTotal(material) }}</span>
               </v-col>
             </v-row>
@@ -54,7 +60,7 @@
                       v-slot="{ errors }"
                     >
                       <v-currency-field
-                        label="Quantidade"
+                        :label="$t(PRODUCT.MATERIAL_ITEM.LABELS.QTY)"
                         v-model="object.qty"
                         :error-messages="errors"
                       />
@@ -84,7 +90,7 @@
 
       <common-confirm-dialog
         :showDialog="showDialog"
-        title="Atenção!"
+        :title="title"
         :message="message"
         @close="showDialog = false"
       >
@@ -120,6 +126,7 @@ import productsActions from "@/actions/productsActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["material", "showActions"],
@@ -131,6 +138,7 @@ export default {
       isLoading: false,
       LOADING_IDENTIFIER: "updateOrDeleteProductMaterial",
       message: "",
+      title: "",
       object: {
         qty: null,
       },
@@ -150,9 +158,12 @@ export default {
     onShowDialog(isEdit = false) {
       this.showDialog = true;
 
-      this.message = !isEdit
-        ? "Tem certeza que deseja excluir o material?"
-        : "Tem certeza que deseja editar o material?";
+      var item = !isEdit
+        ? this.PRODUCT.MATERIAL_ITEM.MESSAGES.CONFIRM_DELETE
+        : this.PRODUCT.MATERIAL_ITEM.MESSAGES.CONFIRM_UPDATE;
+
+      this.message = this.$t(item.MESSAGE);
+      this.title = this.$t(item.TITLE);
     },
     edit(id) {
       productsActions.editMaterial(
@@ -182,6 +193,9 @@ export default {
     calcTotal(material) {
       return this.toCurrency(material.qty * material.material.price);
     },
+  },
+  created() {
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
 };
 </script>

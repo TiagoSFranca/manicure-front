@@ -9,8 +9,12 @@
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-left">Material</th>
-                <th class="text-left">Qty faltante</th>
+                <th class="text-left">
+                  {{ $t(SCHEDULE.ADD.VERIFY_STOCK.PRODUCT.LABELS.MATERIAL) }}
+                </th>
+                <th class="text-left">
+                  {{ $t(SCHEDULE.ADD.VERIFY_STOCK.PRODUCT.LABELS.QTY) }}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -30,7 +34,12 @@
 </template>
 
 <script>
+import i18nConstants from "@/i18n/constants";
+
 export default {
   props: ["product"],
+  created() {
+    this.SCHEDULE = i18nConstants.SCHEDULE;
+  },
 };
 </script>

@@ -18,17 +18,17 @@
                 mdi-sale
               </v-icon>
             </template>
-            <span>Em promoção</span>
+            <span>{{ $t(GENERAL.LABELS.ON_SALE) }}</span>
           </v-tooltip>
         </v-card-title>
         <v-card-text>
           <v-row align="center" justify="space-between">
             <v-col cols="12" class="text-left">
-              <span class="overline">Quantidade:</span>
+              <span class="overline">{{ $t(GENERAL.LABELS.QTY) }}:</span>
               <span class="ml-2 caption">{{ product.qty }}</span>
             </v-col>
             <v-col cols="12" class="text-left pt-0">
-              <span class="overline">Valor atual:</span>
+              <span class="overline">{{ $t(GENERAL.LABELS.PRICE) }}:</span>
               <span class="ml-2 caption">{{
                 toCurrency(
                   product.product.onSale
@@ -61,6 +61,7 @@
 <script>
 import { ToCurrency } from "@/utils/methods";
 import { PRODUCTS_DETAILS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["product"],
@@ -83,6 +84,9 @@ export default {
       });
       window.open(routeData.href, "_blank");
     },
+  },
+  created() {
+    this.GENERAL = i18nConstants.GENERAL;
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="loading" :disabled="disabled">
     <v-card-title>
-      <span class="overline">Estética da Unha</span>
+      <span class="overline">{{ $t(SCHEDULE.CARD_QUESTIONS.NAME) }}</span>
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -10,24 +10,52 @@
             <v-radio-group
               v-model="questions.format"
               row
-              label="Formato de Preferência:"
+              :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT)"
             >
-              <v-radio label="Nenhum" value="n" />
-              <v-radio label="Redondo" value="r" />
-              <v-radio label="Quadrado" value="q" />
-              <v-radio label="Ovalado" value="o" />
-              <v-radio label="Pontudo" value="p" />
+              <v-radio
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT_OPTIONS.NONE)"
+                value="n"
+              />
+              <v-radio
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT_OPTIONS.ROUND)"
+                value="r"
+              />
+              <v-radio
+                :label="
+                  $t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT_OPTIONS.SQUARE)
+                "
+                value="q"
+              />
+              <v-radio
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT_OPTIONS.OVAL)"
+                value="o"
+              />
+              <v-radio
+                :label="
+                  $t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT_OPTIONS.POINTED)
+                "
+                value="p"
+              />
             </v-radio-group>
           </v-col>
           <v-col cols="12" md="6" lg="6">
             <v-radio-group
               v-model="questions.color"
               row
-              label="Tonalidade de Preferência:"
+              :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COLOR)"
             >
-              <v-radio label="Nenhuma" value="n" />
-              <v-radio label="Claro" value="c" />
-              <v-radio label="Escuro" value="e" />
+              <v-radio
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COLOR_OPTIONS.NONE)"
+                value="n"
+              />
+              <v-radio
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COLOR_OPTIONS.BRIGHT)"
+                value="c"
+              />
+              <v-radio
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COLOR_OPTIONS.DARK)"
+                value="e"
+              />
             </v-radio-group>
           </v-col>
         </v-row>
@@ -35,17 +63,21 @@
           <v-col cols="12" md="6" lg="6">
             <v-checkbox
               v-model="questions.hasOnychomycosis"
-              label="Já teve ou tem algum tipo de onicomicose(micoses, fungos,etc)"
+              :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.HAS_ONYCHOMYCOSIS)"
             />
             <v-checkbox
               class="d-flex"
               v-model="questions.useOnychomycosisMedicine"
-              label="Faz uso de algum medicamento específico para onicomicose"
+              :label="
+                $t(SCHEDULE.CARD_QUESTIONS.LABELS.USE_ONYCHOMYCOSIS_MEDICINE)
+              "
             />
             <validation-provider rules="max:512" v-slot="{ errors }">
               <v-textarea
-                label="Qual medicamento? Quem Indicou?"
                 v-model="questions.onychomycosisMedicine"
+                :label="
+                  $t(SCHEDULE.CARD_QUESTIONS.LABELS.ONYCHOMYCOSIS_MEDICINE)
+                "
                 :error-messages="errors"
                 counter="512"
                 :disabled="!questions.useOnychomycosisMedicine"
@@ -53,12 +85,18 @@
             </validation-provider>
           </v-col>
           <v-col cols="12" md="6" lg="6">
-            <v-checkbox v-model="questions.diabetes" label="Diabetes" />
-            <v-checkbox v-model="questions.allergy" label="Alergia" />
+            <v-checkbox
+              v-model="questions.diabetes"
+              :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.DIABETES)"
+            />
+            <v-checkbox
+              v-model="questions.allergy"
+              :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.ALLERGY)"
+            />
             <validation-provider rules="max:512" v-slot="{ errors }">
               <v-textarea
-                label="Qual medicamento?"
                 v-model="questions.allergyMedicine"
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.ALLERGY_MEDICINE)"
                 :error-messages="errors"
                 counter="512"
                 :disabled="!questions.allergy"
@@ -70,8 +108,10 @@
           <v-col cols="12" lg="6" md="6">
             <validation-provider rules="max:512" v-slot="{ errors }">
               <v-textarea
-                label="Medicamento Anticoagulante"
                 v-model="questions.anticoagulantMedication"
+                :label="
+                  $t(SCHEDULE.CARD_QUESTIONS.LABELS.ANTICOAGULANT_MEDICATION)
+                "
                 :error-messages="errors"
                 counter="512"
               ></v-textarea>
@@ -80,8 +120,8 @@
           <v-col cols="12" lg="6" md="6">
             <validation-provider rules="max:512" v-slot="{ errors }">
               <v-textarea
-                label="Observações"
                 v-model="questions.comments"
+                :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COMMENTS)"
                 :error-messages="errors"
                 counter="512"
               ></v-textarea>
@@ -94,7 +134,12 @@
 </template>
 
 <script>
+import i18nConstants from "@/i18n/constants";
+
 export default {
   props: ["loading", "disabled", "questions"],
+  created() {
+    this.SCHEDULE = i18nConstants.SCHEDULE;
+  },
 };
 </script>

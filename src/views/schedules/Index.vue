@@ -4,7 +4,9 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Agendamentos</span>
+            <span class="title white--text">
+              {{ $tc(i18nConstants.SCHEDULE.NAME, 2) }}
+            </span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -41,7 +43,7 @@
               :headers="headers"
               :items="agenda"
               class="elevation-1"
-              loading-text="Loading... Please wait"
+              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
               hide-default-footer
               :custom-sort="onSort"
               :disable-pagination="true"
@@ -109,7 +111,7 @@
           </v-col>
         </v-row>
         <core-pagination :page="page" @onPaging="onPaging" />
-        <material-agenda-filter
+        <material-schedules-filter
           @onFilter="onFilter"
           :loading="loading[LOADING_IDENTIFIER]"
           :filtered="filter"
@@ -123,11 +125,16 @@
 import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
-import { ToCurrency, formatDate } from "@/utils/methods";
+import {
+  formatDate,
+  getScheduleStatusText,
+  getScheduleStatusColor,
+} from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
 import { AGENDA_EDIT, AGENDA_DETAILS, SCHEDULES_ADD } from "@/router/routes";
 import moment from "moment";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -136,17 +143,37 @@ export default {
       source: "",
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
-        { text: "Identificador", align: "start", value: "id" },
-        { text: "Cliente", value: "client.name", align: "center" },
-        { text: "Situação", value: "scheduleStatus.name", align: "center" },
-        { text: "Data a realizar", value: "date", align: "center" },
-        { text: "In loco", value: "inLoco", align: "center" },
+        {
+          text: this.$t(i18nConstants.SCHEDULE.LIST.ID),
+          align: "start",
+          value: "id",
+        },
+        {
+          text: this.$t(i18nConstants.SCHEDULE.LIST.CLIENT_NAME),
+          value: "client.name",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.SCHEDULE.LIST.SCHEDULE_STATUS_NAME),
+          value: "scheduleStatus.name",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.SCHEDULE.LIST.DATE),
+          value: "date",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.SCHEDULE.LIST.IN_LOCO),
+          value: "inLoco",
+          align: "center",
+        },
         { text: "", value: "actions", sortable: false, align: "end" },
       ],
       filter: {},
       pagination: {},
       sort: {},
-      LOADING_IDENTIFIER: "searchAgenda",
+      LOADING_IDENTIFIER: "searchSchedules",
       formatDate: formatDate,
       SCHEDULES_ADD: SCHEDULES_ADD,
     };
@@ -195,43 +222,21 @@ export default {
       this.filter = filter;
       this.searchAgenda();
     },
-    toCurrency(value) {
-      return ToCurrency(value, true, false);
-    },
     seeItem(item, isEdit = true) {
       if (isEdit)
         this.$router.push({ path: AGENDA_EDIT.replace(":id", item.id) });
       else this.$router.push({ path: AGENDA_DETAILS.replace(":id", item.id) });
     },
     getColor(item) {
-      if (
-        (item.idScheduleStatus == 1 || item.idScheduleStatus == 4) &&
-        !moment(item.date).isAfter(moment(), "day")
-      )
-        return "error";
-      if (item.idScheduleStatus == 1 || item.idScheduleStatus == 4)
-        return "blue";
-      else if (item.idScheduleStatus == 2) return "warning";
-      else if (item.idScheduleStatus == 3) return "grey";
-      else if (item.idScheduleStatus == 5) return "success";
-      return "blue";
+      return getScheduleStatusColor(item.idScheduleStatus, item.date);
     },
     getText(item) {
-      console.log();
-      if (
-        (item.idScheduleStatus == 1 || item.idScheduleStatus == 4) &&
-        !moment(item.date).isAfter(moment(), "day")
-      )
-        return "Atrasado";
-      if (item.idScheduleStatus == 1 || item.idScheduleStatus == 4)
-        return "Nenhum problema";
-      else if (item.idScheduleStatus == 2) return "Necessário itens no estoque";
-      else if (item.idScheduleStatus == 3) return "Cancelado";
-      else if (item.idScheduleStatus == 5) return "Realizado";
+      return this.$t(getScheduleStatusText(item.idScheduleStatus, item.date));
     },
   },
   created() {
     this.searchAgenda();
+    this.i18nConstants = { ...i18nConstants };
   },
   computed: {
     ...mapState(agendaConstants.MODULE_NAME, [

@@ -4,44 +4,48 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Material ao Produto</span>
+            <span class="headline">
+              {{ $t(PRODUCT.MATERIAL_ADD.NAME) }}
+            </span>
           </v-card-title>
           <v-card-text>
-            <v-container>
-              <v-form>
-                <v-row>
-                  <v-col cols="9">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <common-autocomplete-remote
-                        :loading="loading[LOADING_IDENTIFIER_SEARCH_MATERIALS]"
-                        :items="materials"
-                        :errors="errors"
-                        label="Material"
-                        :placeholder="`Digite ao menos ${minLength} chars para pesquisar`"
-                        option-text="name"
-                        option-value="id"
-                        @search="searchMaterials"
-                        @select="selectMaterial"
-                        v-model="object.idMaterial"
-                        ref="autoComplete"
-                      />
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="3">
-                    <validation-provider
-                      rules="required|greater_than:0"
-                      v-slot="{ errors }"
-                    >
-                      <v-currency-field
-                        label="Quantidade"
-                        v-model="object.qty"
-                        :error-messages="errors"
-                      />
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-container>
+            <v-form>
+              <v-row>
+                <v-col cols="9">
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <common-autocomplete-remote
+                      :loading="loading[LOADING_IDENTIFIER_SEARCH_MATERIALS]"
+                      :items="materials"
+                      :errors="errors"
+                      :label="$t(PRODUCT.MATERIAL_ADD.LABELS.MATERIAL)"
+                      :placeholder="
+                        $t(GENERAL.MESSAGES.DIGIT_MIN_LENGTH_TO_SEARCH, {
+                          length: minLength,
+                        })
+                      "
+                      option-text="name"
+                      option-value="id"
+                      @search="searchMaterials"
+                      @select="selectMaterial"
+                      v-model="object.idMaterial"
+                      ref="autoComplete"
+                    />
+                  </validation-provider>
+                </v-col>
+                <v-col cols="3">
+                  <validation-provider
+                    rules="required|greater_than:0"
+                    v-slot="{ errors }"
+                  >
+                    <v-currency-field
+                      :label="$t(PRODUCT.MATERIAL_ADD.LABELS.QTY)"
+                      v-model="object.qty"
+                      :error-messages="errors"
+                    />
+                  </validation-provider>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -84,6 +88,7 @@ import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["showAdd"],
@@ -158,6 +163,10 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.source.cancel();
     next();
+  },
+  created() {
+    this.PRODUCT = i18nConstants.PRODUCT;
+    this.GENERAL = i18nConstants.GENERAL;
   },
 };
 </script>

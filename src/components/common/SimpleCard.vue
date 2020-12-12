@@ -4,9 +4,7 @@
       <span class="overline">{{ title }}</span>
     </v-card-title>
     <v-card-text>
-      <v-container>
-        <slot />
-      </v-container>
+      <slot />
     </v-card-text>
   </v-card>
 </template>

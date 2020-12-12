@@ -4,7 +4,9 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Combo ao Agendamento</span>
+            <span class="headline">
+              {{ $t(SCHEDULE.ADD.COMBO_ADD.NAME) }}
+            </span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -16,8 +18,12 @@
                         :loading="loading[LOADING_IDENTIFIER_SEARCH_COMBOS]"
                         :items="combos"
                         :errors="errors"
-                        label="Combo"
-                        :placeholder="`Digite ao menos ${minLength} chars para pesquisar`"
+                        :label="$t(SCHEDULE.ADD.COMBO_ADD.LABELS.COMBO)"
+                        :placeholder="
+                          $t(GENERAL.MESSAGES.DIGIT_MIN_LENGTH_TO_SEARCH, {
+                            length: minLength,
+                          })
+                        "
                         option-text="name"
                         option-value="id"
                         @search="searchCombos"
@@ -33,7 +39,7 @@
                       v-slot="{ errors }"
                     >
                       <v-currency-field
-                        label="Quantidade"
+                        :label="$t(SCHEDULE.ADD.COMBO_ADD.LABELS.QTY)"
                         v-model="object.qty"
                         :error-messages="errors"
                       />
@@ -77,6 +83,7 @@ import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import combosConstants from "@/store/modules/combos/constants";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["showAdd"],
@@ -152,6 +159,10 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.source.cancel();
     next();
+  },
+  created() {
+    this.SCHEDULE = i18nConstants.SCHEDULE;
+    this.GENERAL = i18nConstants.GENERAL;
   },
 };
 </script>

@@ -4,55 +4,53 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Material</span>
+            <span class="headline">{{ $t(MATERIAL.ADD.NAME) }}</span>
           </v-card-title>
           <v-card-text>
-            <v-container>
-              <v-form>
-                <v-row>
-                  <v-col cols="12">
-                    <validation-provider
-                      rules="required|max:64"
-                      v-slot="{ errors }"
-                    >
-                      <v-text-field
-                        label="Nome"
-                        required
-                        v-model="object.name"
-                        :error-messages="errors"
-                        counter="64"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-                <v-row align="start">
-                  <v-col cols="4">
-                    <validation-provider
-                      rules="required|greater_than:0"
-                      v-slot="{ errors }"
-                    >
-                      <v-currency-field
-                        label="Preço"
-                        v-model="object.price"
-                        :error-messages="errors"
-                      />
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4">
-                    <validation-provider
-                      rules="required|greater_than:0"
-                      v-slot="{ errors }"
-                    >
-                      <v-currency-field
-                        label="Quantidade"
-                        v-model="object.qty"
-                        :error-messages="errors"
-                      />
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-container>
+            <v-form>
+              <v-row>
+                <v-col cols="12">
+                  <validation-provider
+                    rules="required|max:64"
+                    v-slot="{ errors }"
+                  >
+                    <v-text-field
+                      :label="$t(MATERIAL.ADD.LABELS.NAME)"
+                      required
+                      v-model="object.name"
+                      :error-messages="errors"
+                      counter="64"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+              </v-row>
+              <v-row align="start">
+                <v-col cols="4">
+                  <validation-provider
+                    rules="required|greater_than:0"
+                    v-slot="{ errors }"
+                  >
+                    <v-currency-field
+                      :label="$t(MATERIAL.ADD.LABELS.PRICE)"
+                      v-model="object.price"
+                      :error-messages="errors"
+                    />
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4">
+                  <validation-provider
+                    rules="required|greater_than:0"
+                    v-slot="{ errors }"
+                  >
+                    <v-currency-field
+                      :label="$t(MATERIAL.ADD.LABELS.QTY)"
+                      v-model="object.qty"
+                      :error-messages="errors"
+                    />
+                  </validation-provider>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -87,6 +85,7 @@ import materialsActions from "@/actions/materialsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["showAdd"],
@@ -139,6 +138,9 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.source.cancel();
     next();
+  },
+  created() {
+    this.MATERIAL = i18nConstants.MATERIAL;
   },
 };
 </script>

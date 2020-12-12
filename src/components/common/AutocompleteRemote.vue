@@ -7,7 +7,7 @@
     :loading="loading"
     :search-input.sync="search"
     hide-selected
-    :no-data-text="loading ? 'Procurando...' : 'Nenhum resultado encontrado'"
+    :no-data-text="$t(loading ? SEARCHING : DATA_NOT_FOUND)"
     :item-text="optionText"
     :item-value="optionValue"
     :label="label"
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import i18nConstants from "@/i18n/constants";
+
 export default {
   props: [
     "loading",
@@ -58,6 +60,10 @@ export default {
     change() {
       this.$emit("change");
     },
+  },
+  created() {
+    this.SEARCHING = i18nConstants.SEARCHING;
+    this.DATA_NOT_FOUND = i18nConstants.DATA_NOT_FOUND;
   },
 };
 </script>

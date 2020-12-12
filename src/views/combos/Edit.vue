@@ -4,7 +4,7 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Editar Combo</span>
+            <span class="title white--text">{{ $t(COMBO.EDIT.NAME) }}</span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -60,6 +60,7 @@ import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import combosConstants from "@/store/modules/combos/constants";
 import { COMBOS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -99,6 +100,7 @@ export default {
     this.searchCombo();
     this.getImages();
     this.getProducts();
+    this.COMBO = i18nConstants.COMBO;
   },
   computed: {
     ...mapState(combosConstants.MODULE_NAME, [

@@ -19,7 +19,7 @@
                 mdi-sale
               </v-icon>
             </template>
-            <span>Em promoção</span>
+            <span>{{ $t(GENERAL.LABELS.ON_SALE) }}</span>
           </v-tooltip>
         </v-card-title>
         <v-card-text>
@@ -45,6 +45,7 @@ import productsActions from "@/actions/productsActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { COMBOS_DETAILS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["combo"],
@@ -55,6 +56,9 @@ export default {
       });
       window.open(routeData.href, "_blank");
     },
+  },
+  created() {
+    this.GENERAL = i18nConstants.GENERAL;
   },
 };
 </script>

@@ -23,7 +23,7 @@ export default {
       appConstants.MUTATION_SET_TOASTR,
     ]),
     onClickBtn() {
-      this.setToastr({ show: false });
+      this[appConstants.MUTATION_SET_TOASTR]({ show: false });
     },
   },
 };

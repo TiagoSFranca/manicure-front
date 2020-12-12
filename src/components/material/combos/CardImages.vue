@@ -1,53 +1,54 @@
 <template>
-  <v-card :loading="isLoading || loading[LOADING_IDENTIFIER]">
+  <v-card
+    :loading="isLoading || loading[LOADING_IDENTIFIER]"
+    :disabled="isLoading || loading[LOADING_IDENTIFIER]"
+  >
     <v-card-title>
-      <span class="overline">imagens</span>
+      <span class="overline">{{ $t(COMBO.CARD_IMAGES.NAME) }}</span>
     </v-card-title>
     <v-card-text>
-      <v-container>
-        <v-row align="end">
-          <v-spacer></v-spacer>
-          <v-col cols="4">
-            <common-file-upload
-              :loading="isLoading || loading[LOADING_IDENTIFIER]"
-              :disabled="!isEdit || isLoading || loading[LOADING_IDENTIFIER]"
-              label="Adicionar imagem"
-              :clear="isLoading || loading[LOADING_IDENTIFIER]"
-              @upload="addImage"
-              accept=".png,.jpg"
-              v-if="isEdit"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            v-for="n in images"
-            :key="n.id"
-            class="d-flex child-flex"
-            cols="12"
-            sm="4"
-            lg="2"
-            md="3"
+      <v-row align="end">
+        <v-spacer></v-spacer>
+        <v-col cols="4">
+          <common-file-upload
+            :loading="isLoading || loading[LOADING_IDENTIFIER]"
+            :disabled="!isEdit || isLoading || loading[LOADING_IDENTIFIER]"
+            :label="$t(COMBO.CARD_IMAGES.LABELS.ADD_IMAGE)"
+            :clear="isLoading || loading[LOADING_IDENTIFIER]"
+            @upload="addImage"
+            accept=".png,.jpg"
+            v-if="isEdit"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          v-for="n in images"
+          :key="n.id"
+          class="d-flex child-flex"
+          cols="12"
+          sm="4"
+          lg="2"
+          md="3"
+        >
+          <common-hover-image
+            :image="{
+              src: n.url,
+            }"
+            :lazy="true"
+            :disabled="!isEdit"
           >
-            <common-hover-image
-              :image="{
-                src: n.url,
-              }"
-              :lazy="true"
-              :disabled="!isEdit"
+            <v-icon @click="onDeleteImage(n.id)" color="error" x-large
+              >mdi-delete-outline</v-icon
             >
-              <v-icon @click="onDeleteImage(n.id)" color="error" x-large
-                >mdi-delete-outline</v-icon
-              >
-            </common-hover-image>
-          </v-col>
-        </v-row>
-      </v-container>
+          </common-hover-image>
+        </v-col>
+      </v-row>
     </v-card-text>
     <common-confirm-dialog
       :showDialog="showDialog"
-      title="Atenção!"
-      message="Tem certeza que deseja excluir a imagem?"
+      :title="$t(COMBO.CARD_IMAGES.MESSAGES.CONFIRM_DELETE.TITLE)"
+      :message="$t(COMBO.CARD_IMAGES.MESSAGES.CONFIRM_DELETE.MESSAGE)"
       @close="showDialog = false"
     >
       <template slot="actions">
@@ -81,6 +82,7 @@
 import combosActions from "@/actions/combosActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["images", "isEdit", "isLoading"],
@@ -121,6 +123,9 @@ export default {
     object() {
       this.item = { ...this.object };
     },
+  },
+  created() {
+    this.COMBO = i18nConstants.COMBO;
   },
 };
 </script>

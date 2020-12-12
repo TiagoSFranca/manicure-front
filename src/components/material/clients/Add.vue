@@ -2,9 +2,9 @@
   <v-row justify="center">
     <v-dialog v-model="visible" scrollable persistent max-width="900px">
       <validation-observer ref="form" v-slot="{ handleSubmit }">
-        <v-card :loading="loading[LOADING_IDENTIFIER]">
+        <v-card :disabled="loading[LOADING_IDENTIFIER]">
           <v-card-title>
-            <span class="headline">Adicionar Cliente</span>
+            <span class="headline">{{ $t(CLIENT.ADD.NAME) }}</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -16,7 +16,7 @@
                       v-slot="{ errors }"
                     >
                       <v-text-field
-                        label="Nome"
+                        :label="$t(CLIENT.ADD.LABELS.NAME)"
                         v-model="object.name"
                         :error-messages="errors"
                         counter="64"
@@ -28,7 +28,7 @@
                   <v-col cols="8">
                     <validation-provider rules="max:32" v-slot="{ errors }">
                       <v-text-field
-                        label="Apelido"
+                        :label="$t(CLIENT.ADD.LABELS.NICKNAME)"
                         v-model="object.nickname"
                         :error-messages="errors"
                         counter="32"
@@ -45,8 +45,15 @@
                         row
                         :error-messages="errors"
                       >
-                        <v-radio label="M" value="m"></v-radio>
-                        <v-radio label="F" value="f" class="mr-0"></v-radio>
+                        <v-radio
+                          :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.MALE)"
+                          value="m"
+                        ></v-radio>
+                        <v-radio
+                          :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.FEMALE)"
+                          value="f"
+                          class="mr-0"
+                        ></v-radio>
                       </v-radio-group>
                     </validation-provider>
                   </v-col>
@@ -59,7 +66,7 @@
                     >
                       <v-text-field
                         name="email"
-                        label="E-mail"
+                        :label="$t(CLIENT.ADD.LABELS.EMAIL)"
                         v-model="object.email"
                         :error-messages="errors"
                         counter="128"
@@ -69,7 +76,7 @@
                   <v-col cols="4">
                     <common-date-picker
                       :date="object.birthday"
-                      label="Dt Nascimento"
+                      :label="$t(CLIENT.ADD.LABELS.BIRTHDAY)"
                       @changeDate="changeDate"
                     />
                   </v-col>
@@ -78,7 +85,7 @@
                   <v-col cols="4">
                     <validation-provider rules="min:14" v-slot="{ errors }">
                       <v-text-field
-                        label="Telefone"
+                        :label="$t(CLIENT.ADD.LABELS.PHONE)"
                         v-model="object.phone"
                         :error-messages="errors"
                         v-mask="'(##) #?####-####'"
@@ -88,7 +95,7 @@
                   <v-col cols="4">
                     <validation-provider rules="min:14" v-slot="{ errors }">
                       <v-text-field
-                        label="Celular"
+                        :label="$t(CLIENT.ADD.LABELS.CELL_PHONE)"
                         v-model="object.cellPhone"
                         :error-messages="errors"
                         v-mask="'(##) #?####-####'"
@@ -98,7 +105,7 @@
                   <v-col cols="4">
                     <validation-provider rules="max:64" v-slot="{ errors }">
                       <v-text-field
-                        label="Profissão"
+                        :label="$t(CLIENT.ADD.LABELS.OCCUPATION)"
                         v-model="object.occupation"
                         :error-messages="errors"
                         counter="64"
@@ -114,7 +121,7 @@
                       v-slot="{ errors }"
                     >
                       <v-text-field
-                        label="Endereço"
+                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.STREET)"
                         v-model="object.address.street"
                         :error-messages="errors"
                         counter="64"
@@ -124,7 +131,7 @@
                   <v-col cols="3">
                     <validation-provider rules="max:10" v-slot="{ errors }">
                       <v-text-field
-                        label="Número"
+                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.NUMBER)"
                         v-model="object.address.number"
                         :error-messages="errors"
                         counter="10"
@@ -139,7 +146,7 @@
                       v-slot="{ errors }"
                     >
                       <v-text-field
-                        label="Bairro"
+                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.DISTRICT)"
                         v-model="object.address.district"
                         :error-messages="errors"
                         counter="64"
@@ -150,23 +157,7 @@
                     <validation-provider rules="required" v-slot="{ errors }">
                       <v-autocomplete
                         clearable
-                        label="Cidade"
-                        v-model="object.address.idCity"
-                        :error-messages="errors"
-                        :items="cities"
-                        item-text="name"
-                        item-value="id"
-                        :loading="loading[LOADING_IDENTIFIER_CITIES]"
-                        hide-no-data
-                        hide-selected
-                      ></v-autocomplete>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <v-autocomplete
-                        clearable
-                        label="Estado"
+                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.COUNTRY)"
                         v-model="object.address.idCountry"
                         :error-messages="errors"
                         :items="countries"
@@ -178,12 +169,28 @@
                       ></v-autocomplete>
                     </validation-provider>
                   </v-col>
+                  <v-col cols="4">
+                    <validation-provider rules="required" v-slot="{ errors }">
+                      <v-autocomplete
+                        clearable
+                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.CITY)"
+                        v-model="object.address.idCity"
+                        :error-messages="errors"
+                        :items="cities"
+                        item-text="name"
+                        item-value="id"
+                        :loading="loading[LOADING_IDENTIFIER_CITIES]"
+                        hide-no-data
+                        hide-selected
+                      ></v-autocomplete>
+                    </validation-provider>
+                  </v-col>
                 </v-row>
                 <v-row>
                   <v-col cols="12">
                     <validation-provider rules="max:512" v-slot="{ errors }">
                       <v-text-field
-                        label="Complemento"
+                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.COMPLEMENT)"
                         v-model="object.address.complement"
                         :error-messages="errors"
                         counter="512"
@@ -230,6 +237,7 @@ import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import addressConstants from "@/store/modules/address/constants";
 import { CLIENTS_EDIT } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["showAdd"],
@@ -317,6 +325,9 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.source.cancel();
     next();
+  },
+  created() {
+    this.CLIENT = i18nConstants.CLIENT;
   },
 };
 </script>

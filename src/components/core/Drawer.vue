@@ -37,6 +37,8 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import routes from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
+
 export default {
   data() {
     return {
@@ -45,37 +47,37 @@ export default {
         {
           to: routes.DASHBOARD,
           icon: "mdi-view-dashboard",
-          text: "Dashboard",
+          text: this.$t(i18nConstants.DASHBOARD.NAME),
         },
         {
           to: routes.AGENDA,
           icon: "mdi-calendar-month-outline",
-          text: "Agenda",
+          text: this.$t(i18nConstants.AGENDA.NAME),
         },
         {
           to: routes.SCHEDULES,
           icon: "mdi-calendar-multiple",
-          text: "Agendamentos",
+          text: this.$tc(i18nConstants.SCHEDULE.NAME, 2),
         },
         {
           to: routes.PRODUCTS,
           icon: "mdi-cube-outline",
-          text: "Produtos",
+          text: this.$tc(i18nConstants.PRODUCT.NAME, 2),
         },
         {
           to: routes.COMBOS,
           icon: "mdi-cards-outline",
-          text: "Combos",
+          text: this.$tc(i18nConstants.COMBO.NAME, 2),
         },
         {
           to: routes.MATERIALS,
           icon: "mdi-hexagon-slice-1",
-          text: "Materiais",
+          text: this.$tc(i18nConstants.MATERIAL.NAME, 2),
         },
         {
           to: routes.CLIENTS,
           icon: "mdi-account-group-outline",
-          text: "Clientes",
+          text: this.$tc(i18nConstants.CLIENT.NAME, 2),
         },
       ],
     };

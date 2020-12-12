@@ -4,43 +4,47 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card>
           <v-card-title>
-            <span class="headline">Adicionar Produto ao Combo</span>
+            <span class="headline">
+              {{ $t(COMBO.PRODUCT_ADD.NAME) }}
+            </span>
           </v-card-title>
           <v-card-text>
-            <v-container>
-              <v-form>
-                <v-row>
-                  <v-col cols="9">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <common-autocomplete-remote
-                        :loading="loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]"
-                        :items="products"
-                        :errors="errors"
-                        label="Produto"
-                        :placeholder="`Digite ao menos ${minLength} chars para pesquisar`"
-                        option-text="name"
-                        option-value="id"
-                        @search="searchProducts"
-                        @select="selectProduct"
-                        v-model="object.idProduct"
-                      />
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="3">
-                    <validation-provider
-                      rules="required|greater_than:0"
-                      v-slot="{ errors }"
-                    >
-                      <v-currency-field
-                        label="Quantidade"
-                        v-model="object.qty"
-                        :error-messages="errors"
-                      />
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-container>
+            <v-form>
+              <v-row>
+                <v-col cols="9">
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <common-autocomplete-remote
+                      :loading="loading[LOADING_IDENTIFIER_SEARCH_PRODUCTS]"
+                      :items="products"
+                      :errors="errors"
+                      :label="$t(COMBO.PRODUCT_ADD.LABELS.PRODUCT)"
+                      :placeholder="
+                        $t(GENERAL.MESSAGES.DIGIT_MIN_LENGTH_TO_SEARCH, {
+                          length: minLength,
+                        })
+                      "
+                      option-text="name"
+                      option-value="id"
+                      @search="searchProducts"
+                      @select="selectProduct"
+                      v-model="object.idProduct"
+                    />
+                  </validation-provider>
+                </v-col>
+                <v-col cols="3">
+                  <validation-provider
+                    rules="required|greater_than:0"
+                    v-slot="{ errors }"
+                  >
+                    <v-currency-field
+                      :label="$t(COMBO.PRODUCT_ADD.LABELS.QTY)"
+                      v-model="object.qty"
+                      :error-messages="errors"
+                    />
+                  </validation-provider>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -83,6 +87,7 @@ import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["showAdd"],
@@ -156,6 +161,10 @@ export default {
   beforeRouteLeave(to, from, next) {
     this.source.cancel();
     next();
+  },
+  created() {
+    this.COMBO = i18nConstants.COMBO;
+    this.GENERAL = i18nConstants.GENERAL;
   },
 };
 </script>

@@ -4,7 +4,9 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Combos</span>
+            <span class="title white--text">
+              {{ $tc(i18nConstants.COMBO.NAME, 2) }}
+            </span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -41,7 +43,7 @@
               :headers="headers"
               :items="combos"
               class="elevation-1"
-              loading-text="Loading... Please wait"
+              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
               hide-default-footer
               :custom-sort="onSort"
               :disable-pagination="true"
@@ -116,6 +118,7 @@ import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import combosConstants from "@/store/modules/combos/constants";
 import { COMBOS_EDIT, COMBOS_DETAILS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -123,13 +126,37 @@ export default {
       showAdd: false,
       source: "",
       headers: [
-        { text: "Nome", align: "start", value: "name" },
-        { text: "Vl orignal", value: "price", align: "center" },
-        { text: "Vl Promocional", value: "promotionalPrice", align: "center" },
-        { text: "Em promoção", value: "onSale", align: "center" },
-        { text: "Fim da promoção", value: "endSale", align: "center" },
-        { text: "Ativo", value: "active", align: "center" },
-        { text: "", value: "actions", sortable: false },
+        {
+          text: this.$t(i18nConstants.COMBO.LIST.NAME),
+          align: "start",
+          value: "name",
+        },
+        {
+          text: this.$t(i18nConstants.COMBO.LIST.PRICE),
+          value: "price",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.COMBO.LIST.PROMOTIONAL_PRICE),
+          value: "promotionalPrice",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.COMBO.LIST.ON_SALE),
+          value: "onSale",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.COMBO.LIST.END_SALE),
+          value: "endSale",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.COMBO.LIST.ACTIVE),
+          value: "active",
+          align: "center",
+        },
+        { text: "", value: "actions", align: "end", sortable: false },
       ],
       filter: {},
       pagination: {},
@@ -193,6 +220,7 @@ export default {
   },
   created() {
     this.searchCombos();
+    this.i18nConstants = { ...i18nConstants };
   },
   computed: {
     ...mapState(combosConstants.MODULE_NAME, [

@@ -18,18 +18,22 @@
                 mdi-sale
               </v-icon>
             </template>
-            <span>Em promoção</span>
+            <span>{{ $t(GENERAL.LABELS.ON_SALE) }}</span>
           </v-tooltip>
         </v-card-title>
         <div v-if="!isEdit">
           <v-card-text>
             <v-row align="center" justify="space-between">
               <v-col cols="12" class="text-left">
-                <span class="overline">Quantidade:</span>
+                <span class="overline">
+                  {{ $t(COMBO.PRODUCT_ITEM.LABELS.QTY) }}:
+                </span>
                 <span class="ml-2 caption">{{ product.qty }}</span>
               </v-col>
               <v-col cols="12" class="text-left pt-0">
-                <span class="overline">Valor atual:</span>
+                <span class="overline">
+                  {{ $t(COMBO.PRODUCT_ITEM.LABELS.PRICE) }}:</span
+                >
                 <span class="ml-2 caption">{{
                   toCurrency(
                     product.product.onSale
@@ -61,7 +65,7 @@
                       v-slot="{ errors }"
                     >
                       <v-currency-field
-                        label="Quantidade"
+                        :label="$t(COMBO.PRODUCT_ITEM.LABELS.QTY)"
                         v-model="object.qty"
                         :error-messages="errors"
                       />
@@ -96,7 +100,7 @@
 
       <common-confirm-dialog
         :showDialog="showDialog"
-        title="Atenção!"
+        :title="title"
         :message="message"
         @close="showDialog = false"
       >
@@ -133,6 +137,7 @@ import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
 import { PRODUCTS_DETAILS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["product", "showActions"],
@@ -144,6 +149,7 @@ export default {
       isLoading: false,
       LOADING_IDENTIFIER: "updateOrDeleteComboProduct",
       message: "",
+      title: "",
       object: {
         qty: null,
       },
@@ -163,9 +169,12 @@ export default {
     onShowDialog(isEdit = false) {
       this.showDialog = true;
 
-      this.message = !isEdit
-        ? "Tem certeza que deseja excluir o produto?"
-        : "Tem certeza que deseja editar o produto?";
+      var item = !isEdit
+        ? this.COMBO.PRODUCT_ITEM.MESSAGES.CONFIRM_DELETE
+        : this.COMBO.PRODUCT_ITEM.MESSAGES.CONFIRM_UPDATE;
+
+      this.message = this.$t(item.MESSAGE);
+      this.title = this.$t(item.TITLE);
     },
     edit(id) {
       combosActions.editProduct(
@@ -194,6 +203,10 @@ export default {
       });
       window.open(routeData.href, "_blank");
     },
+  },
+  created() {
+    this.COMBO = i18nConstants.COMBO;
+    this.GENERAL = i18nConstants.GENERAL;
   },
 };
 </script>

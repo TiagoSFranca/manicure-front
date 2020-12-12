@@ -4,7 +4,7 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Editar Produto</span>
+            <span class="title white--text">{{ $t(PRODUCT.EDIT.NAME) }}</span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -60,6 +60,7 @@ import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -103,6 +104,7 @@ export default {
     this.searchProduct();
     this.getImages();
     this.getMaterials();
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [

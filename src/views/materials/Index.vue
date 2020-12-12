@@ -4,7 +4,9 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Materiais</span>
+            <span class="title white--text">
+              {{ $tc(i18nConstants.MATERIAL.NAME, 2) }}
+            </span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -41,7 +43,7 @@
               :headers="headers"
               :items="materials"
               class="elevation-1"
-              loading-text="Loading... Please wait"
+              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
               hide-default-footer
               :custom-sort="onSort"
               :disable-pagination="true"
@@ -96,6 +98,7 @@ import { ToCurrency } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import { MATERIALS_EDIT, MATERIALS_DETAILS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -103,11 +106,31 @@ export default {
       showAdd: false,
       source: "",
       headers: [
-        { text: "Nome", align: "start", value: "name" },
-        { text: "Preço", value: "price", align: "center" },
-        { text: "Qtd Disponível", value: "qty", align: "center" },
-        { text: "Qtd Reservada", value: "reservedQty", align: "center" },
-        { text: "Qtd Total", value: "qtyTotal", align: "center" },
+        {
+          text: this.$t(i18nConstants.MATERIAL.LIST.NAME),
+          align: "start",
+          value: "name",
+        },
+        {
+          text: this.$t(i18nConstants.MATERIAL.LIST.PRICE),
+          value: "price",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.MATERIAL.LIST.AVALIABLE_QTY),
+          value: "qty",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.MATERIAL.LIST.RESERVED_QTY),
+          value: "reservedQty",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.MATERIAL.LIST.TOTAL_QTY),
+          value: "qtyTotal",
+          align: "center",
+        },
         { text: "", value: "actions", sortable: false },
       ],
       filter: {},
@@ -172,6 +195,7 @@ export default {
   },
   created() {
     this.searchMaterials();
+    this.i18nConstants = { ...i18nConstants };
   },
   computed: {
     ...mapState(materialsConstants.MODULE_NAME, [

@@ -4,7 +4,9 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Clientes</span>
+            <span class="title white--text">
+              {{ $tc(i18nConstants.CLIENT.NAME, 2) }}
+            </span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -41,7 +43,7 @@
               :headers="headers"
               :items="clients"
               class="elevation-1"
-              loading-text="Loading... Please wait"
+              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
               hide-default-footer
               :custom-sort="onSort"
               :disable-pagination="true"
@@ -109,6 +111,7 @@ import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import clientsConstants from "@/store/modules/clients/constants";
 import { CLIENTS_EDIT, CLIENTS_DETAILS } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -116,12 +119,36 @@ export default {
       showAdd: false,
       source: "",
       headers: [
-        { text: "Nome", align: "start", value: "name" },
-        { text: "Apelido", value: "nickname", align: "center" },
-        { text: "Dt Nascimento", value: "birthday", align: "center" },
-        { text: "Telefone", value: "phone", align: "center" },
-        { text: "Celular", value: "cellPhone", align: "center" },
-        { text: "Sexo", value: "sex", align: "center" },
+        {
+          text: this.$t(i18nConstants.CLIENT.LIST.NAME),
+          align: "start",
+          value: "name",
+        },
+        {
+          text: this.$t(i18nConstants.CLIENT.LIST.NICKNAME),
+          value: "nickname",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.CLIENT.LIST.BIRTHDAY),
+          value: "birthday",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.CLIENT.LIST.PHONE),
+          value: "phone",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.CLIENT.LIST.CELL_PHONE),
+          value: "cellPhone",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.CLIENT.LIST.SEX),
+          value: "sex",
+          align: "center",
+        },
         { text: "", value: "actions", sortable: false, align: "end" },
       ],
       filter: {},
@@ -195,6 +222,7 @@ export default {
   },
   created() {
     this.searchClients();
+    this.i18nConstants = { ...i18nConstants };
   },
   computed: {
     ...mapState(clientsConstants.MODULE_NAME, [

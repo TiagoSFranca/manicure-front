@@ -1,7 +1,9 @@
 <template>
   <v-card :loading="loading" :disabled="disabled">
     <v-card-title class="d-flex align-start">
-      <span class="overline">combos</span>
+      <span class="overline">
+        {{ $t(SCHEDULE.ADD.CARD_COMBOS.NAME) }}
+      </span>
       <v-spacer></v-spacer>
       <v-btn
         color="accent"
@@ -17,29 +19,28 @@
     </v-card-title>
 
     <div v-if="combos.length > 0">
-      <span class="overline">Soma dos combos:</span>
-
+      <span class="overline">
+        {{ $t(SCHEDULE.ADD.CARD_COMBOS.LABELS.TOTAL) }}:
+      </span>
       <span class="overline ml-2">{{ toCurrency(calcTotal()) }}</span>
     </div>
 
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col
-            v-for="combo in combos"
-            :key="combo.combo.id"
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-          >
-            <material-schedules-add-combo-item
-              v-bind:combo="combo"
-              @delete="removeCombo"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-row>
+        <v-col
+          v-for="combo in combos"
+          :key="combo.combo.id"
+          cols="12"
+          sm="12"
+          md="12"
+          lg="12"
+        >
+          <material-schedules-add-combo-item
+            v-bind:combo="combo"
+            @delete="removeCombo"
+          />
+        </v-col>
+      </v-row>
     </v-card-text>
     <material-schedules-add-combo-add
       :showAdd="showAdd"
@@ -55,6 +56,7 @@ import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
 import toastr from "@/utils/toastr";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["loading", "disabled"],
@@ -85,7 +87,10 @@ export default {
         this.combos.filter((e) => e.combo.id == object.combo.id).length > 0;
       this.showAdd = keep;
       if (!keep) this.combos.push(object);
-      else toastr.error("Este combo já foi adicionado");
+      else
+        toastr.error(
+          this.$t(this.SCHEDULE.ADD.CARD_COMBOS.MESSAGES.CAN_NOT_ADD)
+        );
     },
     removeCombo(id) {
       let items = this.combos.filter((e) => e.combo.id != id);
@@ -96,6 +101,9 @@ export default {
     combos() {
       this.$emit("changeCombos", this.combos);
     },
+  },
+  created() {
+    this.SCHEDULE = i18nConstants.SCHEDULE;
   },
 };
 </script>

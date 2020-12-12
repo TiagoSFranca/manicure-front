@@ -1,10 +1,13 @@
 <template>
   <v-row align="center">
     <v-col cols="3" class="text-left">
-      <span class="caption white--text"
-        >Exibindo {{ getStart() }}-{{ getEnd() }} de
-        {{ page.total }} itens</span
-      >
+      <span class="caption white--text">
+        {{ $t(i18nConstants.PAGINATION.SHOWING) }} {{ getStart() }}-{{
+          getEnd()
+        }}
+        {{ $t(i18nConstants.PAGINATION.FROM) }} {{ page.total }}
+        {{ $t(i18nConstants.PAGINATION.ITEMS) }}
+      </span>
     </v-col>
     <v-col cols="6">
       <v-pagination
@@ -28,6 +31,7 @@
 <script>
 import { paginacaoList } from "@/utils/constants";
 import cloneDeep from "lodash/cloneDeep";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["page"],
@@ -55,6 +59,9 @@ export default {
       let clonePage = { limit: this.page.limit, number: this.page.number };
       this.$emit("onPaging", clonePage);
     },
+  },
+  created() {
+    this.i18nConstants = { ...i18nConstants };
   },
 };
 </script>

@@ -1,7 +1,9 @@
 <template>
   <v-card :loading="loading" :disabled="disabled">
     <v-card-title class="d-flex align-start">
-      <span class="overline">produtos</span>
+      <span class="overline">
+        {{ $t(SCHEDULE.ADD.CARD_PRODUCTS.NAME) }}
+      </span>
       <v-spacer></v-spacer>
       <v-btn
         color="accent"
@@ -17,29 +19,28 @@
     </v-card-title>
 
     <div v-if="products.length > 0">
-      <span class="overline">Soma dos produtos:</span>
-
+      <span class="overline">
+        {{ $t(SCHEDULE.ADD.CARD_PRODUCTS.LABELS.TOTAL) }}:
+      </span>
       <span class="overline ml-2">{{ toCurrency(calcTotal()) }}</span>
     </div>
 
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col
-            v-for="product in products"
-            :key="product.product.id"
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-          >
-            <material-schedules-add-product-item
-              v-bind:product="product"
-              @delete="removeProduct"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-row>
+        <v-col
+          v-for="product in products"
+          :key="product.product.id"
+          cols="12"
+          sm="12"
+          md="12"
+          lg="12"
+        >
+          <material-schedules-add-product-item
+            v-bind:product="product"
+            @delete="removeProduct"
+          />
+        </v-col>
+      </v-row>
     </v-card-text>
     <material-schedules-add-product-add
       :showAdd="showAdd"
@@ -55,6 +56,7 @@ import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
 import toastr from "@/utils/toastr";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -86,7 +88,10 @@ export default {
         0;
       this.showAdd = keep;
       if (!keep) this.products.push(object);
-      else toastr.error("Este produto já foi adicionado");
+      else
+        toastr.error(
+          this.$t(this.SCHEDULE.ADD.CARD_PRODUCTS.MESSAGES.CAN_NOT_ADD)
+        );
     },
     removeProduct(id) {
       let items = this.products.filter((e) => e.product.id != id);
@@ -97,6 +102,9 @@ export default {
     products() {
       this.$emit("changeProducts", this.products);
     },
+  },
+  created() {
+    this.SCHEDULE = i18nConstants.SCHEDULE;
   },
 };
 </script>

@@ -1,5 +1,6 @@
 import actionTypes from '@/store/actionTypes'
-import moment from 'moment'
+import moment from 'moment';
+import i18nConstants from "@/i18n/constants";
 
 export const ToDecimal = (value) => {
   value = value || "";
@@ -27,3 +28,30 @@ export const startLoading = (identifier) => ({ type: actionTypes.APP_LOADING, lo
 export const endLoading = (identifier) => ({ type: actionTypes.APP_LOADING, loading: { [identifier]: false } });
 
 export const formatDate = (date, formatter = "DD/MM/YYYY") => moment(date).format(formatter)
+
+export const getScheduleStatusText = (idStatus, date) => {
+  if (
+    (idStatus == 1 || idStatus == 4) &&
+    !moment(date).isAfter(moment(), "day")
+  )
+    return i18nConstants.SCHEDULE.STATUS.LATE;
+  if (idStatus == 1 || idStatus == 4)
+    return i18nConstants.SCHEDULE.STATUS.NO_PROBLEM;
+  else if (idStatus == 2) return i18nConstants.SCHEDULE.STATUS.NEED_ITEMS;
+  else if (idStatus == 3) return i18nConstants.SCHEDULE.STATUS.CANCELED;
+  else if (idStatus == 5) return i18nConstants.SCHEDULE.STATUS.REALIZED;
+}
+
+export const getScheduleStatusColor = (idStatus, date) => {
+  if (
+    (idStatus == 1 || idStatus == 4) &&
+    !moment(date).isAfter(moment(), "day")
+  )
+    return "error";
+  if (idStatus == 1 || idStatus == 4)
+    return "blue";
+  else if (idStatus == 2) return "warning";
+  else if (idStatus == 3) return "grey";
+  else if (idStatus == 5) return "success";
+  return "blue";
+}

@@ -4,56 +4,81 @@
       <v-sheet class="text-center">
         <v-row>
           <v-col>
-            <div class="title">Filtrar Produtos</div>
+            <div class="title">{{ $t(PRODUCT.FILTER.NAME) }}</div>
           </v-col>
         </v-row>
         <v-form ref="form" lazy-validation @submit.prevent="submit">
-          <v-container>
-            <v-row align="start" justify="center">
-              <v-col cols="12" md="3">
-                <v-text-field v-model="filter.name" label="Nome"></v-text-field>
-              </v-col>
+          <v-row align="start" justify="center">
+            <v-col cols="12" md="3">
+              <v-text-field
+                v-model="filter.name"
+                :label="$t(PRODUCT.FILTER.LABELS.NAME)"
+              ></v-text-field>
+            </v-col>
 
-              <v-col cols="12" md="3">
-                <common-date-picker
-                  :date="filter.beginEndSale"
-                  label="Fim da Promoção - Início"
-                  @changeDate="(date) => changeDate(date, true)"
-                />
-              </v-col>
+            <v-col cols="12" md="3">
+              <common-date-picker
+                :date="filter.beginEndSale"
+                :label="$t(PRODUCT.FILTER.LABELS.BEGIN_END_SALE)"
+                @changeDate="(date) => changeDate(date, true)"
+              />
+            </v-col>
 
-              <v-col cols="12" md="3">
-                <common-date-picker
-                  :date="filter.endEndSale"
-                  label="Fim da Promoção - Fim"
-                  @changeDate="(date) => changeDate(date, false)"
-                />
-              </v-col>
+            <v-col cols="12" md="3">
+              <common-date-picker
+                :date="filter.endEndSale"
+                :label="$t(PRODUCT.FILTER.LABELS.END_END_SALE)"
+                @changeDate="(date) => changeDate(date, false)"
+              />
+            </v-col>
 
-              <v-col cols="auto">
-                <v-radio-group v-model="filter.active" label="Ativo">
-                  <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
-                  <v-radio label="Sim" value="true"></v-radio>
-                  <v-radio label="Não" value="false"></v-radio>
-                </v-radio-group>
-              </v-col>
+            <v-col cols="auto">
+              <v-radio-group
+                v-model="filter.active"
+                :label="$t(PRODUCT.FILTER.LABELS.ACTIVE)"
+              >
+                <v-radio
+                  :label="$t(PRODUCT.FILTER.LABELS.ACTIVE_OPTIONS.ALL)"
+                  :value="NOT_SELECTED"
+                ></v-radio>
+                <v-radio
+                  :label="$t(PRODUCT.FILTER.LABELS.ACTIVE_OPTIONS.YES)"
+                  value="true"
+                ></v-radio>
+                <v-radio
+                  :label="$t(PRODUCT.FILTER.LABELS.ACTIVE_OPTIONS.NOT)"
+                  value="false"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
 
-              <v-col cols="auto">
-                <v-radio-group v-model="filter.onSale" label="Em Promoção">
-                  <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
-                  <v-radio label="Sim" value="true"></v-radio>
-                  <v-radio label="Não" value="false"></v-radio>
-                </v-radio-group>
-              </v-col>
-            </v-row>
-          </v-container>
+            <v-col cols="auto">
+              <v-radio-group
+                v-model="filter.onSale"
+                :label="$t(PRODUCT.FILTER.LABELS.ON_SALE)"
+              >
+                <v-radio
+                  :label="$t(PRODUCT.FILTER.LABELS.ON_SALE_OPTIONS.ALL)"
+                  :value="NOT_SELECTED"
+                ></v-radio>
+                <v-radio
+                  :label="$t(PRODUCT.FILTER.LABELS.ON_SALE_OPTIONS.YES)"
+                  value="true"
+                ></v-radio>
+                <v-radio
+                  :label="$t(PRODUCT.FILTER.LABELS.ON_SALE_OPTIONS.NOT)"
+                  value="false"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
+          </v-row>
         </v-form>
         <v-row>
           <v-col>
             <v-btn
               class="mx-6"
               color="error"
-              @click="fecharFiltro()"
+              @click="closeFilter()"
               icon
               fab
               small
@@ -63,7 +88,7 @@
             <v-btn
               class="mx-6"
               color="accent"
-              @click="limparFiltro()"
+              @click="clearFilter()"
               icon
               fab
               small
@@ -90,6 +115,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import productsConstants from "@/store/modules/products/constants";
+import i18nConstants from "@/i18n/constants";
 
 const NOT_SELECTED = "NONE";
 
@@ -125,7 +151,7 @@ export default {
 
         this.filter = { ...this.filtered };
       } else {
-        this.limparFiltro();
+        this.clearFilter();
       }
     },
   },
@@ -133,10 +159,10 @@ export default {
     ...mapMutations(productsConstants.MODULE_NAME, [
       productsConstants.MUTATION_SET_SHOW_FILTER,
     ]),
-    fecharFiltro() {
+    closeFilter() {
       this[productsConstants.MUTATION_SET_SHOW_FILTER](false);
     },
-    limparFiltro() {
+    clearFilter() {
       this.$refs.form.reset();
       this.filter = {
         active: NOT_SELECTED,
@@ -154,6 +180,9 @@ export default {
       if (begin) this.filter.beginEndSale = date;
       else this.filter.endEndSale = date;
     },
+  },
+  created() {
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
 };
 </script>

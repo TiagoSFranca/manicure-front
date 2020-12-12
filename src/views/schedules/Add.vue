@@ -4,7 +4,9 @@
       <v-flex>
         <v-row align="center">
           <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Adicionar Agendamento</span>
+            <span class="title white--text">
+              {{ $t(SCHEDULE.ADD.NAME) }}
+            </span>
           </v-col>
 
           <v-col cols="auto" class="ml-auto">
@@ -41,9 +43,9 @@
                 <v-card-text
                   class="d-flex align-content-center flex-wrap justify-center"
                 >
-                  <span class="overline d-flex align-content-center flex-wrap"
-                    >Total</span
-                  >
+                  <span class="overline d-flex align-content-center flex-wrap">
+                    {{ $t(SCHEDULE.ADD.LABELS.TOTAL) }}
+                  </span>
                   <span class="overline ml-2 text-h4 primary--text">
                     {{ toCurrency(calcTotalProducts() + calcTotalCombos()) }}
                   </span>
@@ -85,7 +87,7 @@
         </v-row>
         <v-row>
           <v-col cols="12" sm="12" lg="12" md="12">
-            <material-schedules-add-card-questions
+            <material-schedules-card-questions
               :disabled="loading[LOADING_IDENTIFIER]"
               :loading="loading[LOADING_IDENTIFIER]"
               :questions="questions"
@@ -113,6 +115,7 @@ import appConstants from "@/store/modules/app/constants";
 import { SCHEDULES } from "@/router/routes";
 import { ToCurrency } from "@/utils/methods";
 import toastr from "@/utils/toastr";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -142,7 +145,7 @@ export default {
   methods: {
     onSave() {
       if (this.products.length == 0 && this.combos.length == 0) {
-        toastr.error("Necessário adicionar ao menos um produto ou combo");
+        toastr.error(this.$t(this.SCHEDULE.ADD.MESSAGES.NEED_PRODUCT_OR_COMBO));
         this.$refs.form.reset();
       } else {
         let products = this.products.map((item) => {
@@ -233,6 +236,9 @@ export default {
   },
   mounted() {
     this.source = axiosSourceToken.obterToken();
+  },
+  created() {
+    this.SCHEDULE = i18nConstants.SCHEDULE;
   },
 };
 </script>

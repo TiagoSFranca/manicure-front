@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <span class="overline">COMBOS</span>
+      <span class="overline">{{ $tc(COMBO.NAME, 2) }}</span>
     </v-card-title>
     <v-card-text>
       <v-row no-gutters>
@@ -19,9 +19,13 @@
 
 <script>
 import Combos from "./Combos.vue";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   components: { Combos },
   props: ["combos"],
+  created() {
+    this.COMBO = i18nConstants.COMBO;
+  },
 };
 </script>

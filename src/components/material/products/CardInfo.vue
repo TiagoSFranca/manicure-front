@@ -1,112 +1,110 @@
 <template>
   <validation-observer ref="form" v-slot="{ handleSubmit }">
-    <v-card :loading="isLoading || loading[LOADING_IDENTIFIER]">
+    <v-card
+      :loading="isLoading || loading[LOADING_IDENTIFIER]"
+      :disabled="isLoading || loading[LOADING_IDENTIFIER]"
+    >
       <v-card-title>
-        <span class="overline">DADOS GERAIS</span>
+        <span class="overline">{{ $t(PRODUCT.CARD_INFO.NAME) }}</span>
       </v-card-title>
       <v-card-text>
-        <v-container>
-          <v-form>
-            <v-row>
-              <v-col cols="12">
-                <validation-provider
-                  rules="required|max:64"
-                  v-slot="{ errors }"
-                >
-                  <v-text-field
-                    label="Nome"
-                    required
-                    v-model="item.name"
-                    :error-messages="errors"
-                    counter="64"
-                    :readonly="!isEdit"
-                  ></v-text-field>
-                </validation-provider>
-              </v-col>
-            </v-row>
-            <v-row align="start">
-              <v-col cols="4">
-                <validation-provider
-                  rules="required|greater_than:0"
-                  v-slot="{ errors }"
-                >
-                  <v-currency-field
-                    label="Valor original"
-                    v-model="item.price"
-                    :error-messages="errors"
-                    :readonly="!isEdit"
-                  />
-                </validation-provider>
-              </v-col>
-              <v-col cols="4">
-                <validation-provider
-                  :rules="`${
-                    item.onSale ? 'required|' : ''
-                  }greater_than:0|lower_than_other:${
-                    item.price
-                  },'Valor Original'`"
-                  v-slot="{ errors }"
-                >
-                  <v-currency-field
-                    label="Valor promocional"
-                    v-model="item.promotionalPrice"
-                    :error-messages="errors"
-                    :readonly="!isEdit"
-                  />
-                </validation-provider>
-              </v-col>
-              <v-col cols="4">
-                <validation-provider v-slot="{ errors }">
-                  <v-checkbox
-                    v-model="item.onSale"
-                    label="Em promoção"
-                    color="primary"
-                    hide-details
-                    :error-messages="errors"
-                    :readonly="!isEdit"
-                  ></v-checkbox>
-                </validation-provider>
-              </v-col>
-            </v-row>
-            <v-row align="start">
-              <v-col cols="4">
-                <validation-provider v-slot="{ errors }">
-                  <v-checkbox
-                    v-model="item.active"
-                    label="Ativo"
-                    color="primary"
-                    hide-details
-                    :error-messages="errors"
-                    :readonly="!isEdit"
-                  ></v-checkbox>
-                </validation-provider>
-              </v-col>
-              <v-col cols="4" class="d-sm-none d-md-flex d-lg-flex"></v-col>
-              <v-col cols="4" sm="8" md="4" lg="4">
-                <common-date-picker
-                  :date="item.endSale"
-                  :disabled="!(isEdit && item.onSale)"
+        <v-form>
+          <v-row>
+            <v-col cols="12">
+              <validation-provider rules="required|max:64" v-slot="{ errors }">
+                <v-text-field
+                  :label="$t(PRODUCT.CARD_INFO.LABELS.NAME)"
+                  required
+                  v-model="item.name"
+                  :error-messages="errors"
+                  counter="64"
                   :readonly="!isEdit"
-                  label="Fim da Promoção"
-                  @changeDate="changeDate"
+                ></v-text-field>
+              </validation-provider>
+            </v-col>
+          </v-row>
+          <v-row align="start">
+            <v-col cols="4">
+              <validation-provider
+                rules="required|greater_than:0"
+                v-slot="{ errors }"
+              >
+                <v-currency-field
+                  :label="$t(PRODUCT.CARD_INFO.LABELS.PRICE)"
+                  v-model="item.price"
+                  :error-messages="errors"
+                  :readonly="!isEdit"
                 />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <validation-provider rules="max:512" v-slot="{ errors }">
-                  <v-textarea
-                    label="Comentário"
-                    v-model="item.comments"
-                    :error-messages="errors"
-                    counter="512"
-                    :readonly="!isEdit"
-                  ></v-textarea>
-                </validation-provider>
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-container>
+              </validation-provider>
+            </v-col>
+            <v-col cols="4">
+              <validation-provider
+                :rules="`${
+                  item.onSale ? 'required|' : ''
+                }greater_than:0|lower_than_other:${item.price},'${$t(
+                  PRODUCT.CARD_INFO.LABELS.PRICE
+                )}'`"
+                v-slot="{ errors }"
+              >
+                <v-currency-field
+                  :label="$t(PRODUCT.CARD_INFO.LABELS.PROMOTIONAL_PRICE)"
+                  v-model="item.promotionalPrice"
+                  :error-messages="errors"
+                  :readonly="!isEdit"
+                />
+              </validation-provider>
+            </v-col>
+            <v-col cols="4">
+              <validation-provider v-slot="{ errors }">
+                <v-checkbox
+                  v-model="item.onSale"
+                  :label="$t(PRODUCT.CARD_INFO.LABELS.ON_SALE)"
+                  color="primary"
+                  hide-details
+                  :error-messages="errors"
+                  :readonly="!isEdit"
+                ></v-checkbox>
+              </validation-provider>
+            </v-col>
+          </v-row>
+          <v-row align="start">
+            <v-col cols="4">
+              <validation-provider v-slot="{ errors }">
+                <v-checkbox
+                  v-model="item.active"
+                  :label="$t(PRODUCT.CARD_INFO.LABELS.ACTIVE)"
+                  color="primary"
+                  hide-details
+                  :error-messages="errors"
+                  :readonly="!isEdit"
+                ></v-checkbox>
+              </validation-provider>
+            </v-col>
+            <v-col cols="4" class="d-sm-none d-md-flex d-lg-flex"></v-col>
+            <v-col cols="4" sm="8" md="4" lg="4">
+              <common-date-picker
+                :date="item.endSale"
+                :disabled="!(isEdit && item.onSale)"
+                :readonly="!isEdit"
+                :label="$t(PRODUCT.CARD_INFO.LABELS.END_SALE)"
+                @changeDate="changeDate"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <validation-provider rules="max:512" v-slot="{ errors }">
+                <v-textarea
+                  :label="$t(PRODUCT.CARD_INFO.LABELS.COMMENTS)"
+                  v-model="item.comments"
+                  :error-messages="errors"
+                  counter="512"
+                  :readonly="!isEdit"
+                ></v-textarea>
+              </validation-provider>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-card-text>
       <v-card-actions v-if="showActions">
         <v-spacer></v-spacer>
@@ -134,8 +132,8 @@
     </v-card>
     <common-confirm-dialog
       :showDialog="showDialog"
-      title="Atenção!"
-      message="Tem certeza que deseja atualizar os dados?"
+      :title="$t(PRODUCT.CARD_INFO.MESSAGES.CONFIRM_UPDATE.TITLE)"
+      :message="$t(PRODUCT.CARD_INFO.MESSAGES.CONFIRM_UPDATE.MESSAGE)"
       @close="showDialog = false"
     >
       <template slot="actions">
@@ -169,6 +167,7 @@
 import productsActions from "@/actions/productsActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["object", "isEdit", "isLoading", "showActions", "height"],
@@ -204,6 +203,9 @@ export default {
     object() {
       this.item = { ...this.object };
     },
+  },
+  created() {
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
 };
 </script>

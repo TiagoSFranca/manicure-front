@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="isLoading">
     <v-card-title class="d-flex align-start">
-      <span class="overline">materiais</span>
+      <span class="overline">{{ $t(PRODUCT.CARD_MATERIALS.NAME) }}</span>
       <v-spacer></v-spacer>
       <v-btn
         v-if="isEdit"
@@ -18,29 +18,29 @@
     </v-card-title>
 
     <div v-if="materials.length > 0">
-      <span class="overline">Total:</span>
+      <span class="overline">
+        {{ $t(PRODUCT.CARD_MATERIALS.LABELS.TOTAL) }}:
+      </span>
 
       <span class="overline ml-2">{{ calcTotal() }}</span>
     </div>
 
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col
-            v-for="material in materials"
-            :key="material.id"
-            cols="12"
-            sm="12"
-            md="4"
-            lg="3"
-          >
-            <material-products-material-item
-              v-bind:material="material"
-              :showActions="isEdit"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-row>
+        <v-col
+          v-for="material in materials"
+          :key="material.id"
+          cols="12"
+          sm="12"
+          md="4"
+          lg="3"
+        >
+          <material-products-material-item
+            v-bind:material="material"
+            :showActions="isEdit"
+          />
+        </v-col>
+      </v-row>
     </v-card-text>
     <material-products-material-add
       :showAdd="showAdd"
@@ -54,6 +54,7 @@ import productsActions from "@/actions/productsActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -74,6 +75,9 @@ export default {
         false
       );
     },
+  },
+  created() {
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
 };
 </script>

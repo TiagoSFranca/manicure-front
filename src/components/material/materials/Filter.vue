@@ -4,24 +4,25 @@
       <v-sheet class="text-center">
         <v-row>
           <v-col>
-            <div class="title">Filtrar Materiais</div>
+            <div class="title">{{ $t(MATERIAL.FILTER.NAME) }}</div>
           </v-col>
         </v-row>
         <v-form ref="form" lazy-validation @submit.prevent="submit">
-          <v-container>
-            <v-row align="start" justify="center">
-              <v-col cols="12" md="3">
-                <v-text-field v-model="filter.name" label="Nome"></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-row align="start" justify="center">
+            <v-col cols="12" md="3">
+              <v-text-field
+                v-model="filter.name"
+                :label="$t(MATERIAL.FILTER.LABELS.NAME)"
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </v-form>
         <v-row>
           <v-col>
             <v-btn
               class="mx-6"
               color="error"
-              @click="fecharFiltro()"
+              @click="closeFilter()"
               icon
               fab
               small
@@ -31,7 +32,7 @@
             <v-btn
               class="mx-6"
               color="accent"
-              @click="limparFiltro()"
+              @click="clearFilter()"
               icon
               fab
               small
@@ -58,6 +59,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import materialsConstants from "@/store/modules/materials/constants";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   props: ["loading", "filtered"],
@@ -78,7 +80,7 @@ export default {
       if (val === true) {
         this.filter = { ...this.filtered };
       } else {
-        this.limparFiltro();
+        this.clearFilter();
       }
     },
   },
@@ -86,16 +88,19 @@ export default {
     ...mapMutations(materialsConstants.MODULE_NAME, [
       materialsConstants.MUTATION_SET_SHOW_FILTER,
     ]),
-    fecharFiltro() {
+    closeFilter() {
       this[materialsConstants.MUTATION_SET_SHOW_FILTER](false);
     },
-    limparFiltro() {
+    clearFilter() {
       this.$refs.form.reset();
       this.filter = {};
     },
     onFilter() {
       this.$emit("onFilter", { ...this.filter });
     },
+  },
+  created() {
+    this.MATERIAL = i18nConstants.MATERIAL;
   },
 };
 </script>
