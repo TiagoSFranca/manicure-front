@@ -5,8 +5,8 @@ import routes from './routes'
 
 export default [
   {
-    path: routes.INDEX,
-    name: 'Inicio',
+    path: routes.INDEX.path,
+    name: routes.INDEX.name,
     view: 'Dashboard',
     meta: {
       middleware: guest
@@ -29,96 +29,104 @@ export default [
     }
   },
   {
-    path: routes.DASHBOARD,
-    name: 'Dashboard',
+    path: routes.DASHBOARD.path,
+    name: routes.DASHBOARD.name,
     view: 'Dashboard',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.PRODUCTS,
-    name: 'Produtos',
+    path: routes.PRODUCTS.path,
+    name: routes.PRODUCTS.name,
     view: 'products.Index',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.PRODUCTS_EDIT,
-    name: 'EditProduct',
+    path: routes.PRODUCTS_EDIT.path,
+    name: routes.PRODUCTS_EDIT.name,
     view: 'products.Edit',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.PRODUCTS_DETAILS,
-    name: 'ProductDetails',
+    path: routes.PRODUCTS_DETAILS.path,
+    name: routes.PRODUCTS_DETAILS.name,
     view: 'products.Details',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.MATERIALS,
-    name: 'Materiais',
+    path: routes.MATERIALS.path,
+    name: routes.MATERIALS.name,
     view: 'materials.Index',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.AGENDA,
-    name: 'Agenda',
+    path: routes.MATERIALS_EDIT.path,
+    name: routes.MATERIALS_EDIT.name,
+    view: 'materials.Edit',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
+    path: routes.AGENDA.path,
+    name: routes.AGENDA.name,
     view: 'agenda.Index',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.COMBOS,
-    name: 'Combos',
+    path: routes.COMBOS.path,
+    name: routes.COMBOS.name,
     view: 'combos.Index',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.COMBOS_EDIT,
-    name: 'EditCombo',
+    path: routes.COMBOS_EDIT.path,
+    name: routes.COMBOS_EDIT.name,
     view: 'combos.Edit',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.COMBOS_DETAILS,
-    name: 'ComboDetails',
+    path: routes.COMBOS_DETAILS.path,
+    name: routes.COMBOS_DETAILS.name,
     view: 'combos.Details',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.CLIENTS,
-    name: 'Clientes',
+    path: routes.CLIENTS.path,
+    name: routes.CLIENTS.name,
     view: 'clients.Index',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.SCHEDULES,
-    name: 'Agendamentos',
+    path: routes.SCHEDULES.path,
+    name: routes.SCHEDULES.name,
     view: 'schedules.Index',
     meta: {
       middleware: guest
     }
   },
   {
-    path: routes.SCHEDULES_ADD,
-    name: 'Adicionar Agendamento',
+    path: routes.SCHEDULES_ADD.path,
+    name: routes.SCHEDULES_ADD.name,
     view: 'schedules.Add',
     meta: {
       middleware: guest

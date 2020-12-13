@@ -40,7 +40,38 @@ export const add = (object, LOADING_IDENTIFIER = '') => {
     })
 }
 
+export const get = (id, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  materialsService
+    .get(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.MATERIALS_SET_MATERIAL, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const edit = (id, object, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return materialsService
+    .edit(id, object)
+    .then(() => {
+      store.commit(mutationTypes.MATERIALS_SET_SEARCH, true)
+      toastr.success(messages.sucesso.edicao)
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
 export default {
   search,
-  add
+  add,
+  get,
+  edit
 }

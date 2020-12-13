@@ -13,13 +13,14 @@
         v-model="dateFormatted"
         :label="label"
         persistent-hint
-        prepend-icon="mdi-calendar"
         v-bind="attrs"
         @blur="blur"
         v-on="on"
-        :disabled="!readonly && disabled"
-        :readonly="readonly"
+        :disabled="disabled"
+        readonly
         :error-messages="errors"
+        clearable
+        @click:clear="clear"
       ></v-text-field>
     </template>
     <v-date-picker
@@ -39,7 +40,7 @@ import { formatDate } from "@/utils/methods";
 import moment from "moment";
 
 export default {
-  props: ["disabled", "label", "date", "readonly", "errors", "min"],
+  props: ["disabled", "label", "date", "errors", "min"],
   data() {
     return {
       menu: false,
@@ -83,6 +84,9 @@ export default {
     },
     change() {
       this.$emit("change");
+    },
+    clear() {
+      this.changeDate(null);
     },
   },
   mounted() {

@@ -54,8 +54,26 @@ export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = ''
     })
 };
 
+export const cancel = (id, object, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return agendaService
+    .cancel(id, object)
+    .then(() => {
+      store.commit(mutationTypes.AGENDA_SET_SEARCH, true)
+      toastr.success(messages.sucesso.cadastro)
+      return { success: true };
+    }).catch(() => {
+      return { success: false };
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
 export default {
   checkStock,
   add,
-  search
+  search,
+  cancel
 }

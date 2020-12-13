@@ -8,4 +8,5 @@ export default {
   [constants.MUTATION_SET_SHOW_FILTER]: set('showFilter'),
   [constants.MUTATION_TOGGLE_SHOW_FILTER]: toggle('showFilter'),
   [constants.MUTATION_SET_PAGE]: set('page'),
+  [constants.MUTATION_SET_MATERIAL]: set('material'),
 }

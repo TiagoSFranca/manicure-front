@@ -1,6 +1,7 @@
 import actionTypes from '@/store/actionTypes'
 import moment from 'moment';
 import i18nConstants from "@/i18n/constants";
+import { SCHEDULE_STATUS } from './constants'
 
 export const ToDecimal = (value) => {
   value = value || "";
@@ -54,4 +55,9 @@ export const getScheduleStatusColor = (idStatus, date) => {
   else if (idStatus == 3) return "grey";
   else if (idStatus == 5) return "success";
   return "blue";
+}
+
+export const checkDisabledCancelScheduleFromStatus = (idScheduleStatus) => {
+  let ids = [SCHEDULE_STATUS.OPENED, SCHEDULE_STATUS.OPENED_WITHOT_STOCK];
+  return !ids.includes(idScheduleStatus);
 }

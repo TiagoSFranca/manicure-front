@@ -2,26 +2,20 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout wrap>
       <v-flex>
-        <v-row align="center">
-          <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">{{ $t(PRODUCT.EDIT.NAME) }}</span>
-          </v-col>
-
+        <core-page-title :title="$t(PRODUCT.EDIT.NAME)">
           <v-col cols="auto" class="ml-auto">
             <v-btn
               color="error"
               elevation="2"
-              fab
-              outlined
-              rounded
-              small
+              icon
+              large
               :loading="loading[LOADING_IDENTIFIER]"
-              @click="comeBack"
+              :to="{ name: PRODUCTS.name }"
             >
               <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
           </v-col>
-        </v-row>
+        </core-page-title>
         <v-row>
           <v-col cols="12" sm="12" lg="12" md="12">
             <material-products-card-info
@@ -70,6 +64,7 @@ export default {
       LOADING_IDENTIFIER: "searchProduct",
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
       LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
+      PRODUCTS: PRODUCTS,
     };
   },
   methods: {
@@ -95,9 +90,6 @@ export default {
         this.source,
         this.LOADING_IDENTIFIER_MATERIALS
       );
-    },
-    comeBack() {
-      this.$router.push({ path: PRODUCTS });
     },
   },
   created() {

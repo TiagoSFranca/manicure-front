@@ -18,6 +18,17 @@ export default {
   [constants.MATERIAL.ADD.LABELS.QTY]: "Quantidade",
   [constants.MATERIAL.FILTER.NAME]: "Filtrar Material",
   [constants.MATERIAL.FILTER.LABELS.NAME]: "Nome",
+  [constants.MATERIAL.EDIT.NAME]: "Editar Material",
+  [constants.MATERIAL.EDIT.LABELS.ADD_ON_STOCK]: "Adicionar ao estoque",
+  [constants.MATERIAL.EDIT.LABELS.REMOVE_FROM_STOCK]: "Remover do estoque",
+  [constants.MATERIAL.CARD_INFO.NAME]: "Dados gerais",
+  [constants.MATERIAL.CARD_INFO.LABELS.NAME]: "Nome",
+  [constants.MATERIAL.CARD_INFO.LABELS.PRICE]: "Preço",
+  [constants.MATERIAL.CARD_INFO.LABELS.AVALIABLE_QTY]: "Qtd disponível",
+  [constants.MATERIAL.CARD_INFO.LABELS.RESERVED_QTY]: "Qtd reservada",
+  [constants.MATERIAL.CARD_INFO.LABELS.QTY_TOTAL]: "Qtd total",
+  [constants.MATERIAL.CARD_INFO.MESSAGES.CONFIRM_UPDATE.TITLE]: "Atenção!",
+  [constants.MATERIAL.CARD_INFO.MESSAGES.CONFIRM_UPDATE.MESSAGE]: "Tem certeza que deseja atualizar os dados?",
 
   [constants.DASHBOARD.NAME]: "Dashboard",
 
@@ -77,6 +88,9 @@ export default {
   [constants.SCHEDULE.CARD_QUESTIONS.LABELS.ALLERGY_MEDICINE]: "Qual medicamento?",
   [constants.SCHEDULE.CARD_QUESTIONS.LABELS.ANTICOAGULANT_MEDICATION]: "Medicamento Anticoagulante",
   [constants.SCHEDULE.CARD_QUESTIONS.LABELS.COMMENTS]: "Observações",
+  [constants.SCHEDULE.CANCEL.NAME]: "Cancelar agendamento {identifier}",
+  [constants.SCHEDULE.CANCEL.LABELS.CANCELLATION_REASON]: "Justificativa",
+  [constants.SCHEDULE.CANCEL.MESSAGES.CONFIRM_CANCEL]: "Deseja cancelar o agendamento de {clientName} para o dia {date}?",
 
   [constants.PRODUCT.NAME]: "Produto | Produtos",
   [constants.PRODUCT.LIST.NAME]: "Nome",

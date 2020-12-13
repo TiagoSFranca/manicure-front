@@ -27,7 +27,7 @@ import appConstants from "@/store/modules/app/constants";
 import i18nConstants from "@/i18n/constants";
 
 export default {
-  props: ["combos", "isLoading", "height"],
+  props: ["combos", "isLoading"],
   methods: {
     seeCombo(combo) {
       this.$router.push({ path: "/GOOGLE".replace(":id", combo.id) });

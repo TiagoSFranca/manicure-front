@@ -22,7 +22,27 @@ export const add = (object) => {
   })
 }
 
+export const get = (id, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+};
+
+export const edit = (id, object) => {
+  return new Promise((resolve, reject) => {
+    return axios.put(`${RESOURCE_NAME}/${id}`, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
 export default {
   search,
-  add
+  add,
+  get,
+  edit
 }

@@ -5,15 +5,15 @@
       :disabled="isLoading || loading[LOADING_IDENTIFIER]"
     >
       <v-card-title>
-        <span class="overline">{{ $t(COMBO.CARD_INFO.NAME) }}</span>
+        <span class="overline">{{ $t(MATERIAL.CARD_INFO.NAME) }}</span>
       </v-card-title>
       <v-card-text>
         <v-form>
           <v-row>
-            <v-col cols="12">
+            <v-col cols="8">
               <validation-provider rules="required|max:64" v-slot="{ errors }">
                 <v-text-field
-                  :label="$t(COMBO.CARD_INFO.LABELS.NAME)"
+                  :label="$t(MATERIAL.CARD_INFO.LABELS.NAME)"
                   required
                   v-model="item.name"
                   :error-messages="errors"
@@ -22,85 +22,49 @@
                 ></v-text-field>
               </validation-provider>
             </v-col>
-          </v-row>
-          <v-row align="start">
             <v-col cols="4">
               <validation-provider
                 rules="required|greater_than:0"
                 v-slot="{ errors }"
               >
                 <v-currency-field
-                  :label="$t(COMBO.CARD_INFO.LABELS.PRICE)"
+                  :label="$t(MATERIAL.CARD_INFO.LABELS.PRICE)"
                   v-model="item.price"
                   :error-messages="errors"
                   :readonly="!isEdit"
                 />
               </validation-provider>
             </v-col>
+          </v-row>
+          <v-row align="start">
             <v-col cols="4">
-              <validation-provider
-                :rules="`${
-                  item.onSale ? 'required|' : ''
-                }greater_than:0|lower_than_other:${item.price},'${$t(
-                  COMBO.CARD_INFO.LABELS.PRICE
-                )}'`"
-                v-slot="{ errors }"
-              >
+              <validation-provider v-slot="{ errors }">
                 <v-currency-field
-                  :label="$t(COMBO.CARD_INFO.LABELS.PROMOTIONAL_PRICE)"
-                  v-model="item.promotionalPrice"
+                  :label="$t(MATERIAL.CARD_INFO.LABELS.AVALIABLE_QTY)"
+                  v-model="item.qty"
                   :error-messages="errors"
-                  :readonly="!isEdit"
+                  disabled
                 />
               </validation-provider>
             </v-col>
             <v-col cols="4">
               <validation-provider v-slot="{ errors }">
-                <v-checkbox
-                  v-model="item.onSale"
-                  :label="$t(COMBO.CARD_INFO.LABELS.ON_SALE)"
-                  color="primary"
-                  hide-details
+                <v-currency-field
+                  :label="$t(MATERIAL.CARD_INFO.LABELS.RESERVED_QTY)"
+                  v-model="item.reservedQty"
                   :error-messages="errors"
-                  :readonly="!isEdit"
-                ></v-checkbox>
+                  disabled
+                />
               </validation-provider>
             </v-col>
-          </v-row>
-          <v-row align="start">
             <v-col cols="4">
               <validation-provider v-slot="{ errors }">
-                <v-checkbox
-                  v-model="item.active"
-                  :label="$t(COMBO.CARD_INFO.LABELS.ACTIVE)"
-                  color="primary"
-                  hide-details
+                <v-currency-field
+                  :label="$t(MATERIAL.CARD_INFO.LABELS.QTY_TOTAL)"
+                  v-model="item.qtyTotal"
                   :error-messages="errors"
-                  :readonly="!isEdit"
-                ></v-checkbox>
-              </validation-provider>
-            </v-col>
-            <v-col cols="4" class="d-sm-none d-md-flex d-lg-flex"></v-col>
-            <v-col cols="4" sm="8" md="4" lg="4">
-              <common-date-picker
-                :date="item.endSale"
-                :disabled="!(isEdit && item.onSale)"
-                :readonly="!isEdit"
-                :label="$t(COMBO.CARD_INFO.LABELS.END_SALE)"
-                @changeDate="changeDate"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <validation-provider rules="max:512" v-slot="{ errors }">
-                <v-textarea
-                  :label="$t(COMBO.CARD_INFO.LABELS.COMMENTS)"
-                  v-model="item.comments"
-                  :error-messages="errors"
-                  counter="512"
-                  :readonly="!isEdit"
-                ></v-textarea>
+                  disabled
+                />
               </validation-provider>
             </v-col>
           </v-row>
@@ -132,8 +96,8 @@
     </v-card>
     <common-confirm-dialog
       :showDialog="showDialog"
-      :title="$t(COMBO.CARD_INFO.MESSAGES.CONFIRM_UPDATE.TITLE)"
-      :message="$t(COMBO.CARD_INFO.MESSAGES.CONFIRM_UPDATE.MESSAGE)"
+      :title="$t(MATERIAL.CARD_INFO.MESSAGES.CONFIRM_UPDATE.TITLE)"
+      :message="$t(MATERIAL.CARD_INFO.MESSAGES.CONFIRM_UPDATE.MESSAGE)"
       @close="showDialog = false"
     >
       <template slot="actions">
@@ -164,7 +128,7 @@
 </template>
 
 <script>
-import combosActions from "@/actions/combosActions";
+import materialsActions from "@/actions/materialsActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import i18nConstants from "@/i18n/constants";
@@ -175,7 +139,7 @@ export default {
     return {
       showDialog: false,
       menu: false,
-      LOADING_IDENTIFIER: "editCombo",
+      LOADING_IDENTIFIER: "editMaterial",
       item: {},
     };
   },
@@ -189,11 +153,8 @@ export default {
     },
     save() {
       let id = this.$route.params.id;
-      combosActions.edit(id, this.item, this.LOADING_IDENTIFIER);
+      materialsActions.edit(id, this.item, this.LOADING_IDENTIFIER);
       this.showDialog = false;
-    },
-    changeDate(date) {
-      this.item.endSale = date;
     },
   },
   computed: {
@@ -205,7 +166,7 @@ export default {
     },
   },
   created() {
-    this.COMBO = i18nConstants.COMBO;
+    this.MATERIAL = i18nConstants.MATERIAL;
   },
 };
 </script>

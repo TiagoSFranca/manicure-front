@@ -59,7 +59,7 @@ export default {
       showAdd: false,
     };
   },
-  props: ["products", "isLoading", "isEdit", "height"],
+  props: ["products", "isLoading", "isEdit"],
   methods: {
     getCurrPrice(product) {
       return product.onSale ? product.promotionalPrice : product.price;

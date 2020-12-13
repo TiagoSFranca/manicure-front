@@ -79,33 +79,34 @@
                   v-model="item.inLoco"
                   disabled
                   color="primary"
-                ></v-simple-checkbox>
+                />
               </template>
               <template v-slot:item.actions="{ item }">
                 <v-icon
                   @click="seeItem(item, false)"
                   dark
                   :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-eye-outline</v-icon
                 >
-                <v-icon
-                  @click="seeItem(item)"
-                  color="accent"
-                  :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-pencil-outline</v-icon
-                >
+                  mdi-eye-outline
+                </v-icon>
                 <v-icon
                   @click="seeItem(item)"
                   color="success"
-                  :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-check</v-icon
+                  :disabled="
+                    loading[LOADING_IDENTIFIER] || setCancelDisabled(item)
+                  "
                 >
+                  mdi-check
+                </v-icon>
                 <v-icon
-                  @click="deleteItem(item)"
+                  @click="cancelItem(item)"
                   color="error"
-                  :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-delete-outline</v-icon
+                  :disabled="
+                    loading[LOADING_IDENTIFIER] || setCancelDisabled(item)
+                  "
                 >
+                  mdi-delete-outline
+                </v-icon>
               </template>
             </v-data-table>
           </v-col>
@@ -115,6 +116,11 @@
           @onFilter="onFilter"
           :loading="loading[LOADING_IDENTIFIER]"
           :filtered="filter"
+        />
+        <material-schedules-cancel
+          :showCancel="showCancel"
+          @fechar="showCancel = false"
+          :schedule="scheduleToCancel"
         />
       </v-flex>
     </v-layout>
@@ -129,6 +135,7 @@ import {
   formatDate,
   getScheduleStatusText,
   getScheduleStatusColor,
+  checkDisabledCancelScheduleFromStatus,
 } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
@@ -140,6 +147,8 @@ export default {
   data() {
     return {
       showAdd: false,
+      showCancel: false,
+      scheduleToCancel: {},
       source: "",
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
@@ -232,6 +241,13 @@ export default {
     },
     getText(item) {
       return this.$t(getScheduleStatusText(item.idScheduleStatus, item.date));
+    },
+    cancelItem(item) {
+      this.showCancel = true;
+      this.scheduleToCancel = item;
+    },
+    setCancelDisabled(item) {
+      return checkDisabledCancelScheduleFromStatus(item.idScheduleStatus);
     },
   },
   created() {

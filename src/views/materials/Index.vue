@@ -62,12 +62,14 @@
                   :disabled="loading[LOADING_IDENTIFIER]"
                   >mdi-eye-outline</v-icon
                 >
-                <v-icon
-                  @click="seeItem(item)"
-                  color="accent"
+                <v-btn
+                  icon
+                  :to="{ name: MATERIALS_EDIT.name, params: { id: item.id } }"
                   :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-pencil-outline</v-icon
+                  color="accent"
                 >
+                  <v-icon>mdi-pencil-outline</v-icon>
+                </v-btn>
                 <v-icon
                   @click="deleteItem(item)"
                   color="error"
@@ -131,12 +133,13 @@ export default {
           value: "qtyTotal",
           align: "center",
         },
-        { text: "", value: "actions", sortable: false },
+        { text: "", value: "actions", sortable: false, align: "end" },
       ],
       filter: {},
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchMaterials",
+      MATERIALS_EDIT: MATERIALS_EDIT,
     };
   },
   methods: {

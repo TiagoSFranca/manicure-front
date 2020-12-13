@@ -30,8 +30,17 @@ export const search = (query, source) => {
   })
 };
 
+export const cancel = (id, object) => {
+  return new Promise((resolve, reject) => {
+    return axios.post(`${RESOURCE_NAME}/cancel/${id}`, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
 export default {
   checkStock,
   add,
-  search
+  search,
+  cancel
 }

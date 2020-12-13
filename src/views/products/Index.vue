@@ -2,13 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout wrap>
       <v-flex>
-        <v-row align="center">
-          <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">
-              {{ $tc(i18nConstants.PRODUCT.NAME, 2) }}
-            </span>
-          </v-col>
-
+        <core-page-title :title="$tc(i18nConstants.PRODUCT.NAME, 2)">
           <v-col cols="auto" class="ml-auto">
             <v-btn
               color="accent"
@@ -36,7 +30,7 @@
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-col>
-        </v-row>
+        </core-page-title>
         <v-row>
           <v-col cols="12">
             <v-data-table
@@ -76,24 +70,32 @@
                 ></v-simple-checkbox>
               </template>
               <template v-slot:item.actions="{ item }">
-                <v-icon
-                  @click="seeItem(item, false)"
-                  dark
+                <v-btn
+                  icon
                   :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-eye-outline</v-icon
+                  :to="{ name: PRODUCTS_DETAILS.name, params: { id: item.id } }"
+                  small
                 >
-                <v-icon
-                  @click="seeItem(item)"
+                  <v-icon>mdi-eye-outline</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
                   color="accent"
                   :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-pencil-outline</v-icon
+                  :to="{ name: PRODUCTS_EDIT.name, params: { id: item.id } }"
+                  small
                 >
-                <v-icon
-                  @click="deleteItem(item)"
+                  <v-icon>mdi-pencil-outline</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
                   color="error"
+                  @click="deleteItem(item)"
                   :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-delete-outline</v-icon
+                  small
                 >
+                  <v-icon>mdi-delete-outline</v-icon>
+                </v-btn>
               </template>
             </v-data-table>
           </v-col>
@@ -163,6 +165,8 @@ export default {
       sort: {},
       LOADING_IDENTIFIER: "searchProducts",
       formatDate: formatDate,
+      PRODUCTS_EDIT: PRODUCTS_EDIT,
+      PRODUCTS_DETAILS: PRODUCTS_DETAILS,
     };
   },
   methods: {

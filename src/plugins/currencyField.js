@@ -8,5 +8,5 @@ Vue.use(VCurrencyField, {
   min: null,
   max: null,
   valueAsInteger: false,
-  allowNegative: false
+  allowNegative: true
 })

@@ -170,7 +170,7 @@ import appConstants from "@/store/modules/app/constants";
 import i18nConstants from "@/i18n/constants";
 
 export default {
-  props: ["object", "isEdit", "isLoading", "showActions", "height"],
+  props: ["object", "isEdit", "isLoading", "showActions"],
   data() {
     return {
       showDialog: false,

@@ -62,7 +62,7 @@ export default {
       showAdd: false,
     };
   },
-  props: ["materials", "isLoading", "isEdit", "height"],
+  props: ["materials", "isLoading", "isEdit"],
   methods: {
     calcTotal() {
       let p = this.materials.map((cur) => {
