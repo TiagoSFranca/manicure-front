@@ -36,6 +36,7 @@ export default {
 
   MATERIALS,
   MATERIALS_EDIT,
+  MATERIALS_DETAILS,
 
   AGENDA,
 

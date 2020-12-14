@@ -77,6 +77,14 @@ export default [
     }
   },
   {
+    path: routes.MATERIALS_DETAILS.path,
+    name: routes.MATERIALS_DETAILS.name,
+    view: 'materials.Edit',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
     path: routes.AGENDA.path,
     name: routes.AGENDA.name,
     view: 'agenda.Index',

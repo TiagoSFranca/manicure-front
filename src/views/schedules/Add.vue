@@ -18,7 +18,7 @@
               rounded
               small
               :loading="loading[LOADING_IDENTIFIER]"
-              @click="comeBack"
+              :to="SCHEDULES"
             >
               <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
@@ -140,6 +140,7 @@ export default {
       },
       stockErrors: {},
       requestObject: {},
+      SCHEDULES: SCHEDULES,
     };
   },
   methods: {
@@ -185,9 +186,6 @@ export default {
             console.log("NÂO SALVOU");
           }
         });
-    },
-    comeBack() {
-      this.$router.push({ path: SCHEDULES });
     },
     changeProducts(products) {
       this.products = products;

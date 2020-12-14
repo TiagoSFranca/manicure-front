@@ -43,6 +43,18 @@
                     v-slot="{ errors }"
                   >
                     <v-currency-field
+                      :label="$t(MATERIAL.ADD.LABELS.MIN_QTY)"
+                      v-model="object.minQty"
+                      :error-messages="errors"
+                    />
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4">
+                  <validation-provider
+                    rules="required|greater_than:0"
+                    v-slot="{ errors }"
+                  >
+                    <v-currency-field
                       :label="$t(MATERIAL.ADD.LABELS.QTY)"
                       v-model="object.qty"
                       :error-messages="errors"
@@ -97,6 +109,7 @@ export default {
       object: {
         name: "",
         price: "",
+        minQty: "",
         qty: "",
       },
       LOADING_IDENTIFIER: "addMaterial",

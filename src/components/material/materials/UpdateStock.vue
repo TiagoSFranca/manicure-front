@@ -5,17 +5,37 @@
         <v-card :disabled="loading[LOADING_IDENTIFIER]">
           <v-card-title>
             <span class="headline">
-              {{ isAdd ? "Adicionar ao estoque" : "Remover do estoque" }}
+              {{
+                $t(
+                  isAdd
+                    ? MATERIAL.UPDATE_STOCK.NAME_ADD
+                    : MATERIAL.UPDATE_STOCK.NAME_REMOVE
+                )
+              }}
             </span>
           </v-card-title>
           <v-card-text>
             <v-form>
               <v-row>
+                <v-col cols="12" lg="4" md="4" offset="8">
+                  <validation-provider
+                    rules="required|greater_than:0"
+                    v-slot="{ errors }"
+                  >
+                    <v-currency-field
+                      :label="$t(MATERIAL.UPDATE_STOCK.LABELS.QTY)"
+                      v-model="object.qty"
+                      :error-messages="errors"
+                    />
+                  </validation-provider>
+                </v-col>
+              </v-row>
+              <v-row>
                 <v-col cols="12">
                   <validation-provider rules="max:512" v-slot="{ errors }">
                     <v-textarea
-                      :label="$t(SCHEDULE.CANCEL.LABELS.CANCELLATION_REASON)"
-                      v-model="object.cancellationReason"
+                      :label="$t(MATERIAL.UPDATE_STOCK.LABELS.COMMENTS)"
+                      v-model="object.comments"
                       :error-messages="errors"
                       counter="512"
                     ></v-textarea>
@@ -53,10 +73,9 @@
 </template>
 
 <script>
-import agendaActions from "@/actions/agendaActions";
+import materialsActions from "@/actions/materialsActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
-import { SCHEDULES_EDIT } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import { formatDate } from "@/utils/methods";
 
@@ -66,7 +85,12 @@ export default {
     return {
       visible: false,
       object: {
-        cancellationReason: null,
+        qty: null,
+        comments: null,
+      },
+      defObject: {
+        qty: null,
+        comments: null,
       },
       LOADING_IDENTIFIER: "updateStock",
       formatDate: formatDate,
@@ -77,16 +101,20 @@ export default {
       this.$refs.form.reset();
       this.$emit("fechar");
       this.visible = false;
-      this.object = { cancellationReason: null };
+      this.object = { ...this.defObject };
     },
     show() {
       this.visible = true;
     },
     save() {
-      agendaActions
-        .cancel(this.material.id, this.object, this.LOADING_IDENTIFIER)
+      materialsActions
+        .updateStock(
+          this.material.id,
+          { ...this.object, isAdd: this.isAdd },
+          this.LOADING_IDENTIFIER
+        )
         .then((res) => {
-          if (res.success) {
+          if (res) {
             this.hide();
           }
         });
@@ -102,7 +130,7 @@ export default {
     },
   },
   created() {
-    this.SCHEDULE = i18nConstants.SCHEDULE;
+    this.MATERIAL = i18nConstants.MATERIAL;
   },
 };
 </script>

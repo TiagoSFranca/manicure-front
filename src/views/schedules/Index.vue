@@ -237,17 +237,17 @@ export default {
       else this.$router.push({ path: AGENDA_DETAILS.replace(":id", item.id) });
     },
     getColor(item) {
-      return getScheduleStatusColor(item.idScheduleStatus, item.date);
+      return getScheduleStatusColor(item.status);
     },
     getText(item) {
-      return this.$t(getScheduleStatusText(item.idScheduleStatus, item.date));
+      return this.$t(getScheduleStatusText(item.status));
     },
     cancelItem(item) {
       this.showCancel = true;
       this.scheduleToCancel = item;
     },
     setCancelDisabled(item) {
-      return checkDisabledCancelScheduleFromStatus(item.idScheduleStatus);
+      return checkDisabledCancelScheduleFromStatus(item.status);
     },
   },
   created() {

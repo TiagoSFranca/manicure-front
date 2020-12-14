@@ -10,7 +10,7 @@
       <v-card-text>
         <v-form>
           <v-row>
-            <v-col cols="8">
+            <v-col cols="4">
               <validation-provider rules="required|max:64" v-slot="{ errors }">
                 <v-text-field
                   :label="$t(MATERIAL.CARD_INFO.LABELS.NAME)"
@@ -30,6 +30,19 @@
                 <v-currency-field
                   :label="$t(MATERIAL.CARD_INFO.LABELS.PRICE)"
                   v-model="item.price"
+                  :error-messages="errors"
+                  :readonly="!isEdit"
+                />
+              </validation-provider>
+            </v-col>
+            <v-col cols="4">
+              <validation-provider
+                rules="required|greater_than:0"
+                v-slot="{ errors }"
+              >
+                <v-currency-field
+                  :label="$t(MATERIAL.CARD_INFO.LABELS.MIN_QTY)"
+                  v-model="item.minQty"
                   :error-messages="errors"
                   :readonly="!isEdit"
                 />
@@ -60,8 +73,8 @@
             <v-col cols="4">
               <validation-provider v-slot="{ errors }">
                 <v-currency-field
-                  :label="$t(MATERIAL.CARD_INFO.LABELS.QTY_TOTAL)"
-                  v-model="item.qtyTotal"
+                  :label="$t(MATERIAL.CARD_INFO.LABELS.USED_QTY)"
+                  v-model="item.usedQty"
                   :error-messages="errors"
                   disabled
                 />

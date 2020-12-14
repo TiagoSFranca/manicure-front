@@ -29,13 +29,15 @@
             </v-col>
             <v-col cols="12" class="text-left pt-0">
               <span class="overline">{{ $t(GENERAL.LABELS.PRICE) }}:</span>
-              <span class="ml-2 caption">{{
-                toCurrency(
-                  product.product.onSale
-                    ? product.product.promotionalPrice
-                    : product.product.price
-                )
-              }}</span>
+              <span class="ml-2 caption">
+                {{
+                  toCurrency(
+                    product.product.onSale
+                      ? product.product.promotionalPrice
+                      : product.product.price
+                  )
+                }}
+              </span>
             </v-col>
           </v-row>
         </v-card-text>
@@ -80,7 +82,8 @@ export default {
     },
     seeProduct(product) {
       let routeData = this.$router.resolve({
-        path: PRODUCTS_DETAILS.replace(":id", product.id),
+        name: PRODUCTS_DETAILS.name,
+        params: { id: product.id },
       });
       window.open(routeData.href, "_blank");
     },

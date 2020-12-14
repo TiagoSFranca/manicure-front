@@ -134,10 +134,15 @@
     >
       <template slot="actions">
         <v-spacer></v-spacer>
-        <v-btn color="error" @click="() => redirect(false)" icon fab>
+        <v-btn color="error" @click="() => hide()" icon fab>
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-btn color="success" icon fab @click="() => redirect(true)">
+        <v-btn
+          color="success"
+          icon
+          fab
+          :to="{ name: PRODUCTS_EDIT.name, params: { id: idProduct } }"
+        >
           <v-icon>mdi-check</v-icon>
         </v-btn>
       </template>
@@ -172,6 +177,7 @@ export default {
       },
       LOADING_IDENTIFIER: "addProduct",
       idProduct: "",
+      PRODUCTS_EDIT: PRODUCTS_EDIT,
     };
   },
   methods: {

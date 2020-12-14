@@ -52,16 +52,35 @@
               :loading="loading[LOADING_IDENTIFIER] === true"
               :multi-sort="false"
             >
+              <template v-slot:item.status="{ item }">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :color="getColor(item)"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      fab
+                      x-small
+                    />
+                  </template>
+                  <span>{{ getText(item) }}</span>
+                </v-tooltip>
+              </template>
               <template v-slot:item.price="{ item }">
                 <span>{{ toCurrency(item.price) }}</span>
               </template>
               <template v-slot:item.actions="{ item }">
-                <v-icon
-                  @click="seeItem(item, false)"
-                  dark
+                <v-btn
+                  icon
+                  :to="{
+                    name: MATERIALS_DETAILS.name,
+                    params: { id: item.id },
+                  }"
                   :disabled="loading[LOADING_IDENTIFIER]"
-                  >mdi-eye-outline</v-icon
                 >
+                  <v-icon>mdi-eye-outline</v-icon>
+                </v-btn>
                 <v-btn
                   icon
                   :to="{ name: MATERIALS_EDIT.name, params: { id: item.id } }"
@@ -96,7 +115,11 @@
 import materialsActions from "@/actions/materialsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
-import { ToCurrency } from "@/utils/methods";
+import {
+  ToCurrency,
+  getMaterialStatusText,
+  getMaterialStatusColor,
+} from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import { MATERIALS_EDIT, MATERIALS_DETAILS } from "@/router/routes";
@@ -108,6 +131,7 @@ export default {
       showAdd: false,
       source: "",
       headers: [
+        { text: "", value: "status", sortable: false, align: "center" },
         {
           text: this.$t(i18nConstants.MATERIAL.LIST.NAME),
           align: "start",
@@ -124,13 +148,18 @@ export default {
           align: "center",
         },
         {
+          text: this.$t(i18nConstants.MATERIAL.LIST.MIN_QTY),
+          value: "minQty",
+          align: "center",
+        },
+        {
           text: this.$t(i18nConstants.MATERIAL.LIST.RESERVED_QTY),
           value: "reservedQty",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.MATERIAL.LIST.TOTAL_QTY),
-          value: "qtyTotal",
+          text: this.$t(i18nConstants.MATERIAL.LIST.USED_QTY),
+          value: "usedQty",
           align: "center",
         },
         { text: "", value: "actions", sortable: false, align: "end" },
@@ -140,6 +169,7 @@ export default {
       sort: {},
       LOADING_IDENTIFIER: "searchMaterials",
       MATERIALS_EDIT: MATERIALS_EDIT,
+      MATERIALS_DETAILS: MATERIALS_DETAILS,
     };
   },
   methods: {
@@ -189,11 +219,11 @@ export default {
     toCurrency(value) {
       return ToCurrency(value, true, false);
     },
-    seeItem(item, isEdit = true) {
-      if (isEdit)
-        this.$router.push({ path: MATERIALS_EDIT.replace(":id", item.id) });
-      else
-        this.$router.push({ path: MATERIALS_DETAILS.replace(":id", item.id) });
+    getColor(item) {
+      return getMaterialStatusColor(item.status);
+    },
+    getText(item) {
+      return this.$t(getMaterialStatusText(item.status));
     },
   },
   created() {

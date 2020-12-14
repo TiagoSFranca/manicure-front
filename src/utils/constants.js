@@ -24,8 +24,15 @@ export const paginacaoList = {
 }
 
 export const SCHEDULE_STATUS = {
-  OPENED: 1,
-  OPENED_WITHOT_STOCK: 2,
-  CANCELED: 3,
-  FINISHED: 4
+  FINISHED: 1,
+  CANCELED: 2,
+  LATE: 3,
+  WITHOT_STOCK: 4,
+  OK: 5,
+}
+
+export const MATERIAL_STATUS = {
+  OK: 1,
+  WARNING: 2,
+  ERROR: 3
 }

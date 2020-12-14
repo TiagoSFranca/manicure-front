@@ -100,8 +100,8 @@ export default {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
   watch: {
-    search() {
-      this.searchMaterial();
+    search(val) {
+      if (val) this.searchMaterial();
     },
   },
   beforeRouteLeave(to, from, next) {

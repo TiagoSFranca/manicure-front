@@ -72,7 +72,6 @@
 import agendaActions from "@/actions/agendaActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
-import { SCHEDULES_EDIT } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import { formatDate } from "@/utils/methods";
 
