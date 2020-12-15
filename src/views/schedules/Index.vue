@@ -1,130 +1,123 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <v-row align="center">
-          <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">
-              {{ $tc(i18nConstants.SCHEDULE.NAME, 2) }}
-            </span>
-          </v-col>
+  <div>
+    <v-row align="center">
+      <v-col cols="auto" class="mr-auto">
+        <span class="title white--text">
+          {{ $tc(i18nConstants.SCHEDULE.NAME, 2) }}
+        </span>
+      </v-col>
 
-          <v-col cols="auto" class="ml-auto">
-            <v-btn
-              color="accent"
-              elevation="2"
-              fab
-              outlined
-              rounded
-              small
-              @click="onShowFilter()"
-              :disabled="showFilter"
-            >
-              <v-icon>mdi-filter</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col cols="auto">
-            <v-btn
-              color="accent"
-              elevation="2"
-              fab
-              outlined
-              rounded
-              small
-              :to="SCHEDULES_ADD"
-            >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-data-table
-              :headers="headers"
-              :items="agenda"
-              class="elevation-1"
-              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
-              hide-default-footer
-              :custom-sort="onSort"
-              :disable-pagination="true"
-              :disable-filtering="true"
-              :disable-sort="!!loading[LOADING_IDENTIFIER]"
-              :loading="loading[LOADING_IDENTIFIER] === true"
-              :multi-sort="false"
-            >
-              <template v-slot:item.status="{ item }">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      :color="getColor(item)"
-                      dark
-                      v-bind="attrs"
-                      v-on="on"
-                      fab
-                      x-small
-                    >
-                    </v-btn>
-                  </template>
-                  <span>{{ getText(item) }}</span>
-                </v-tooltip>
-              </template>
-              <template v-slot:item.id="{ item }">
-                <span>{{ "#" + item.id }}</span>
-              </template>
-              <template v-slot:item.date="{ item }">
-                <span>{{ formatDate(item.date) }}</span>
-              </template>
-              <template v-slot:item.inLoco="{ item }">
-                <v-simple-checkbox
-                  v-model="item.inLoco"
-                  disabled
-                  color="primary"
-                />
-              </template>
-              <template v-slot:item.actions="{ item }">
-                <v-icon
-                  @click="seeItem(item, false)"
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="accent"
+          elevation="2"
+          fab
+          outlined
+          rounded
+          small
+          @click="onShowFilter()"
+          :disabled="showFilter"
+        >
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          color="accent"
+          elevation="2"
+          fab
+          outlined
+          rounded
+          small
+          :to="SCHEDULES_ADD"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-data-table
+          :headers="headers"
+          :items="agenda"
+          class="elevation-1"
+          :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
+          hide-default-footer
+          :custom-sort="onSort"
+          :disable-pagination="true"
+          :disable-filtering="true"
+          :disable-sort="!!loading[LOADING_IDENTIFIER]"
+          :loading="loading[LOADING_IDENTIFIER] === true"
+          :multi-sort="false"
+        >
+          <template v-slot:item.status="{ item }">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  :color="getColor(item)"
                   dark
-                  :disabled="loading[LOADING_IDENTIFIER]"
+                  v-bind="attrs"
+                  v-on="on"
+                  fab
+                  x-small
                 >
-                  mdi-eye-outline
-                </v-icon>
-                <v-icon
-                  @click="seeItem(item)"
-                  color="success"
-                  :disabled="
-                    loading[LOADING_IDENTIFIER] || setCancelDisabled(item)
-                  "
-                >
-                  mdi-check
-                </v-icon>
-                <v-icon
-                  @click="cancelItem(item)"
-                  color="error"
-                  :disabled="
-                    loading[LOADING_IDENTIFIER] || setCancelDisabled(item)
-                  "
-                >
-                  mdi-delete-outline
-                </v-icon>
+                </v-btn>
               </template>
-            </v-data-table>
-          </v-col>
-        </v-row>
-        <core-pagination :page="page" @onPaging="onPaging" />
-        <material-schedules-filter
-          @onFilter="onFilter"
-          :loading="loading[LOADING_IDENTIFIER]"
-          :filtered="filter"
-        />
-        <material-schedules-cancel
-          :showCancel="showCancel"
-          @fechar="showCancel = false"
-          :schedule="scheduleToCancel"
-        />
-      </v-flex>
-    </v-layout>
-  </v-container>
+              <span>{{ getText(item) }}</span>
+            </v-tooltip>
+          </template>
+          <template v-slot:item.id="{ item }">
+            <span>{{ "#" + item.id }}</span>
+          </template>
+          <template v-slot:item.date="{ item }">
+            <span>{{ formatDate(item.date) }}</span>
+          </template>
+          <template v-slot:item.inLoco="{ item }">
+            <v-simple-checkbox v-model="item.inLoco" disabled color="primary" />
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <v-btn
+              icon
+              :to="{
+                name: SCHEDULES_DETAILS.name,
+                params: { id: item.id },
+              }"
+              :disabled="loading[LOADING_IDENTIFIER]"
+            >
+              <v-icon> mdi-eye-outline </v-icon>
+            </v-btn>
+            <v-btn
+              icon
+              color="success"
+              :to="{ name: SCHEDULES_FINISH.name, params: { id: item.id } }"
+              :disabled="loading[LOADING_IDENTIFIER] || setCancelDisabled(item)"
+            >
+              <v-icon>mdi-check</v-icon>
+            </v-btn>
+            <v-btn
+              icon
+              color="error"
+              @click="cancelItem(item)"
+              :disabled="loading[LOADING_IDENTIFIER] || setCancelDisabled(item)"
+            >
+              <v-icon>mdi-delete-outline</v-icon>
+            </v-btn>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+    <core-pagination :page="page" @onPaging="onPaging" />
+    <material-schedules-filter
+      @onFilter="onFilter"
+      :loading="loading[LOADING_IDENTIFIER]"
+      :filtered="filter"
+    />
+    <material-schedules-cancel
+      :showCancel="showCancel"
+      @close="showCancel = false"
+      :schedule="scheduleToCancel"
+    />
+  </div>
 </template>
 
 <script>
@@ -139,7 +132,11 @@ import {
 } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
-import { AGENDA_EDIT, AGENDA_DETAILS, SCHEDULES_ADD } from "@/router/routes";
+import {
+  SCHEDULES_ADD,
+  SCHEDULES_FINISH,
+  SCHEDULES_DETAILS,
+} from "@/router/routes";
 import moment from "moment";
 import i18nConstants from "@/i18n/constants";
 
@@ -185,6 +182,8 @@ export default {
       LOADING_IDENTIFIER: "searchSchedules",
       formatDate: formatDate,
       SCHEDULES_ADD: SCHEDULES_ADD,
+      SCHEDULES_FINISH: SCHEDULES_FINISH,
+      SCHEDULES_DETAILS: SCHEDULES_DETAILS,
     };
   },
   methods: {
@@ -230,11 +229,6 @@ export default {
     onFilter(filter) {
       this.filter = filter;
       this.searchAgenda();
-    },
-    seeItem(item, isEdit = true) {
-      if (isEdit)
-        this.$router.push({ path: AGENDA_EDIT.replace(":id", item.id) });
-      else this.$router.push({ path: AGENDA_DETAILS.replace(":id", item.id) });
     },
     getColor(item) {
       return getScheduleStatusColor(item.status);

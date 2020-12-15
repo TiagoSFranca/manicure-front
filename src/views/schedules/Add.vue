@@ -1,110 +1,103 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <v-row align="center">
-          <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">
-              {{ $t(SCHEDULE.ADD.NAME) }}
-            </span>
-          </v-col>
+  <div>
+    <v-row align="center">
+      <v-col cols="auto" class="mr-auto">
+        <span class="title white--text">
+          {{ $t(SCHEDULE.ADD.NAME) }}
+        </span>
+      </v-col>
 
-          <v-col cols="auto" class="ml-auto">
-            <v-btn
-              color="error"
-              elevation="2"
-              fab
-              outlined
-              rounded
-              small
-              :loading="loading[LOADING_IDENTIFIER]"
-              :to="SCHEDULES"
-            >
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-
-        <validation-observer
-          ref="form"
-          v-slot="{ handleSubmit }"
-          @submit.prevent
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="error"
+          elevation="2"
+          fab
+          outlined
+          rounded
+          small
+          :loading="loading[LOADING_IDENTIFIER]"
+          :to="SCHEDULES"
+          exact
         >
-          <v-row align="center">
-            <v-col cols="12" sm="12" lg="9" md="9">
-              <material-schedules-add-card-info
-                @changeInfo="changeInfo"
-                :disabled="loading[LOADING_IDENTIFIER]"
-                :isLoading="loading[LOADING_IDENTIFIER]"
-              />
-            </v-col>
-            <v-col cols="12" sm="12" lg="3" md="3">
-              <v-card class="bgcolor-unset" elevation="0">
-                <v-card-text
-                  class="d-flex align-content-center flex-wrap justify-center"
-                >
-                  <span class="overline d-flex align-content-center flex-wrap">
-                    {{ $t(SCHEDULE.ADD.LABELS.TOTAL) }}
-                  </span>
-                  <span class="overline ml-2 text-h4 primary--text">
-                    {{ toCurrency(calcTotalProducts() + calcTotalCombos()) }}
-                  </span>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
-          <v-btn
-            color="success"
-            submit
-            fab
-            fixed
-            right
-            bottom
-            @click="handleSubmit(onSave)"
-            :loading="loading[LOADING_IDENTIFIER]"
-          >
-            <v-icon>mdi-check</v-icon>
-          </v-btn>
-        </validation-observer>
-        <v-row>
-          <v-col cols="12" sm="12" lg="6" md="6">
-            <material-schedules-add-card-products
-              :products="products"
-              @changeProducts="changeProducts"
-              :disabled="loading[LOADING_IDENTIFIER]"
-              :loading="loading[LOADING_IDENTIFIER]"
-            />
-          </v-col>
-          <v-col cols="12" sm="12" lg="6" md="6">
-            <material-schedules-add-card-combos
-              :combos="combos"
-              :isEdit="true"
-              @changeCombos="changeCombos"
-              :disabled="loading[LOADING_IDENTIFIER]"
-              :loading="loading[LOADING_IDENTIFIER]"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-schedules-card-questions
-              :disabled="loading[LOADING_IDENTIFIER]"
-              :loading="loading[LOADING_IDENTIFIER]"
-              :questions="questions"
-            />
-          </v-col>
-        </v-row>
-        <material-schedules-add-verify-stock-error
-          :showError="showError"
-          :stockErrors="stockErrors"
-          @fechar="showError = false"
-          @confirm="save"
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <validation-observer ref="form" v-slot="{ handleSubmit }" @submit.prevent>
+      <v-row align="center">
+        <v-col cols="12" sm="12" lg="9" md="9">
+          <material-schedules-add-card-info
+            @changeInfo="changeInfo"
+            :disabled="loading[LOADING_IDENTIFIER]"
+            :isLoading="loading[LOADING_IDENTIFIER]"
+          />
+        </v-col>
+        <v-col cols="12" sm="12" lg="3" md="3">
+          <v-card class="bgcolor-unset" elevation="0">
+            <v-card-text
+              class="d-flex align-content-center flex-wrap justify-center"
+            >
+              <span class="overline d-flex align-content-center flex-wrap">
+                {{ $t(SCHEDULE.ADD.LABELS.TOTAL) }}
+              </span>
+              <span class="overline ml-2 text-h4 primary--text">
+                {{ toCurrency(calcTotalProducts() + calcTotalCombos()) }}
+              </span>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-btn
+        color="success"
+        submit
+        fab
+        fixed
+        right
+        bottom
+        @click="handleSubmit(onSave)"
+        :loading="loading[LOADING_IDENTIFIER]"
+      >
+        <v-icon>mdi-check</v-icon>
+      </v-btn>
+    </validation-observer>
+    <v-row>
+      <v-col cols="12" sm="12" lg="6" md="6">
+        <material-schedules-add-card-products
+          :products="products"
+          @changeProducts="changeProducts"
           :disabled="loading[LOADING_IDENTIFIER]"
-          :isLoading="loading[LOADING_IDENTIFIER]"
+          :loading="loading[LOADING_IDENTIFIER]"
         />
-      </v-flex>
-    </v-layout>
-  </v-container>
+      </v-col>
+      <v-col cols="12" sm="12" lg="6" md="6">
+        <material-schedules-add-card-combos
+          :combos="combos"
+          :isEdit="true"
+          @changeCombos="changeCombos"
+          :disabled="loading[LOADING_IDENTIFIER]"
+          :loading="loading[LOADING_IDENTIFIER]"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-schedules-card-questions
+          :disabled="loading[LOADING_IDENTIFIER]"
+          :loading="loading[LOADING_IDENTIFIER]"
+          :questions="questions"
+        />
+      </v-col>
+    </v-row>
+    <material-schedules-add-verify-stock-error
+      :showError="showError"
+      :stockErrors="stockErrors"
+      @close="showError = false"
+      @confirm="save"
+      :disabled="loading[LOADING_IDENTIFIER]"
+      :isLoading="loading[LOADING_IDENTIFIER]"
+    />
+  </div>
 </template>
 
 <script>

@@ -1,171 +1,167 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <v-row align="center">
-          <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">Visualizar Produto</span>
-          </v-col>
+  <div>
+    <v-row align="center">
+      <v-col cols="auto" class="mr-auto">
+        <span class="title white--text">Visualizar Produto</span>
+      </v-col>
 
-          <v-col cols="auto" class="ml-auto">
-            <v-btn
-              color="error"
-              elevation="2"
-              fab
-              outlined
-              rounded
-              small
-              :loading="loading[LOADING_IDENTIFIER]"
-              @click="comeBack"
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="error"
+          elevation="2"
+          fab
+          outlined
+          rounded
+          small
+          :loading="loading[LOADING_IDENTIFIER]"
+          @click="comeBack"
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <material-combos-card-info
+          :isEdit="false"
+          :isLoading="loading[LOADING_IDENTIFIER]"
+          :object="combo"
+          height="600"
+        />
+      </v-col>
+      <v-col cols="12">
+        <material-combos-card-products
+          :isEdit="false"
+          :isLoading="loading[LOADING_IDENTIFIER_PRODUCTS]"
+          :products="products"
+          height="600"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="6" md="6">
+        <v-row>
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Agendamentos em 2020"
             >
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
+              <span class="title white--text">38</span>
+            </common-simple-card>
+          </v-col>
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Agendamentos totais"
+            >
+              <span class="title white--text">7503</span>
+            </common-simple-card>
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="12">
-            <material-combos-card-info
-              :isEdit="false"
-              :isLoading="loading[LOADING_IDENTIFIER]"
-              :object="combo"
-              height="600"
+            <material-combos-card-graphs
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              :labels="labels"
+              :datasets="datasets"
+              title="Agendamentos em 2020"
             />
           </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="12" sm="12" lg="6" md="6">
+        <v-row>
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Faturamento em 2020"
+            >
+              <span class="title white--text">38</span>
+            </common-simple-card>
+          </v-col>
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Faturamento total"
+            >
+              <span class="title white--text">7503</span>
+            </common-simple-card>
+          </v-col>
+        </v-row>
+        <v-row>
           <v-col cols="12">
-            <material-combos-card-products
-              :isEdit="false"
-              :isLoading="loading[LOADING_IDENTIFIER_PRODUCTS]"
-              :products="products"
-              height="600"
+            <material-combos-card-graphs
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              :labels="labels"
+              :datasets="datasets"
+              title="Faturamento em 2020"
             />
           </v-col>
         </v-row>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
         <v-row>
-          <v-col cols="12" sm="12" lg="6" md="6">
-            <v-row>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Agendamentos em 2020"
-                >
-                  <span class="title white--text">38</span>
-                </common-simple-card>
-              </v-col>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Agendamentos totais"
-                >
-                  <span class="title white--text">7503</span>
-                </common-simple-card>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <material-combos-card-graphs
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  :labels="labels"
-                  :datasets="datasets"
-                  title="Agendamentos em 2020"
-                />
-              </v-col>
-            </v-row>
+          <v-col cols="6" sm="6" lg="3" md="3">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Materiais reservados em 2020"
+            >
+              <span class="title white--text">38</span>
+            </common-simple-card>
           </v-col>
-          <v-col cols="12" sm="12" lg="6" md="6">
-            <v-row>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Faturamento em 2020"
-                >
-                  <span class="title white--text">38</span>
-                </common-simple-card>
-              </v-col>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Faturamento total"
-                >
-                  <span class="title white--text">7503</span>
-                </common-simple-card>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <material-combos-card-graphs
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  :labels="labels"
-                  :datasets="datasets"
-                  title="Faturamento em 2020"
-                />
-              </v-col>
-            </v-row>
+          <v-col cols="6" sm="6" lg="3" md="3">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Materiais usados em 2020"
+            >
+              <span class="title white--text">7503</span>
+            </common-simple-card>
+          </v-col>
+          <v-col cols="12" sm="12" lg="3" md="3">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Valores gastos em 2020"
+            >
+              <span class="title white--text">7503</span>
+            </common-simple-card>
+          </v-col>
+          <v-col cols="12" sm="12" lg="3" md="3">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              title="Valores gastos totais"
+            >
+              <span class="title white--text">7503</span>
+            </common-simple-card>
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <v-row>
-              <v-col cols="6" sm="6" lg="3" md="3">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Materiais reservados em 2020"
-                >
-                  <span class="title white--text">38</span>
-                </common-simple-card>
-              </v-col>
-              <v-col cols="6" sm="6" lg="3" md="3">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Materiais usados em 2020"
-                >
-                  <span class="title white--text">7503</span>
-                </common-simple-card>
-              </v-col>
-              <v-col cols="12" sm="12" lg="3" md="3">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Valores gastos em 2020"
-                >
-                  <span class="title white--text">7503</span>
-                </common-simple-card>
-              </v-col>
-              <v-col cols="12" sm="12" lg="3" md="3">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  title="Valores gastos totais"
-                >
-                  <span class="title white--text">7503</span>
-                </common-simple-card>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <material-combos-card-graphs
-                  :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-                  :labels="labels"
-                  :datasets="datasets"
-                  title="Materiais em 2020"
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-combos-card-images
-              :isEdit="false"
-              :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
-              :images="images"
+          <v-col cols="12">
+            <material-combos-card-graphs
+              :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
+              :labels="labels"
+              :datasets="datasets"
+              title="Materiais em 2020"
             />
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="12" sm="12" lg="6" md="6"> SALES </v-col>
-          <v-col cols="12" sm="12" lg="6" md="6"> CHANGES </v-col>
-        </v-row>
-      </v-flex>
-    </v-layout>
-  </v-container>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-combos-card-images
+          :isEdit="false"
+          :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
+          :images="images"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="6" md="6"> SALES </v-col>
+      <v-col cols="12" sm="12" lg="6" md="6"> CHANGES </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>

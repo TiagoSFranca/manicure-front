@@ -140,4 +140,20 @@ export default [
       middleware: guest
     }
   },
+  {
+    path: routes.SCHEDULES_DETAILS.path,
+    name: routes.SCHEDULES_DETAILS.name,
+    view: 'schedules.Add',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
+    path: routes.SCHEDULES_FINISH.path,
+    name: routes.SCHEDULES_FINISH.name,
+    view: 'schedules.Add',
+    meta: {
+      middleware: guest
+    }
+  },
 ]

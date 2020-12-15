@@ -9,45 +9,43 @@
             </span>
           </v-card-title>
           <v-card-text>
-            <v-container>
-              <v-form>
-                <v-row>
-                  <v-col cols="9">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <common-autocomplete-remote
-                        :loading="loading[LOADING_IDENTIFIER_SEARCH_COMBOS]"
-                        :items="combos"
-                        :errors="errors"
-                        :label="$t(SCHEDULE.ADD.COMBO_ADD.LABELS.COMBO)"
-                        :placeholder="
-                          $t(GENERAL.MESSAGES.DIGIT_MIN_LENGTH_TO_SEARCH, {
-                            length: minLength,
-                          })
-                        "
-                        option-text="name"
-                        option-value="id"
-                        @search="searchCombos"
-                        @select="selectCombo"
-                        v-model="object.idCombo"
-                        ref="autocomplete"
-                      />
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="3">
-                    <validation-provider
-                      rules="required|greater_than:0"
-                      v-slot="{ errors }"
-                    >
-                      <v-currency-field
-                        :label="$t(SCHEDULE.ADD.COMBO_ADD.LABELS.QTY)"
-                        v-model="object.qty"
-                        :error-messages="errors"
-                      />
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-container>
+            <v-form>
+              <v-row>
+                <v-col cols="9">
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <common-autocomplete-remote
+                      :loading="loading[LOADING_IDENTIFIER_SEARCH_COMBOS]"
+                      :items="combos"
+                      :errors="errors"
+                      :label="$t(SCHEDULE.ADD.COMBO_ADD.LABELS.COMBO)"
+                      :placeholder="
+                        $t(GENERAL.MESSAGES.DIGIT_MIN_LENGTH_TO_SEARCH, {
+                          length: minLength,
+                        })
+                      "
+                      option-text="name"
+                      option-value="id"
+                      @search="searchCombos"
+                      @select="selectCombo"
+                      v-model="object.idCombo"
+                      ref="autocomplete"
+                    />
+                  </validation-provider>
+                </v-col>
+                <v-col cols="3">
+                  <validation-provider
+                    rules="required|greater_than:0"
+                    v-slot="{ errors }"
+                  >
+                    <v-currency-field
+                      :label="$t(SCHEDULE.ADD.COMBO_ADD.LABELS.QTY)"
+                      v-model="object.qty"
+                      :error-messages="errors"
+                    />
+                  </validation-provider>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -110,7 +108,7 @@ export default {
     ]),
     hide() {
       this.$refs.form.reset();
-      this.$emit("fechar");
+      this.$emit("close");
       this.visible = false;
       this.object = this.defObject;
       this.$refs.autocomplete.clear();

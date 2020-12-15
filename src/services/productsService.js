@@ -6,10 +6,9 @@ const IMAGES = "/images"
 const COMBOS = "/combos"
 
 export const search = (query, source) => {
-  let strQuery = new URLSearchParams(query).toString();
-
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}?${strQuery}`, {
+    return axios.get(`${RESOURCE_NAME}`, {
+      params: query,
       cancelToken: source.token
     })
       .then((e) => resolve(e))

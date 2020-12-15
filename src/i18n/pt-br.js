@@ -39,6 +39,12 @@ export default {
   [constants.MATERIAL.UPDATE_STOCK.NAME_REMOVE]: "Remover do estoque",
   [constants.MATERIAL.UPDATE_STOCK.LABELS.QTY]: "Qtd",
   [constants.MATERIAL.UPDATE_STOCK.LABELS.COMMENTS]: "Comentários",
+  [constants.MATERIAL.DETAILS.NAME]: "Visualizar Material",
+  [constants.MATERIAL.DETAILS.LABELS.YEAR]: "Ano",
+  [constants.MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR]: "Entradas em {year}",
+  [constants.MATERIAL.DETAILS.LABELS.REGISTER_TOTAL]: "Entradas totais",
+  [constants.MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR]: "Saidas em {year}",
+  [constants.MATERIAL.DETAILS.LABELS.REMOVE_TOTAL]: "Saidas totais",
 
   [constants.DASHBOARD.NAME]: "Dashboard",
 

@@ -42,7 +42,7 @@
         </v-col>
       </v-row>
     </v-card-text>
-    <material-combos-product-add :showAdd="showAdd" @fechar="showAdd = false" />
+    <material-combos-product-add :showAdd="showAdd" @close="showAdd = false" />
   </v-card>
 </template>
 

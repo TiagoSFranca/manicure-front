@@ -183,7 +183,7 @@ export default {
   methods: {
     hide() {
       this.$refs.form.reset();
-      this.$emit("fechar");
+      this.$emit("close");
       this.visible = false;
       this.showDialog = false;
       this.object = { active: true };

@@ -20,7 +20,9 @@ export const CLIENTS_EDIT = { name: "clients_edit", path: `${CLIENTS.path}/edit/
 export const CLIENTS_DETAILS = { name: "clients_details", path: `${CLIENTS.path}/details/:id` };
 
 export const SCHEDULES = { name: "schedules_index", path: "/schedules" }
-export const SCHEDULES_ADD = { name: "schedules_add", path: "/schedules/add" }
+export const SCHEDULES_ADD = { name: "schedules_add", path: `${SCHEDULES.path}/add` }
+export const SCHEDULES_DETAILS = { name: "schedules_details", path: `${SCHEDULES.path}/details/:id` }
+export const SCHEDULES_FINISH = { name: "schedules_finish", path: `${SCHEDULES.path}/finish/:id` }
 
 export default {
   INDEX,
@@ -46,4 +48,6 @@ export default {
 
   SCHEDULES,
   SCHEDULES_ADD,
+  SCHEDULES_DETAILS,
+  SCHEDULES_FINISH
 }

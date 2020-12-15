@@ -44,7 +44,7 @@
     </v-card-text>
     <material-products-material-add
       :showAdd="showAdd"
-      @fechar="showAdd = false"
+      @close="showAdd = false"
     />
   </v-card>
 </template>

@@ -111,7 +111,7 @@ export default {
     ]),
     hide() {
       this.$refs.form.reset();
-      this.$emit("fechar");
+      this.$emit("close");
       this.visible = false;
       this.object = {};
       this.$refs.autoComplete.clear();

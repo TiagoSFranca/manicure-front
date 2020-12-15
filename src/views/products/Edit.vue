@@ -1,50 +1,46 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <core-page-title :title="$t(PRODUCT.EDIT.NAME)">
-          <v-col cols="auto" class="ml-auto">
-            <v-btn
-              color="error"
-              elevation="2"
-              icon
-              large
-              :loading="loading[LOADING_IDENTIFIER]"
-              :to="{ name: PRODUCTS.name }"
-            >
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-          </v-col>
-        </core-page-title>
-        <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-products-card-info
-              :isEdit="true"
-              :isLoading="loading[LOADING_IDENTIFIER]"
-              :object="product"
-              :showActions="true"
-            />
-          </v-col>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-products-card-materials
-              :isEdit="true"
-              :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
-              :materials="materials"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-products-card-images
-              :isEdit="true"
-              :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
-              :images="images"
-            />
-          </v-col>
-        </v-row>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <div>
+    <core-page-title :title="$t(PRODUCT.EDIT.NAME)">
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="error"
+          elevation="2"
+          icon
+          large
+          :loading="loading[LOADING_IDENTIFIER]"
+          :to="{ name: PRODUCTS.name }"
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-col>
+    </core-page-title>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-products-card-info
+          :isEdit="true"
+          :isLoading="loading[LOADING_IDENTIFIER]"
+          :object="product"
+          :showActions="true"
+        />
+      </v-col>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-products-card-materials
+          :isEdit="true"
+          :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
+          :materials="materials"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-products-card-images
+          :isEdit="true"
+          :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
+          :images="images"
+        />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>

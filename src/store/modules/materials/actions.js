@@ -5,4 +5,9 @@ export default {
     commit(constants.MUTATION_SET_MATERIALS, data.content)
     commit(constants.MUTATION_SET_PAGE, data.page)
   },
+
+  [constants.ACTION_SET_MATERIAL_STOCKS]({ commit }, data) {
+    commit(constants.MUTATION_SET_MATERIAL_STOCKS, data.content)
+    commit(constants.MUTATION_SET_MATERIAL_STOCK_PAGE, data.page)
+  },
 }

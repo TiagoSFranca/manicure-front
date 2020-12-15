@@ -116,6 +116,23 @@ export const getReportYear = (id, year, source, LOADING_IDENTIFIER = '') => {
     })
 }
 
+export const searchMaterialStocks = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  materialsService
+    .searchMaterialStocks(id, query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.MATERIALS_SET_MATERIAL_STOCKS, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
 export default {
   search,
   add,
@@ -123,5 +140,6 @@ export default {
   edit,
   updateStock,
   getYears,
-  getReportYear
+  getReportYear,
+  searchMaterialStocks
 }

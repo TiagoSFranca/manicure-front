@@ -1,56 +1,52 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <v-row align="center">
-          <v-col cols="auto" class="mr-auto">
-            <span class="title white--text">{{ $t(COMBO.EDIT.NAME) }}</span>
-          </v-col>
+  <div>
+    <v-row align="center">
+      <v-col cols="auto" class="mr-auto">
+        <span class="title white--text">{{ $t(COMBO.EDIT.NAME) }}</span>
+      </v-col>
 
-          <v-col cols="auto" class="ml-auto">
-            <v-btn
-              color="error"
-              elevation="2"
-              fab
-              outlined
-              rounded
-              small
-              :loading="loading[LOADING_IDENTIFIER]"
-              @click="comeBack"
-            >
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-combos-card-info
-              :isEdit="true"
-              :isLoading="loading[LOADING_IDENTIFIER]"
-              :object="combo"
-              :showActions="true"
-            />
-          </v-col>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-combos-card-products
-              :isEdit="true"
-              :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
-              :products="products"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-combos-card-images
-              :isEdit="true"
-              :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
-              :images="images"
-            />
-          </v-col>
-        </v-row>
-      </v-flex>
-    </v-layout>
-  </v-container>
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="error"
+          elevation="2"
+          fab
+          outlined
+          rounded
+          small
+          :loading="loading[LOADING_IDENTIFIER]"
+          @click="comeBack"
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-combos-card-info
+          :isEdit="true"
+          :isLoading="loading[LOADING_IDENTIFIER]"
+          :object="combo"
+          :showActions="true"
+        />
+      </v-col>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-combos-card-products
+          :isEdit="true"
+          :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
+          :products="products"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-combos-card-images
+          :isEdit="true"
+          :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
+          :images="images"
+        />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>

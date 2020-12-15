@@ -1,117 +1,139 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <core-page-title :title="$t(MATERIAL.EDIT.NAME)">
-          <v-col cols="auto" class="ml-auto">
-            <v-btn
-              color="error"
-              outlined
-              icon
-              large
-              :loading="loading[LOADING_IDENTIFIER]"
-              :to="MATERIALS"
-              exact
-            >
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-          </v-col>
-        </core-page-title>
+  <div>
+    <core-page-title :title="$t(MATERIAL.DETAILS.NAME)">
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="error"
+          outlined
+          icon
+          large
+          :loading="loading[LOADING_IDENTIFIER]"
+          :to="MATERIALS"
+          exact
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-col>
+    </core-page-title>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-materials-card-info
+          :isEdit="false"
+          :isLoading="loading[LOADING_IDENTIFIER]"
+          :object="material"
+          :showActions="false"
+        />
+      </v-col>
+    </v-row>
+    <v-divider class="my-2" />
+    <v-row justify="end">
+      <v-col cols="12" md="2" lg="2">
+        <v-select
+          :items="years"
+          v-model="yearSelected"
+          :label="$t(MATERIAL.DETAILS.LABELS.YEAR)"
+          :loading="loading[LOADING_IDENTIFIER_YEARS]"
+        ></v-select>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="6" md="6">
         <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-materials-card-info
-              :isEdit="false"
-              :isLoading="loading[LOADING_IDENTIFIER]"
-              :object="material"
-              :showActions="false"
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
+              :title="
+                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
+                  year: yearSelected,
+                })
+              "
+            >
+              <span class="title white--text">
+                {{ reportYear.totalRegisterYear }}
+              </span>
+            </common-simple-card>
+          </v-col>
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
+              :title="$t(MATERIAL.DETAILS.LABELS.REGISTER_TOTAL)"
+            >
+              <span class="title white--text">
+                {{ reportYear.totalRegister }}
+              </span>
+            </common-simple-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <material-materials-card-graphs
+              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
+              :labels="labels"
+              :datasets="getRegisters()"
+              :title="
+                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
+                  year: yearSelected,
+                })
+              "
             />
           </v-col>
         </v-row>
-        <v-divider class="my-2" />
-        <v-row justify="end">
-          <v-col cols="12" md="2" lg="2">
-            <v-select
-              :items="years"
-              v-model="yearSelected"
-              label="Ano"
-              :loading="loading[LOADING_IDENTIFIER_YEARS]"
-            ></v-select>
+      </v-col>
+      <v-col cols="12" sm="12" lg="6" md="6">
+        <v-row>
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
+              :title="
+                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
+                  year: yearSelected,
+                })
+              "
+            >
+              <span class="title white--text">
+                {{ reportYear.totalRemove }}
+              </span>
+            </common-simple-card>
+          </v-col>
+          <v-col cols="6" sm="6" lg="6" md="6">
+            <common-simple-card
+              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
+              :title="$t(MATERIAL.DETAILS.LABELS.REMOVE_TOTAL)"
+            >
+              <span class="title white--text">
+                {{ reportYear.totalRemove }}
+              </span>
+            </common-simple-card>
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="12" lg="6" md="6">
-            <v-row>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-                  title="Registros em 2020"
-                >
-                  <span class="title white--text">
-                    {{ reportYear.totalRegisterYear }}
-                  </span>
-                </common-simple-card>
-              </v-col>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-                  title="Registros totais"
-                >
-                  <span class="title white--text">
-                    {{ reportYear.totalRegister }}
-                  </span>
-                </common-simple-card>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <material-materials-card-graphs
-                  :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-                  :labels="labels"
-                  :datasets="getRegisters()"
-                  title="Registros em 2020"
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" sm="12" lg="6" md="6">
-            <v-row>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-                  title="Remoçãos em 2020"
-                >
-                  <span class="title white--text">
-                    {{ reportYear.totalRemove }}
-                  </span>
-                </common-simple-card>
-              </v-col>
-              <v-col cols="6" sm="6" lg="6" md="6">
-                <common-simple-card
-                  :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-                  title="Remoção total"
-                >
-                  <span class="title white--text">
-                    {{ reportYear.totalRemove }}
-                  </span>
-                </common-simple-card>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12">
-                <material-materials-card-graphs
-                  :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-                  :labels="labels"
-                  :datasets="getRemoves()"
-                  title="Remoção em 2020"
-                  key="151"
-                />
-              </v-col>
-            </v-row>
+          <v-col cols="12">
+            <material-materials-card-graphs
+              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
+              :labels="labels"
+              :datasets="getRemoves()"
+              :title="
+                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
+                  year: yearSelected,
+                })
+              "
+            />
           </v-col>
         </v-row>
-      </v-flex>
-    </v-layout>
-  </v-container>
+      </v-col>
+    </v-row>
+    <v-divider class="my-2" />
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-materials-card-historic
+          :isEdit="false"
+          :isLoading="loading[LOADING_IDENTIFIER]"
+          :object="material"
+          :showActions="false"
+        />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -178,7 +200,7 @@ export default {
       return [
         {
           label: "Registros",
-          backgroundColor: randomColor(),
+          backgroundColor: "blue",
           data: registers,
         },
       ];
@@ -188,7 +210,7 @@ export default {
       return [
         {
           label: "remoções",
-          backgroundColor: randomColor(),
+          backgroundColor: "yellow",
           data: registers,
         },
       ];

@@ -8,5 +8,7 @@ export default {
   reportYear: {
     register: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     remove: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  }
+  },
+  materialStocks: [],
+  materialStockPage: {},
 }

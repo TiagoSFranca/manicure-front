@@ -11,4 +11,6 @@ export default {
   [constants.MUTATION_SET_MATERIAL]: set('material'),
   [constants.MUTATION_SET_YEARS]: set('years'),
   [constants.MUTATION_SET_REPORT_YEAR]: set('reportYear'),
+  [constants.MUTATION_SET_MATERIAL_STOCKS]: set('materialStocks'),
+  [constants.MUTATION_SET_MATERIAL_STOCK_PAGE]: set('materialStockPage'),
 }

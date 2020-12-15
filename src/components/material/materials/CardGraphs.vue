@@ -4,17 +4,15 @@
       <span class="overline">{{ title }}</span>
     </v-card-title>
     <v-card-text>
-      <v-container>
-        <v-sheet class="v-sheet--offset mx-auto" color="gray" elevation="7">
-          <common-charts-line
-            :labels="labels"
-            :datasets="datasets"
-            :yAxes="{
-              ticks: { beginAtZero: true, callback: yAxesCallback },
-            }"
-          />
-        </v-sheet>
-      </v-container>
+      <v-sheet class="v-sheet--offset mx-auto" color="gray" elevation="7">
+        <common-charts-line
+          :labels="labels"
+          :datasets="datasets"
+          :yAxes="{
+            ticks: { beginAtZero: true, callback: yAxesCallback },
+          }"
+        />
+      </v-sheet>
     </v-card-text>
   </v-card>
 </template>

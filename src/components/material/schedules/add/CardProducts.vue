@@ -44,7 +44,7 @@
     </v-card-text>
     <material-schedules-add-product-add
       :showAdd="showAdd"
-      @fechar="showAdd = false"
+      @close="showAdd = false"
       @addProduct="addProduct"
     />
   </v-card>

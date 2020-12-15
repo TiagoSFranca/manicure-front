@@ -4,10 +4,9 @@ const RESOURCE_NAME = '/materials'
 const STOCK = "/stock"
 
 export const search = (query, source) => {
-  let strQuery = new URLSearchParams(query).toString();
-
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}?${strQuery}`, {
+    return axios.get(`${RESOURCE_NAME}`, {
+      params: query,
       cancelToken: source.token
     })
       .then((e) => resolve(e))
@@ -69,6 +68,17 @@ export const getReportYear = (id, year, source) => {
   })
 }
 
+export const searchMaterialStocks = (id, query, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}`, {
+      params: query,
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+};
+
 export default {
   search,
   add,
@@ -76,5 +86,6 @@ export default {
   edit,
   updateStock,
   getYears,
-  getReportYear
+  getReportYear,
+  searchMaterialStocks
 }

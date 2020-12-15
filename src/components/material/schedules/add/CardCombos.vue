@@ -44,7 +44,7 @@
     </v-card-text>
     <material-schedules-add-combo-add
       :showAdd="showAdd"
-      @fechar="showAdd = false"
+      @close="showAdd = false"
       @addCombo="addCombo"
     />
   </v-card>

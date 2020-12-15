@@ -7,199 +7,197 @@
             <span class="headline">{{ $t(CLIENT.ADD.NAME) }}</span>
           </v-card-title>
           <v-card-text>
-            <v-container>
-              <v-form>
-                <v-row>
-                  <v-col cols="12">
-                    <validation-provider
-                      rules="required|max:64"
-                      v-slot="{ errors }"
+            <v-form>
+              <v-row>
+                <v-col cols="12">
+                  <validation-provider
+                    rules="required|max:64"
+                    v-slot="{ errors }"
+                  >
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.NAME)"
+                      v-model="object.name"
+                      :error-messages="errors"
+                      counter="64"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+              </v-row>
+              <v-row justify="space-between">
+                <v-col cols="8">
+                  <validation-provider rules="max:32" v-slot="{ errors }">
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.NICKNAME)"
+                      v-model="object.nickname"
+                      :error-messages="errors"
+                      counter="32"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4" class="d-flex justify-end">
+                  <validation-provider
+                    rules="required|max:64"
+                    v-slot="{ errors }"
+                  >
+                    <v-radio-group
+                      v-model="object.sex"
+                      row
+                      :error-messages="errors"
                     >
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.NAME)"
-                        v-model="object.name"
-                        :error-messages="errors"
-                        counter="64"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-                <v-row justify="space-between">
-                  <v-col cols="8">
-                    <validation-provider rules="max:32" v-slot="{ errors }">
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.NICKNAME)"
-                        v-model="object.nickname"
-                        :error-messages="errors"
-                        counter="32"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4" class="d-flex justify-end">
-                    <validation-provider
-                      rules="required|max:64"
-                      v-slot="{ errors }"
-                    >
-                      <v-radio-group
-                        v-model="object.sex"
-                        row
-                        :error-messages="errors"
-                      >
-                        <v-radio
-                          :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.MALE)"
-                          value="m"
-                        ></v-radio>
-                        <v-radio
-                          :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.FEMALE)"
-                          value="f"
-                          class="mr-0"
-                        ></v-radio>
-                      </v-radio-group>
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="8">
-                    <validation-provider
-                      rules="max:128|email"
-                      v-slot="{ errors }"
-                    >
-                      <v-text-field
-                        name="email"
-                        :label="$t(CLIENT.ADD.LABELS.EMAIL)"
-                        v-model="object.email"
-                        :error-messages="errors"
-                        counter="128"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4">
-                    <common-date-picker
-                      :date="object.birthday"
-                      :label="$t(CLIENT.ADD.LABELS.BIRTHDAY)"
-                      @changeDate="changeDate"
-                    />
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="4">
-                    <validation-provider rules="min:14" v-slot="{ errors }">
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.PHONE)"
-                        v-model="object.phone"
-                        :error-messages="errors"
-                        v-mask="'(##) #?####-####'"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4">
-                    <validation-provider rules="min:14" v-slot="{ errors }">
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.CELL_PHONE)"
-                        v-model="object.cellPhone"
-                        :error-messages="errors"
-                        v-mask="'(##) #?####-####'"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4">
-                    <validation-provider rules="max:64" v-slot="{ errors }">
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.OCCUPATION)"
-                        v-model="object.occupation"
-                        :error-messages="errors"
-                        counter="64"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-                <v-divider></v-divider>
-                <v-row>
-                  <v-col cols="9">
-                    <validation-provider
-                      rules="required|max:64"
-                      v-slot="{ errors }"
-                    >
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.STREET)"
-                        v-model="object.address.street"
-                        :error-messages="errors"
-                        counter="64"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="3">
-                    <validation-provider rules="max:10" v-slot="{ errors }">
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.NUMBER)"
-                        v-model="object.address.number"
-                        :error-messages="errors"
-                        counter="10"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="4">
-                    <validation-provider
-                      rules="required|max:64"
-                      v-slot="{ errors }"
-                    >
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.DISTRICT)"
-                        v-model="object.address.district"
-                        :error-messages="errors"
-                        counter="64"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <v-autocomplete
-                        clearable
-                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.COUNTRY)"
-                        v-model="object.address.idCountry"
-                        :error-messages="errors"
-                        :items="countries"
-                        item-text="name"
-                        item-value="id"
-                        :loading="loading[LOADING_IDENTIFIER_COUNTRIES]"
-                        hide-no-data
-                        hide-selected
-                      ></v-autocomplete>
-                    </validation-provider>
-                  </v-col>
-                  <v-col cols="4">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <v-autocomplete
-                        clearable
-                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.CITY)"
-                        v-model="object.address.idCity"
-                        :error-messages="errors"
-                        :items="cities"
-                        item-text="name"
-                        item-value="id"
-                        :loading="loading[LOADING_IDENTIFIER_CITIES]"
-                        hide-no-data
-                        hide-selected
-                      ></v-autocomplete>
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="12">
-                    <validation-provider rules="max:512" v-slot="{ errors }">
-                      <v-text-field
-                        :label="$t(CLIENT.ADD.LABELS.ADDRESS.COMPLEMENT)"
-                        v-model="object.address.complement"
-                        :error-messages="errors"
-                        counter="512"
-                      ></v-text-field>
-                    </validation-provider>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-container>
+                      <v-radio
+                        :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.MALE)"
+                        value="m"
+                      ></v-radio>
+                      <v-radio
+                        :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.FEMALE)"
+                        value="f"
+                        class="mr-0"
+                      ></v-radio>
+                    </v-radio-group>
+                  </validation-provider>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="8">
+                  <validation-provider
+                    rules="max:128|email"
+                    v-slot="{ errors }"
+                  >
+                    <v-text-field
+                      name="email"
+                      :label="$t(CLIENT.ADD.LABELS.EMAIL)"
+                      v-model="object.email"
+                      :error-messages="errors"
+                      counter="128"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4">
+                  <common-date-picker
+                    :date="object.birthday"
+                    :label="$t(CLIENT.ADD.LABELS.BIRTHDAY)"
+                    @changeDate="changeDate"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <validation-provider rules="min:14" v-slot="{ errors }">
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.PHONE)"
+                      v-model="object.phone"
+                      :error-messages="errors"
+                      v-mask="'(##) #?####-####'"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4">
+                  <validation-provider rules="min:14" v-slot="{ errors }">
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.CELL_PHONE)"
+                      v-model="object.cellPhone"
+                      :error-messages="errors"
+                      v-mask="'(##) #?####-####'"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4">
+                  <validation-provider rules="max:64" v-slot="{ errors }">
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.OCCUPATION)"
+                      v-model="object.occupation"
+                      :error-messages="errors"
+                      counter="64"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+              </v-row>
+              <v-divider></v-divider>
+              <v-row>
+                <v-col cols="9">
+                  <validation-provider
+                    rules="required|max:64"
+                    v-slot="{ errors }"
+                  >
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.STREET)"
+                      v-model="object.address.street"
+                      :error-messages="errors"
+                      counter="64"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+                <v-col cols="3">
+                  <validation-provider rules="max:10" v-slot="{ errors }">
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.NUMBER)"
+                      v-model="object.address.number"
+                      :error-messages="errors"
+                      counter="10"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <validation-provider
+                    rules="required|max:64"
+                    v-slot="{ errors }"
+                  >
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.DISTRICT)"
+                      v-model="object.address.district"
+                      :error-messages="errors"
+                      counter="64"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4">
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-autocomplete
+                      clearable
+                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.COUNTRY)"
+                      v-model="object.address.idCountry"
+                      :error-messages="errors"
+                      :items="countries"
+                      item-text="name"
+                      item-value="id"
+                      :loading="loading[LOADING_IDENTIFIER_COUNTRIES]"
+                      hide-no-data
+                      hide-selected
+                    ></v-autocomplete>
+                  </validation-provider>
+                </v-col>
+                <v-col cols="4">
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <v-autocomplete
+                      clearable
+                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.CITY)"
+                      v-model="object.address.idCity"
+                      :error-messages="errors"
+                      :items="cities"
+                      item-text="name"
+                      item-value="id"
+                      :loading="loading[LOADING_IDENTIFIER_CITIES]"
+                      hide-no-data
+                      hide-selected
+                    ></v-autocomplete>
+                  </validation-provider>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12">
+                  <validation-provider rules="max:512" v-slot="{ errors }">
+                    <v-text-field
+                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.COMPLEMENT)"
+                      v-model="object.address.complement"
+                      :error-messages="errors"
+                      counter="512"
+                    ></v-text-field>
+                  </validation-provider>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -269,7 +267,7 @@ export default {
     ]),
     hide() {
       this.$refs.form.reset();
-      this.$emit("fechar");
+      this.$emit("close");
       this.visible = false;
       this.object = this.defObject;
     },

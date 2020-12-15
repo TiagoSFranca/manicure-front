@@ -76,7 +76,7 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-btn
-              color="primary"
+              color="success"
               submit
               icon
               fab
@@ -118,7 +118,7 @@ export default {
   methods: {
     hide() {
       this.$refs.form.reset();
-      this.$emit("fechar");
+      this.$emit("close");
       this.visible = false;
       this.object = {};
     },

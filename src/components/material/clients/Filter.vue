@@ -8,45 +8,43 @@
           </v-col>
         </v-row>
         <v-form ref="form" lazy-validation @submit.prevent="submit">
-          <v-container>
-            <v-row align="start" justify="center">
-              <v-col cols="12" md="3">
-                <v-text-field v-model="filter.name" label="Nome"></v-text-field>
-              </v-col>
+          <v-row align="start" justify="center">
+            <v-col cols="12" md="3">
+              <v-text-field v-model="filter.name" label="Nome"></v-text-field>
+            </v-col>
 
-              <v-col cols="12" md="3">
-                <common-date-picker
-                  :date="filter.beginEndSale"
-                  label="Fim da Promoção - Início"
-                  @changeDate="(date) => changeDate(date, true)"
-                />
-              </v-col>
+            <v-col cols="12" md="3">
+              <common-date-picker
+                :date="filter.beginEndSale"
+                label="Fim da Promoção - Início"
+                @changeDate="(date) => changeDate(date, true)"
+              />
+            </v-col>
 
-              <v-col cols="12" md="3">
-                <common-date-picker
-                  :date="filter.endEndSale"
-                  label="Fim da Promoção - Fim"
-                  @changeDate="(date) => changeDate(date, false)"
-                />
-              </v-col>
+            <v-col cols="12" md="3">
+              <common-date-picker
+                :date="filter.endEndSale"
+                label="Fim da Promoção - Fim"
+                @changeDate="(date) => changeDate(date, false)"
+              />
+            </v-col>
 
-              <v-col cols="auto">
-                <v-radio-group v-model="filter.active" label="Ativo">
-                  <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
-                  <v-radio label="Sim" value="true"></v-radio>
-                  <v-radio label="Não" value="false"></v-radio>
-                </v-radio-group>
-              </v-col>
+            <v-col cols="auto">
+              <v-radio-group v-model="filter.active" label="Ativo">
+                <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
+                <v-radio label="Sim" value="true"></v-radio>
+                <v-radio label="Não" value="false"></v-radio>
+              </v-radio-group>
+            </v-col>
 
-              <v-col cols="auto">
-                <v-radio-group v-model="filter.onSale" label="Em Promoção">
-                  <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
-                  <v-radio label="Sim" value="true"></v-radio>
-                  <v-radio label="Não" value="false"></v-radio>
-                </v-radio-group>
-              </v-col>
-            </v-row>
-          </v-container>
+            <v-col cols="auto">
+              <v-radio-group v-model="filter.onSale" label="Em Promoção">
+                <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
+                <v-radio label="Sim" value="true"></v-radio>
+                <v-radio label="Não" value="false"></v-radio>
+              </v-radio-group>
+            </v-col>
+          </v-row>
         </v-form>
         <v-row>
           <v-col>

@@ -1,115 +1,111 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <core-page-title :title="$tc(i18nConstants.PRODUCT.NAME, 2)">
-          <v-col cols="auto" class="ml-auto">
+  <div>
+    <core-page-title :title="$tc(i18nConstants.PRODUCT.NAME, 2)">
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="accent"
+          elevation="2"
+          fab
+          outlined
+          rounded
+          small
+          @click="onShowFilter()"
+          :disabled="showFilter"
+        >
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          color="accent"
+          elevation="2"
+          fab
+          outlined
+          rounded
+          small
+          @click="showAdd = true"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-col>
+    </core-page-title>
+    <v-row>
+      <v-col cols="12">
+        <v-data-table
+          :headers="headers"
+          :items="products"
+          class="elevation-1"
+          :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
+          hide-default-footer
+          :custom-sort="onSort"
+          :disable-pagination="true"
+          :disable-filtering="true"
+          :disable-sort="!!loading[LOADING_IDENTIFIER]"
+          :loading="loading[LOADING_IDENTIFIER] === true"
+          :multi-sort="false"
+        >
+          <template v-slot:item.price="{ item }">
+            <span>{{ toCurrency(item.price) }}</span>
+          </template>
+          <template v-slot:item.promotionalPrice="{ item }">
+            <span>{{ toCurrency(item.promotionalPrice) }}</span>
+          </template>
+          <template v-slot:item.endSale="{ item }">
+            <span>{{ item.endSale && formatDate(item.endSale) }}</span>
+          </template>
+          <template v-slot:item.onSale="{ item }">
+            <v-simple-checkbox
+              v-model="item.onSale"
+              disabled
+              color="primary"
+            ></v-simple-checkbox>
+          </template>
+          <template v-slot:item.active="{ item }">
+            <v-simple-checkbox
+              v-model="item.active"
+              disabled
+              color="primary"
+            ></v-simple-checkbox>
+          </template>
+          <template v-slot:item.actions="{ item }">
             <v-btn
-              color="accent"
-              elevation="2"
-              fab
-              outlined
-              rounded
+              icon
+              :disabled="loading[LOADING_IDENTIFIER]"
+              :to="{ name: PRODUCTS_DETAILS.name, params: { id: item.id } }"
               small
-              @click="onShowFilter()"
-              :disabled="showFilter"
             >
-              <v-icon>mdi-filter</v-icon>
+              <v-icon>mdi-eye-outline</v-icon>
             </v-btn>
-          </v-col>
-          <v-col cols="auto">
             <v-btn
+              icon
               color="accent"
-              elevation="2"
-              fab
-              outlined
-              rounded
+              :disabled="loading[LOADING_IDENTIFIER]"
+              :to="{ name: PRODUCTS_EDIT.name, params: { id: item.id } }"
               small
-              @click="showAdd = true"
             >
-              <v-icon>mdi-plus</v-icon>
+              <v-icon>mdi-pencil-outline</v-icon>
             </v-btn>
-          </v-col>
-        </core-page-title>
-        <v-row>
-          <v-col cols="12">
-            <v-data-table
-              :headers="headers"
-              :items="products"
-              class="elevation-1"
-              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
-              hide-default-footer
-              :custom-sort="onSort"
-              :disable-pagination="true"
-              :disable-filtering="true"
-              :disable-sort="!!loading[LOADING_IDENTIFIER]"
-              :loading="loading[LOADING_IDENTIFIER] === true"
-              :multi-sort="false"
+            <v-btn
+              icon
+              color="error"
+              @click="deleteItem(item)"
+              :disabled="loading[LOADING_IDENTIFIER]"
+              small
             >
-              <template v-slot:item.price="{ item }">
-                <span>{{ toCurrency(item.price) }}</span>
-              </template>
-              <template v-slot:item.promotionalPrice="{ item }">
-                <span>{{ toCurrency(item.promotionalPrice) }}</span>
-              </template>
-              <template v-slot:item.endSale="{ item }">
-                <span>{{ item.endSale && formatDate(item.endSale) }}</span>
-              </template>
-              <template v-slot:item.onSale="{ item }">
-                <v-simple-checkbox
-                  v-model="item.onSale"
-                  disabled
-                  color="primary"
-                ></v-simple-checkbox>
-              </template>
-              <template v-slot:item.active="{ item }">
-                <v-simple-checkbox
-                  v-model="item.active"
-                  disabled
-                  color="primary"
-                ></v-simple-checkbox>
-              </template>
-              <template v-slot:item.actions="{ item }">
-                <v-btn
-                  icon
-                  :disabled="loading[LOADING_IDENTIFIER]"
-                  :to="{ name: PRODUCTS_DETAILS.name, params: { id: item.id } }"
-                  small
-                >
-                  <v-icon>mdi-eye-outline</v-icon>
-                </v-btn>
-                <v-btn
-                  icon
-                  color="accent"
-                  :disabled="loading[LOADING_IDENTIFIER]"
-                  :to="{ name: PRODUCTS_EDIT.name, params: { id: item.id } }"
-                  small
-                >
-                  <v-icon>mdi-pencil-outline</v-icon>
-                </v-btn>
-                <v-btn
-                  icon
-                  color="error"
-                  @click="deleteItem(item)"
-                  :disabled="loading[LOADING_IDENTIFIER]"
-                  small
-                >
-                  <v-icon>mdi-delete-outline</v-icon>
-                </v-btn>
-              </template>
-            </v-data-table>
-          </v-col>
-        </v-row>
-        <core-pagination :page="page" @onPaging="onPaging" />
-        <material-products-add :showAdd="showAdd" @fechar="showAdd = false" />
-        <material-products-filter
-          @onFilter="onFilter"
-          :loading="loading[LOADING_IDENTIFIER]"
-          :filtered="filter"
-        />
-      </v-flex>
-    </v-layout>
-  </v-container>
+              <v-icon>mdi-delete-outline</v-icon>
+            </v-btn>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+    <core-pagination :page="page" @onPaging="onPaging" />
+    <material-products-add :showAdd="showAdd" @close="showAdd = false" />
+    <material-products-filter
+      @onFilter="onFilter"
+      :loading="loading[LOADING_IDENTIFIER]"
+      :filtered="filter"
+    />
+  </div>
 </template>
 
 <script>

@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     hide() {
-      this.$emit("fechar");
+      this.$emit("close");
       this.visible = false;
     },
     show() {

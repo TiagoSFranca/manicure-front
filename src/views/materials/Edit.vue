@@ -1,65 +1,61 @@
 <template>
-  <v-container fill-height fluid grid-list-xl>
-    <v-layout wrap>
-      <v-flex>
-        <core-page-title :title="$t(MATERIAL.EDIT.NAME)">
-          <v-col cols="auto" class="ml-auto">
-            <v-btn
-              color="error"
-              outlined
-              icon
-              large
-              :loading="loading[LOADING_IDENTIFIER]"
-              :to="MATERIALS"
-              exact
-            >
-              <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
-          </v-col>
-        </core-page-title>
-        <v-row>
-          <v-col cols="12" sm="12" lg="12" md="12">
-            <material-materials-card-info
-              :isEdit="true"
-              :isLoading="loading[LOADING_IDENTIFIER]"
-              :object="material"
-              :showActions="true"
-            />
-          </v-col>
-        </v-row>
-        <v-row justify="space-between">
-          <v-col cols="auto">
-            <v-btn
-              elevation="2"
-              color="error"
-              outlined
-              @click="() => onShowUpdateStock(false)"
-            >
-              <v-icon left>mdi-minus</v-icon>
-              {{ $t(MATERIAL.EDIT.LABELS.REMOVE_FROM_STOCK) }}
-            </v-btn>
-          </v-col>
-          <v-col cols="auto">
-            <v-btn
-              elevation="2"
-              color="accent"
-              outlined
-              @click="() => onShowUpdateStock(true)"
-            >
-              <v-icon left>mdi-plus</v-icon>
-              {{ $t(MATERIAL.EDIT.LABELS.ADD_ON_STOCK) }}
-            </v-btn>
-          </v-col>
-        </v-row>
-        <material-materials-update-stock
-          :showUpdateStock="showUpdateStock"
-          @fechar="showUpdateStock = false"
-          :material="material"
-          :isAdd="isAdd"
+  <div>
+    <core-page-title :title="$t(MATERIAL.EDIT.NAME)">
+      <v-col cols="auto" class="ml-auto">
+        <v-btn
+          color="error"
+          outlined
+          icon
+          large
+          :loading="loading[LOADING_IDENTIFIER]"
+          :to="MATERIALS"
+          exact
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </v-col>
+    </core-page-title>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-materials-card-info
+          :isEdit="true"
+          :isLoading="loading[LOADING_IDENTIFIER]"
+          :object="material"
+          :showActions="true"
         />
-      </v-flex>
-    </v-layout>
-  </v-container>
+      </v-col>
+    </v-row>
+    <v-row justify="space-between">
+      <v-col cols="auto">
+        <v-btn
+          elevation="2"
+          color="error"
+          outlined
+          @click="() => onShowUpdateStock(false)"
+        >
+          <v-icon left>mdi-minus</v-icon>
+          {{ $t(MATERIAL.EDIT.LABELS.REMOVE_FROM_STOCK) }}
+        </v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          elevation="2"
+          color="accent"
+          outlined
+          @click="() => onShowUpdateStock(true)"
+        >
+          <v-icon left>mdi-plus</v-icon>
+          {{ $t(MATERIAL.EDIT.LABELS.ADD_ON_STOCK) }}
+        </v-btn>
+      </v-col>
+    </v-row>
+    <material-materials-update-stock
+      :showUpdateStock="showUpdateStock"
+      @close="showUpdateStock = false"
+      :material="material"
+      :isAdd="isAdd"
+    />
+  </div>
 </template>
 
 <script>

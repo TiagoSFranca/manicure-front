@@ -36,3 +36,18 @@ export const MATERIAL_STATUS = {
   WARNING: 2,
   ERROR: 3
 }
+
+export const MATERIAL_SCHEDULE_STATUS = {
+  REGISTER: 1,
+  REMOVE: 2,
+  LIST: [
+    {
+      label: "REGISTER",
+      value: 1
+    },
+    {
+      label: "REMOVE",
+      value: 2
+    },
+  ]
+}

@@ -80,7 +80,7 @@
         </v-card-text>
       </v-card>
     </form>
-    <material-clients-add :showAdd="showAdd" @fechar="showAdd = false" />
+    <material-clients-add :showAdd="showAdd" @close="showAdd = false" />
   </div>
 </template>
 
