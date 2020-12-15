@@ -69,7 +69,8 @@
             <material-materials-card-graphs
               :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
               :labels="labels"
-              :datasets="getRegisters()"
+              :series="getRegisters()"
+              :colors="[randomColor()]"
               :title="
                 $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
                   year: yearSelected,
@@ -111,7 +112,8 @@
             <material-materials-card-graphs
               :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
               :labels="labels"
-              :datasets="getRemoves()"
+              :series="getRemoves()"
+              :colors="[randomColor()]"
               :title="
                 $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
                   year: yearSelected,
@@ -169,6 +171,7 @@ export default {
         "nov",
         "dez",
       ],
+      randomColor: randomColor,
     };
   },
   methods: {
@@ -199,8 +202,7 @@ export default {
       var registers = (this.reportYear.register || []).map((e) => e.value);
       return [
         {
-          label: "Registros",
-          backgroundColor: "blue",
+          name: this.$t(this.MATERIAL.DETAILS.LABELS.REGISTER),
           data: registers,
         },
       ];
@@ -209,8 +211,7 @@ export default {
       var registers = (this.reportYear.remove || []).map((e) => e.value);
       return [
         {
-          label: "remoções",
-          backgroundColor: "yellow",
+          name: this.$t(this.MATERIAL.DETAILS.LABELS.REMOVE),
           data: registers,
         },
       ];

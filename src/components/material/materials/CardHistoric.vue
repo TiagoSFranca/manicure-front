@@ -5,21 +5,27 @@
       :disabled="loading[LOADING_IDENTIFIER]"
     >
       <v-card-title>
-        <span class="overline">HISTÓRICO</span>
+        <span class="overline">
+          {{ $t(i18nConstants.MATERIAL.CARD_HISTORIC.NAME) }}
+        </span>
       </v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="3">
             <common-date-picker
               :date="filter.initialDate"
-              label="Data de cadastro"
+              :label="
+                $t(i18nConstants.MATERIAL.CARD_HISTORIC.LABELS.INITIAL_DATE)
+              "
               @changeDate="(date) => changeDate(date, true)"
             />
           </v-col>
           <v-col cols="12" md="3">
             <common-date-picker
               :date="filter.finalDate"
-              label="Data de cadastro"
+              :label="
+                $t(i18nConstants.MATERIAL.CARD_HISTORIC.LABELS.FINAL_DATE)
+              "
               @changeDate="(date) => changeDate(date, false)"
             />
           </v-col>
@@ -30,14 +36,22 @@
               :items="MATERIAL_SCHEDULE_STATUS.LIST"
               item-value="value"
               item-text="label"
-              label="Tipo"
+              :label="
+                $t(i18nConstants.MATERIAL.CARD_HISTORIC.LABELS.STOCK_TYPE)
+              "
             >
               <template v-slot:selection="{ item, index }">
                 <v-chip v-if="index === 0" small>
                   <span>{{ item.label }}</span>
                 </v-chip>
                 <span v-if="index === 1" class="grey--text caption">
-                  (+{{ filter.IdMaterialStockStatus.length - 1 }} others)
+                  {{
+                    $t(
+                      i18nConstants.MATERIAL.CARD_HISTORIC.LABELS
+                        .STOCK_TYPE_MULTIPLE_SELECTED,
+                      { length: filter.IdMaterialStockStatus.length - 1 }
+                    )
+                  }}
                 </span>
               </template>
             </v-select>
@@ -83,13 +97,17 @@
                 <span>{{ toCurrency(item.qty) }}</span>
               </template>
               <template v-slot:item.actions="{ item }">
-                <v-btn icon :disabled="loading[LOADING_IDENTIFIER]">
+                <v-btn
+                  icon
+                  :disabled="loading[LOADING_IDENTIFIER]"
+                  @click="seeItem(item)"
+                >
                   <v-icon>mdi-eye-outline</v-icon>
                 </v-btn>
               </template>
               <template v-slot:item.idSchedule="{ item }">
                 <v-simple-checkbox
-                  v-model="item.idSchedule"
+                  :value="item.idSchedule != null"
                   disabled
                   color="primary"
                 ></v-simple-checkbox>
@@ -100,6 +118,11 @@
         <core-pagination :page="materialStockPage" @onPaging="onPaging" />
       </v-card-text>
     </v-card>
+    <material-materials-stock-info
+      :showInfo="showMaterialStock"
+      @close="showMaterialStock = false"
+      :materialStock="materialStockSelected"
+    />
   </div>
 </template>
 
@@ -107,12 +130,7 @@
 import materialsActions from "@/actions/materialsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
-import {
-  ToCurrency,
-  getMaterialStatusText,
-  getMaterialStatusColor,
-  formatDate,
-} from "@/utils/methods";
+import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import i18nConstants from "@/i18n/constants";
@@ -121,26 +139,26 @@ import { MATERIAL_SCHEDULE_STATUS } from "@/utils/constants";
 export default {
   data() {
     return {
-      showAdd: false,
       source: "",
       headers: [
         {
-          text: this.$t(i18nConstants.MATERIAL.LIST.NAME),
+          text: this.$t(i18nConstants.MATERIAL.CARD_HISTORIC.LIST.DATE),
           align: "start",
           value: "createdAt",
         },
         {
-          text: this.$t(i18nConstants.MATERIAL.LIST.PRICE),
-          value: "materialStockType.type",
+          text: this.$t(i18nConstants.MATERIAL.CARD_HISTORIC.LIST.TYPE),
+          value: "materialStockType.description",
           align: "center",
+          sortable: false,
         },
         {
-          text: this.$t(i18nConstants.MATERIAL.LIST.AVALIABLE_QTY),
+          text: this.$t(i18nConstants.MATERIAL.CARD_HISTORIC.LIST.QTY),
           value: "qty",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.MATERIAL.LIST.MIN_QTY),
+          text: this.$t(i18nConstants.MATERIAL.CARD_HISTORIC.LIST.IS_SCHEDULE),
           value: "idSchedule",
           align: "center",
           sortable: false,
@@ -165,6 +183,8 @@ export default {
       LOADING_IDENTIFIER: "searchMaterialStocks",
       MATERIAL_SCHEDULE_STATUS: MATERIAL_SCHEDULE_STATUS,
       formatDate: formatDate,
+      showMaterialStock: false,
+      materialStockSelected: { materialStockType: {} },
     };
   },
   methods: {
@@ -213,15 +233,13 @@ export default {
     toCurrency(value) {
       return ToCurrency(value);
     },
-    getColor(item) {
-      return getMaterialStatusColor(item.status);
-    },
-    getText(item) {
-      return this.$t(getMaterialStatusText(item.status));
-    },
     changeDate(date, begin) {
       if (begin) this.filter.initialDate = date;
       else this.filter.finalDate = date;
+    },
+    seeItem(item) {
+      this.materialStockSelected = item;
+      this.showMaterialStock = true;
     },
   },
   created() {
@@ -231,7 +249,6 @@ export default {
   computed: {
     ...mapState(materialsConstants.MODULE_NAME, [
       "materialStocks",
-      "showFilter",
       "materialStockPage",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),

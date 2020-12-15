@@ -7,10 +7,8 @@
       <v-sheet class="v-sheet--offset mx-auto" color="gray" elevation="7">
         <common-charts-line
           :labels="labels"
-          :datasets="datasets"
-          :yAxes="{
-            ticks: { beginAtZero: true, callback: yAxesCallback },
-          }"
+          :series="series"
+          :colors="colors"
         />
       </v-sheet>
     </v-card-text>
@@ -23,11 +21,6 @@ import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 
 export default {
-  props: ["labels", "isLoading", "title", "datasets", "options"],
-  methods: {
-    yAxesCallback(value, index, values) {
-      return value;
-    },
-  },
+  props: ["labels", "isLoading", "title", "series", "options", "colors"],
 };
 </script>
