@@ -79,7 +79,7 @@ export default [
   {
     path: routes.MATERIALS_DETAILS.path,
     name: routes.MATERIALS_DETAILS.name,
-    view: 'materials.Edit',
+    view: 'materials.Details',
     meta: {
       middleware: guest
     }

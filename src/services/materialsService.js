@@ -49,10 +49,32 @@ export const updateStock = (id, object) => {
   })
 }
 
+export const getYears = (id, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}/years`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
+export const getReportYear = (id, year, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}/report/${year}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
 export default {
   search,
   add,
   get,
   edit,
-  updateStock
+  updateStock,
+  getYears,
+  getReportYear
 }

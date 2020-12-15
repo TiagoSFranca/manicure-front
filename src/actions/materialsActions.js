@@ -86,10 +86,42 @@ export const updateStock = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
+export const getYears = (id, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  materialsService
+    .getYears(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.MATERIALS_SET_YEARS, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getReportYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  materialsService
+    .getReportYear(id, year, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.MATERIALS_SET_REPORT_YEAR, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
 export default {
   search,
   add,
   get,
   edit,
-  updateStock
+  updateStock,
+  getYears,
+  getReportYear
 }

@@ -9,4 +9,6 @@ export default {
   [constants.MUTATION_TOGGLE_SHOW_FILTER]: toggle('showFilter'),
   [constants.MUTATION_SET_PAGE]: set('page'),
   [constants.MUTATION_SET_MATERIAL]: set('material'),
+  [constants.MUTATION_SET_YEARS]: set('years'),
+  [constants.MUTATION_SET_REPORT_YEAR]: set('reportYear'),
 }

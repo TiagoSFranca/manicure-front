@@ -3,5 +3,10 @@ export default {
   search: false,
   showFilter: false,
   page: {},
-  material: {}
+  material: {},
+  years: [],
+  reportYear: {
+    register: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    remove: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  }
 }

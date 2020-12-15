@@ -85,3 +85,7 @@ export const getMaterialStatusText = (idStatus) => {
   else
     return i18nConstants.MATERIAL.STATUS.ERROR;
 }
+
+export const randomColor = () => {
+  return `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
+}

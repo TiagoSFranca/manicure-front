@@ -6,11 +6,12 @@
           <v-col cols="auto" class="ml-auto">
             <v-btn
               color="error"
-              elevation="2"
+              outlined
               icon
               large
               :loading="loading[LOADING_IDENTIFIER]"
               :to="MATERIALS"
+              exact
             >
               <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
