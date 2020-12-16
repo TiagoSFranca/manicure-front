@@ -133,6 +133,20 @@ export const searchMaterialStocks = (id, source, filter, pagination, sort, LOADI
     })
 };
 
+export const toggleActive = (id, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return materialsService
+    .toggleActive(id)
+    .then(() => {
+      store.commit(mutationTypes.MATERIALS_SET_SEARCH, true)
+      toastr.success(messages.sucesso.exclusao)
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
 export default {
   search,
   add,
@@ -141,5 +155,6 @@ export default {
   updateStock,
   getYears,
   getReportYear,
-  searchMaterialStocks
+  searchMaterialStocks,
+  toggleActive
 }

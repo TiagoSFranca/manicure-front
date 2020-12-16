@@ -62,6 +62,13 @@
           <template v-slot:item.price="{ item }">
             <span>{{ toCurrency(item.price) }}</span>
           </template>
+          <template v-slot:item.active="{ item }">
+            <v-simple-checkbox
+              v-model="item.active"
+              disabled
+              color="primary"
+            ></v-simple-checkbox>
+          </template>
           <template v-slot:item.actions="{ item }">
             <v-btn
               icon
@@ -81,12 +88,16 @@
             >
               <v-icon>mdi-pencil-outline</v-icon>
             </v-btn>
-            <v-icon
-              @click="deleteItem(item)"
-              color="error"
+            <v-btn
+              icon
               :disabled="loading[LOADING_IDENTIFIER]"
-              >mdi-delete-outline</v-icon
+              :color="item.active ? 'error' : 'success'"
+              @click="deleteItem(item)"
             >
+              <v-icon>
+                {{ item.active ? "mdi-delete-outline" : "mdi-delete-restore" }}
+              </v-icon>
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
@@ -98,6 +109,35 @@
       :loading="loading[LOADING_IDENTIFIER]"
       :filtered="filter"
     />
+    <common-confirm-dialog
+      :showDialog="showDialog"
+      :title="title"
+      :message="message"
+      @close="showDialog = false"
+    >
+      <template slot="actions">
+        <v-spacer></v-spacer>
+        <v-btn
+          color="error"
+          @click="showDialog = false"
+          icon
+          fab
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-btn
+          color="success"
+          submit
+          icon
+          fab
+          @click="confirmDialog()"
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-check</v-icon>
+        </v-btn>
+      </template>
+    </common-confirm-dialog>
   </div>
 </template>
 
@@ -119,6 +159,10 @@ export default {
   data() {
     return {
       showAdd: false,
+      showDialog: false,
+      title: "",
+      message: "",
+      materialSelected: {},
       source: "",
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
@@ -152,9 +196,16 @@ export default {
           value: "usedQty",
           align: "center",
         },
+        {
+          text: this.$t(i18nConstants.MATERIAL.LIST.ACTIVE),
+          value: "active",
+          align: "center",
+        },
         { text: "", value: "actions", sortable: false, align: "end" },
       ],
-      filter: {},
+      filter: {
+        active: true,
+      },
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchMaterials",
@@ -214,6 +265,25 @@ export default {
     },
     getText(item) {
       return this.$t(getMaterialStatusText(item.status));
+    },
+    deleteItem(item) {
+      this.showDialog = true;
+
+      var message = item.active
+        ? this.i18nConstants.MATERIAL.LIST.MESSAGES.CONFIRM_DELETE
+        : this.i18nConstants.MATERIAL.LIST.MESSAGES.CONFIRM_RESTORE;
+
+      this.message = this.$t(message.MESSAGE);
+      this.title = this.$t(message.TITLE);
+
+      this.materialSelected = item;
+    },
+    confirmDialog() {
+      this.showDialog = false;
+      materialsActions.toggleActive(
+        this.materialSelected.id,
+        this.LOADING_IDENTIFIER
+      );
     },
   },
   created() {

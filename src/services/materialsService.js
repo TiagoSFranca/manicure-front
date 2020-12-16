@@ -79,6 +79,14 @@ export const searchMaterialStocks = (id, query, source) => {
   })
 };
 
+export const toggleActive = (id) => {
+  return new Promise((resolve, reject) => {
+    return axios.post(`${RESOURCE_NAME}/${id}/toggleActive`)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
 export default {
   search,
   add,
@@ -87,5 +95,6 @@ export default {
   updateStock,
   getYears,
   getReportYear,
-  searchMaterialStocks
+  searchMaterialStocks,
+  toggleActive
 }

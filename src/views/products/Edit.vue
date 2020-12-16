@@ -9,6 +9,7 @@
           large
           :loading="loading[LOADING_IDENTIFIER]"
           :to="{ name: PRODUCTS.name }"
+          exact
         >
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
