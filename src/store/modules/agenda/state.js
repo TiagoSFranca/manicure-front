@@ -2,5 +2,12 @@ export default {
   agenda: [],
   search: false,
   showFilter: false,
-  page: {}
+  page: {},
+  schedule: {
+    client: {},
+    scheduleQuestion: {}
+  },
+  materials: [],
+  products: [],
+  combos: [],
 }

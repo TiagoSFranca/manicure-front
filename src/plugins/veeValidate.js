@@ -12,6 +12,14 @@ extend('greater_than', {
   },
   message: 'Valor deve ser maior que {compare}'
 });
+extend('greater_than_or_equal', {
+  params: ["compare"],
+  validate: (value, { compare }) => {
+    let compareNumb = ToDecimal(compare)
+    return (value ? value : 0) >= compareNumb
+  },
+  message: 'Valor deve ser maior ou igual a {compare}'
+});
 extend('lower_than_other', {
   params: ["compare", "other"],
   validate: (value, { compare }) => {

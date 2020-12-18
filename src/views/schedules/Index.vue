@@ -1,12 +1,6 @@
 <template>
   <div>
-    <v-row align="center">
-      <v-col cols="auto" class="mr-auto">
-        <span class="title white--text">
-          {{ $tc(i18nConstants.SCHEDULE.NAME, 2) }}
-        </span>
-      </v-col>
-
+    <core-page-title :title="$tc(i18nConstants.SCHEDULE.NAME, 2)">
       <v-col cols="auto" class="ml-auto">
         <v-btn
           color="accent"
@@ -34,7 +28,7 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-col>
-    </v-row>
+    </core-page-title>
     <v-row>
       <v-col cols="12">
         <v-data-table

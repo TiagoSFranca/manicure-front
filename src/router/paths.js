@@ -143,7 +143,7 @@ export default [
   {
     path: routes.SCHEDULES_DETAILS.path,
     name: routes.SCHEDULES_DETAILS.name,
-    view: 'schedules.Add',
+    view: 'schedules.Details',
     meta: {
       middleware: guest
     }
@@ -151,7 +151,7 @@ export default [
   {
     path: routes.SCHEDULES_FINISH.path,
     name: routes.SCHEDULES_FINISH.name,
-    view: 'schedules.Add',
+    view: 'schedules.Finish',
     meta: {
       middleware: guest
     }

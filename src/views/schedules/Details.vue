@@ -1,6 +1,6 @@
 <template>
   <div>
-    <core-page-title :title="$t(SCHEDULE.FINISH.NAME)">
+    <core-page-title :title="$t(SCHEDULE.DETAILS.NAME)">
       <v-col cols="auto" class="ml-auto">
         <v-btn
           color="error"
@@ -32,7 +32,7 @@
             class="d-flex align-content-center flex-wrap justify-center"
           >
             <span class="overline d-flex align-content-center flex-wrap">
-              {{ $t(SCHEDULE.FINISH.LABELS.TOTAL) }}
+              {{ $t(SCHEDULE.DETAILS.LABELS.TOTAL) }}
             </span>
             <common-span-loading
               classes="overline ml-2 text-h4 primary--text"
@@ -45,37 +45,48 @@
         </v-card>
       </v-col>
     </v-row>
-    <validation-observer ref="form" v-slot="{ handleSubmit }" @submit.prevent>
-      <v-row>
-        <v-col cols="12">
-          <material-schedules-card-materials
-            :materials="materials"
-            :loading="
-              loading[LOADING_IDENTIFIER_MATERIALS] ||
-              loading[LOADING_IDENTIFIER]
-            "
-            :disabled="
-              loading[LOADING_IDENTIFIER_MATERIALS] ||
-              loading[LOADING_IDENTIFIER]
-            "
-          />
-        </v-col>
-      </v-row>
-      <v-btn
-        color="success"
-        submit
-        fab
-        fixed
-        right
-        bottom
-        @click="handleSubmit(onSave)"
-        :loading="
-          loading[LOADING_IDENTIFIER_MATERIALS] || loading[LOADING_IDENTIFIER]
-        "
-      >
-        <v-icon>mdi-check</v-icon>
-      </v-btn>
-    </validation-observer>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-schedules-card-products
+          :products="products"
+          :disabled="loading[LOADING_IDENTIFIER_PRODUCTS]"
+          :loading="loading[LOADING_IDENTIFIER_PRODUCTS]"
+        />
+      </v-col>
+    </v-row>
+    <v-row v-if="combos.length > 0">
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-schedules-card-combos
+          :combos="combos"
+          :disabled="loading[LOADING_IDENTIFIER_COMBOS]"
+          :loading="loading[LOADING_IDENTIFIER_COMBOS]"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-schedules-card-questions
+          :disabled="loading[LOADING_IDENTIFIER]"
+          :loading="loading[LOADING_IDENTIFIER]"
+          :questions="schedule.scheduleQuestion"
+          :readonly="true"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <material-schedules-card-materials
+          :materials="materials"
+          :loading="
+            loading[LOADING_IDENTIFIER_MATERIALS] || loading[LOADING_IDENTIFIER]
+          "
+          :disabled="
+            loading[LOADING_IDENTIFIER_MATERIALS] || loading[LOADING_IDENTIFIER]
+          "
+          :readonly="true"
+        />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -95,23 +106,12 @@ export default {
       source: "",
       LOADING_IDENTIFIER: "searchSchedule",
       LOADING_IDENTIFIER_MATERIALS: "searchScheduleMaterials",
+      LOADING_IDENTIFIER_PRODUCTS: "searchScheduleProducts",
+      LOADING_IDENTIFIER_COMBOS: "searchScheduleCombos",
       SCHEDULES: SCHEDULES,
     };
   },
   methods: {
-    onSave() {
-      let id = this.$route.params.id;
-
-      let materials = this.materials.map((e) => {
-        return { idMaterial: e.idMaterial, qty: e.qtyUsed };
-      });
-
-      agendaActions
-        .finish(id, { materials: materials }, this.LOADING_IDENTIFIER)
-        .then((res) => {
-          if (res.success) this.$router.push(SCHEDULES);
-        });
-    },
     toCurrency(value) {
       return ToCurrency(value, false, false);
     },
@@ -129,12 +129,27 @@ export default {
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },
+    getProducts() {
+      let id = this.$route.params.id;
+      this.source = axiosSourceToken.obterToken();
+      agendaActions.getProducts(
+        id,
+        this.source,
+        this.LOADING_IDENTIFIER_PRODUCTS
+      );
+    },
+    getCombos() {
+      let id = this.$route.params.id;
+      this.source = axiosSourceToken.obterToken();
+      agendaActions.getCombos(id, this.source, this.LOADING_IDENTIFIER_COMBOS);
+    },
   },
   computed: {
     ...mapState(agendaConstants.MODULE_NAME, [
       "schedule",
       "materials",
-      "search",
+      "products",
+      "combos",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
@@ -148,6 +163,8 @@ export default {
   created() {
     this.searchSchedule();
     this.getMaterials();
+    this.getProducts();
+    this.getCombos();
     this.SCHEDULE = i18nConstants.SCHEDULE;
   },
 };

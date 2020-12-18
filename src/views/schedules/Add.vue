@@ -173,11 +173,7 @@ export default {
       agendaActions
         .add(this.requestObject, this.LOADING_IDENTIFIER)
         .then((res) => {
-          if (res.success) {
-            console.log("SALVOU");
-          } else {
-            console.log("NÂO SALVOU");
-          }
+          if (res.success) this.$router.push(SCHEDULES);
         });
     },
     changeProducts(products) {

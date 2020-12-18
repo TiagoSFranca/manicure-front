@@ -8,4 +8,8 @@ export default {
   [constants.MUTATION_TOGGLE_SHOW_FILTER]: toggle('showFilter'),
   [constants.MUTATION_SET_PAGE]: set('page'),
   [constants.MUTATION_CLEAR_AGENDA]: set('agenda', []),
+  [constants.MUTATION_SET_SCHEDULE]: set('schedule'),
+  [constants.MUTATION_SET_MATERIALS]: set('materials'),
+  [constants.MUTATION_SET_PRODUCTS]: set('products'),
+  [constants.MUTATION_SET_COMBOS]: set('combos'),
 }

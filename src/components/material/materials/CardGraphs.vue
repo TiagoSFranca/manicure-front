@@ -4,13 +4,7 @@
       <span class="overline">{{ title }}</span>
     </v-card-title>
     <v-card-text>
-      <v-sheet class="v-sheet--offset mx-auto" color="gray" elevation="7">
-        <common-charts-line
-          :labels="labels"
-          :series="series"
-          :colors="colors"
-        />
-      </v-sheet>
+      <common-charts-line :labels="labels" :series="series" :colors="colors" />
     </v-card-text>
   </v-card>
 </template>

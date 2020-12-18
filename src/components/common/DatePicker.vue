@@ -16,10 +16,9 @@
         v-bind="attrs"
         @blur="blur"
         v-on="on"
-        :disabled="disabled"
         readonly
         :error-messages="errors"
-        clearable
+        :clearable="!disabled"
         @click:clear="clear"
       ></v-text-field>
     </template>

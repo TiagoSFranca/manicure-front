@@ -10,6 +10,7 @@
             v-model="questions.format"
             row
             :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT)"
+            :readonly="readonly"
           >
             <v-radio
               :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.FORMAT_OPTIONS.NONE)"
@@ -38,6 +39,7 @@
             v-model="questions.color"
             row
             :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COLOR)"
+            :readonly="readonly"
           >
             <v-radio
               :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COLOR_OPTIONS.NONE)"
@@ -59,6 +61,7 @@
           <v-checkbox
             v-model="questions.hasOnychomycosis"
             :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.HAS_ONYCHOMYCOSIS)"
+            :readonly="readonly"
           />
           <v-checkbox
             class="d-flex"
@@ -66,6 +69,7 @@
             :label="
               $t(SCHEDULE.CARD_QUESTIONS.LABELS.USE_ONYCHOMYCOSIS_MEDICINE)
             "
+            :readonly="readonly"
           />
           <validation-provider rules="max:512" v-slot="{ errors }">
             <v-textarea
@@ -74,6 +78,7 @@
               :error-messages="errors"
               counter="512"
               :disabled="!questions.useOnychomycosisMedicine"
+              :readonly="readonly"
             ></v-textarea>
           </validation-provider>
         </v-col>
@@ -81,10 +86,12 @@
           <v-checkbox
             v-model="questions.diabetes"
             :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.DIABETES)"
+            :readonly="readonly"
           />
           <v-checkbox
             v-model="questions.allergy"
             :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.ALLERGY)"
+            :readonly="readonly"
           />
           <validation-provider rules="max:512" v-slot="{ errors }">
             <v-textarea
@@ -93,6 +100,7 @@
               :error-messages="errors"
               counter="512"
               :disabled="!questions.allergy"
+              :readonly="readonly"
             ></v-textarea>
           </validation-provider>
         </v-col>
@@ -107,6 +115,7 @@
               "
               :error-messages="errors"
               counter="512"
+              :readonly="readonly"
             ></v-textarea>
           </validation-provider>
         </v-col>
@@ -117,6 +126,7 @@
               :label="$t(SCHEDULE.CARD_QUESTIONS.LABELS.COMMENTS)"
               :error-messages="errors"
               counter="512"
+              :readonly="readonly"
             ></v-textarea>
           </validation-provider>
         </v-col>
@@ -129,7 +139,7 @@
 import i18nConstants from "@/i18n/constants";
 
 export default {
-  props: ["loading", "disabled", "questions"],
+  props: ["loading", "disabled", "questions", "readonly"],
   created() {
     this.SCHEDULE = i18nConstants.SCHEDULE;
   },

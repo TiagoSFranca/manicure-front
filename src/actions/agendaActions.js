@@ -71,9 +71,88 @@ export const cancel = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
+export const get = (id, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  agendaService
+    .get(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.AGENDA_SET_SCHEDULE, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getMaterials = (id, source, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  agendaService
+    .getMaterials(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.AGENDA_SET_MATERIALS, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const finish = (id, object, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return agendaService
+    .finish(id, object)
+    .then(() => {
+      store.commit(mutationTypes.AGENDA_SET_SEARCH, true)
+      toastr.success(messages.sucesso.cadastro)
+      return { success: true };
+    }).catch(() => {
+      return { success: false };
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getProducts = (id, source, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  agendaService
+    .getProducts(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.AGENDA_SET_PRODUCTS, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getCombos = (id, source, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  agendaService
+    .getCombos(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.AGENDA_SET_COMBOS, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
 export default {
   checkStock,
   add,
   search,
-  cancel
+  cancel,
+  get,
+  getMaterials,
+  finish,
+  getProducts,
+  getCombos
 }
