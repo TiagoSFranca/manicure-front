@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-container fluid grid-list-xl class="fill-height">
+    <v-container fluid grid-list-xl>
       <v-layout wrap>
         <v-flex>
           <router-view />

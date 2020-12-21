@@ -7,7 +7,14 @@
     offset-y
   >
     <template v-slot:activator="{ on, attrs }">
-      <v-btn text outlined v-bind="attrs" v-on="on" :loading="loading">
+      <v-btn
+        text
+        outlined
+        v-bind="attrs"
+        v-on="on"
+        :loading="loading"
+        :color="color"
+      >
         <v-icon>mdi-calendar</v-icon>
       </v-btn>
     </template>
@@ -26,7 +33,7 @@ import { formatDate } from "@/utils/methods";
 import moment from "moment";
 
 export default {
-  props: ["loading"],
+  props: ["loading", "color"],
   data() {
     return {
       menu: false,

@@ -1,22 +1,22 @@
 <template>
   <div>
-    <v-row align="center">
-      <v-col cols="auto" class="mr-auto">
-        <span class="title white--text">Agenda</span>
-      </v-col>
-    </v-row>
+    <core-page-title :title="$tc(i18nConstants.SCHEDULE.NAME, 2)">
+    </core-page-title>
 
     <v-row class="fill-height">
       <v-col>
-        <v-card>
+        <v-card
+          :loading="loading[LOADING_IDENTIFIER]"
+          :disabled="loading[LOADING_IDENTIFIER]"
+        >
           <v-card-title>
-            <v-btn text outlined @click="prev">
+            <v-btn text outlined @click="prev" color="accent">
               <v-icon> mdi-calendar-arrow-left </v-icon>
             </v-btn>
-            <v-btn text outlined @click="setToday" class="mx-1">
+            <v-btn text outlined @click="setToday" class="mx-1" color="accent">
               <v-icon> mdi-calendar-check-outline </v-icon>
             </v-btn>
-            <v-btn text outlined @click="next">
+            <v-btn text outlined @click="next" color="accent">
               <v-icon> mdi-calendar-arrow-right </v-icon>
             </v-btn>
             <v-spacer />
@@ -24,37 +24,51 @@
               {{ $refs.calendar.title }}
             </v-toolbar-title>
             <v-spacer />
-            <material-agenda-month-picker @changeDate="changeDate" />
+            <material-agenda-month-picker
+              @changeDate="changeDate"
+              color="accent"
+            />
             <v-btn
               text
               outlined
               @click="refresh"
-              :class="`m${type == 'day' ? 'l' : 'x'}-1`"
+              :class="`ml-1`"
+              color="accent"
             >
               <v-icon>mdi-refresh</v-icon>
             </v-btn>
-            <v-btn text outlined class="mx-1" v-if="type == 'day'">
+            <v-btn
+              text
+              outlined
+              class="mx-1"
+              :to="SCHEDULES_ADD"
+              target="_blank"
+              color="accent"
+            >
               <v-icon>mdi-plus</v-icon>
             </v-btn>
             <v-menu bottom right>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" v-on="on" outlined>
+                <v-btn
+                  v-bind="attrs"
+                  v-on="on"
+                  outlined
+                  text
+                  color="accent"
+                >
                   <span>{{ typeToLabel[type] }}</span>
                   <v-icon right> mdi-menu-down </v-icon>
                 </v-btn>
               </template>
               <v-list>
                 <v-list-item @click="type = 'day'">
-                  <v-list-item-title>Day</v-list-item-title>
+                  <v-list-item-title>Diário</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="type = 'week'">
-                  <v-list-item-title>Week</v-list-item-title>
+                  <v-list-item-title>Semanal</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="type = 'month'">
-                  <v-list-item-title>Month</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="type = '4day'">
-                  <v-list-item-title>4 days</v-list-item-title>
+                  <v-list-item-title>Mensal</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -82,31 +96,7 @@
                 :activator="selectedElement"
                 offset-x
               >
-                <v-card color="grey lighten-4" min-width="350px" flat>
-                  <v-toolbar :color="selectedEvent.color" dark>
-                    <v-btn icon>
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
-                    <v-toolbar-title
-                      v-html="selectedEvent.name"
-                    ></v-toolbar-title>
-                    <v-spacer></v-spacer>
-                    <v-btn icon>
-                      <v-icon>mdi-heart</v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                      <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                  </v-toolbar>
-                  <v-card-text>
-                    <span v-html="selectedEvent.details"></span>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn text color="secondary" @click="selectedOpen = false">
-                      Cancel
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
+                <material-agenda-item :selectedEvent="selectedEvent" />
               </v-menu>
             </v-sheet>
           </v-card-text>
@@ -117,30 +107,41 @@
 </template>
 
 <script>
+import agendaActions from "@/actions/agendaActions";
+import axiosSourceToken from "@/utils/axiosSourceToken";
+import { mapState, mapMutations } from "vuex";
+import {
+  formatDate,
+  getScheduleStatusText,
+  getScheduleStatusColor,
+  checkDisabledCancelScheduleFromStatus,
+} from "@/utils/methods";
+import appConstants from "@/store/modules/app/constants";
+import agendaConstants from "@/store/modules/agenda/constants";
+import {
+  SCHEDULES_ADD,
+  SCHEDULES_FINISH,
+  SCHEDULES_DETAILS,
+} from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
+
 export default {
   data: () => ({
     focus: "",
     type: "month",
     typeToLabel: {
-      month: "Month",
-      week: "Week",
-      day: "Day",
-      "4day": "4 Days",
+      month: "Mensal",
+      week: "Semanal",
+      day: "Diário",
     },
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
     events: [],
-    colors: [
-      "blue",
-      "indigo",
-      "deep-purple",
-      "cyan",
-      "green",
-      "orange",
-      "grey darken-1",
-    ],
-    names: ["Meeting", "Holiday", "PTO"],
+    LOADING_IDENTIFIER: "searchSchedules",
+    beginDate: "",
+    endDate: "",
+    SCHEDULES_ADD: SCHEDULES_ADD,
   }),
   mounted() {
     this.$refs.calendar.checkChange();
@@ -169,6 +170,7 @@ export default {
     refresh() {
       this.focus = "";
       this.type = "month";
+      this.searchAgenda();
     },
     showEvent({ nativeEvent, event }) {
       const open = () => {
@@ -189,35 +191,61 @@ export default {
       nativeEvent.stopPropagation();
     },
     updateRange({ start, end }) {
-      console.log("START", start);
-      console.log("END", end);
-      const events = [];
+      this.beginDate = start.date;
+      this.endDate = end.date;
 
-      const min = new Date(`${start.date}T00:00:00`);
-      const max = new Date(`${end.date}T23:59:59`);
-      const days = (max.getTime() - min.getTime()) / 86400000;
-      const eventCount = this.rnd(days, days + 20);
-
-      for (let i = 0; i < eventCount; i++) {
-        const allDay = this.rnd(0, 3) === 0;
-        const firstTimestamp = this.rnd(min.getTime(), max.getTime());
-        const first = new Date(firstTimestamp - (firstTimestamp % 900000));
-        const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
-        const second = new Date(first.getTime() + secondTimestamp);
-
-        events.push({
-          name: this.names[this.rnd(0, this.names.length - 1)],
-          start: first,
-          end: second,
-          color: this.colors[this.rnd(0, this.colors.length - 1)],
-          timed: false,
-        });
-      }
-
-      this.events = events;
+      this.searchAgenda();
     },
-    rnd(a, b) {
-      return Math.floor((b - a + 1) * Math.random()) + a;
+    mountAgenda() {
+      this.events = [];
+
+      let newList = this.agenda.map((item) => {
+        return {
+          name: "#" + item.id,
+          start: new Date(item.date),
+          schedule: item,
+          end: new Date(item.date),
+          color: getScheduleStatusColor(item.status),
+        };
+      });
+
+      this.events = newList;
+    },
+    searchAgenda() {
+      this.source = axiosSourceToken.obterToken();
+      agendaActions.search(
+        this.source,
+        { beginDate: this.beginDate, endDate: this.endDate },
+        this.pagination,
+        this.sort,
+        this.LOADING_IDENTIFIER
+      );
+
+      this.closeEvent();
+    },
+    closeEvent() {
+      this.selectedOpen = false;
+      this.selectedEvent = {};
+      this.selectedElement = null;
+    },
+  },
+  created() {
+    this.i18nConstants = { ...i18nConstants };
+  },
+  computed: {
+    ...mapState(agendaConstants.MODULE_NAME, ["agenda", "search"]),
+    ...mapState(appConstants.MODULE_NAME, ["loading"]),
+  },
+  beforeRouteLeave(to, from, next) {
+    this.source.cancel();
+    next();
+  },
+  watch: {
+    agenda() {
+      this.mountAgenda();
+    },
+    search() {
+      this.searchAgenda();
     },
   },
 };

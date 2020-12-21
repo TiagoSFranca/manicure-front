@@ -154,5 +154,5 @@ export default {
   getMaterials,
   finish,
   getProducts,
-  getCombos
+  getCombos,
 }
