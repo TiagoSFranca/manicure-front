@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-container fluid grid-list-xl>
+    <v-container fluid grid-list-xl class="fill-height">
       <v-layout wrap>
         <v-flex>
           <router-view />
@@ -15,5 +15,6 @@
     <core-toastr />
     <core-progress-bar />
     <core-logout />
+    <core-no-connection />
   </v-main>
 </template>

@@ -156,4 +156,20 @@ export default [
       middleware: guest
     }
   },
+  {
+    path: routes.NOT_FOUND.path,
+    name: routes.NOT_FOUND.name,
+    view: 'NotFound',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
+    path: routes.RESOURCE_NOT_FOUND.path,
+    name: routes.RESOURCE_NOT_FOUND.name,
+    view: 'ResourceNotFound',
+    meta: {
+      middleware: guest
+    }
+  },
 ]

@@ -2,7 +2,9 @@ import progressBar from '@/utils/progressBar'
 import store from '@/store'
 import axios from 'axios'
 import router from '@/router'
-import { baseUrlAuth, clientId } from "@/utils/constants"
+
+const baseUrlAuth = "@/utils/constants";
+const clientId = "@/utils/constants";
 
 export default {
   auth(username, password) {
@@ -67,7 +69,7 @@ export default {
 
           this.getUserInfo()
 
-          return axios(error.response.config);
+          // return axios(error.response.config);
         }).catch(error => {
           store.dispatch('auth/logout')
           router.push({ path: '/login' })

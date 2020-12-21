@@ -24,6 +24,9 @@ export const SCHEDULES_ADD = { name: "schedules_add", path: `${SCHEDULES.path}/a
 export const SCHEDULES_DETAILS = { name: "schedules_details", path: `${SCHEDULES.path}/details/:id` }
 export const SCHEDULES_FINISH = { name: "schedules_finish", path: `${SCHEDULES.path}/finish/:id` }
 
+export const NOT_FOUND = { name: "not_found", path: "*" }
+export const RESOURCE_NOT_FOUND = { name: "resource_not_found", path: "/not-found" }
+
 export default {
   INDEX,
   DASHBOARD,
@@ -49,5 +52,8 @@ export default {
   SCHEDULES,
   SCHEDULES_ADD,
   SCHEDULES_DETAILS,
-  SCHEDULES_FINISH
+  SCHEDULES_FINISH,
+  
+  NOT_FOUND,
+  RESOURCE_NOT_FOUND
 }
