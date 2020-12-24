@@ -264,7 +264,7 @@ export default {
       return getMaterialStatusColor(item.status);
     },
     getText(item) {
-      return this.$t(getMaterialStatusText(item.status));
+      return getMaterialStatusText(item.status);
     },
     deleteItem(item) {
       this.showDialog = true;

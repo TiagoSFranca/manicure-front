@@ -125,6 +125,11 @@ const DASHBOARD = {
 
 const AGENDA = {
   NAME: 'AGENDA.NAME',
+  TYPES: {
+    MONTH: 'AGENDA.TYPES.MONTH',
+    DAY: 'AGENDA.TYPES.DAY',
+    WEEK: 'AGENDA.TYPES.WEEK',
+  }
 }
 
 const SCHEDULE = {

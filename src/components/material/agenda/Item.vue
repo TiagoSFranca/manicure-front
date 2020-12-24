@@ -6,14 +6,7 @@
         <v-spacer />
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              :color="selectedEvent.color"
-              dark
-              v-bind="attrs"
-              v-on="on"
-              fab
-              x-small
-            >
+            <v-btn :color="selectedEvent.color" dark v-bind="attrs" v-on="on" fab x-small>
             </v-btn>
           </template>
           <span> {{ getText(selectedEvent.schedule) }}</span>
@@ -99,7 +92,6 @@
 import {
   formatDate,
   getScheduleStatusText,
-  getScheduleStatusColor,
   checkDisabledCancelScheduleFromStatus,
 } from "@/utils/methods";
 import {
@@ -124,7 +116,7 @@ export default {
   },
   methods: {
     getText(item) {
-      return this.$t(getScheduleStatusText(item.status));
+      return getScheduleStatusText(item.status);
     },
     setCancelDisabled(item) {
       return checkDisabledCancelScheduleFromStatus(item.status);

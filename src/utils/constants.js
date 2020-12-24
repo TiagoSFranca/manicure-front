@@ -1,26 +1,12 @@
+import i18n from '@/plugins/i18n';
+import i18nConstants from '@/i18n/constants';
+
 export const clientId = "vue"
 
 export const paginacao = {
   MINIMO: 6,
   MEDIO: 12,
   MAXIMO: 18,
-}
-
-export const paginacaoList = {
-  paginacao: [
-    {
-      text: paginacao.MINIMO + ' Itens',
-      value: paginacao.MINIMO
-    },
-    {
-      text: paginacao.MEDIO + ' Itens',
-      value: paginacao.MEDIO
-    },
-    {
-      text: paginacao.MAXIMO + ' Itens',
-      value: paginacao.MAXIMO
-    }
-  ]
 }
 
 export const SCHEDULE_STATUS = {
@@ -50,4 +36,19 @@ export const MATERIAL_SCHEDULE_STATUS = {
       value: 2
     },
   ]
+}
+
+export const AGENDA_TYPES = {
+  MONTH: {
+    label: i18n.t(i18nConstants.AGENDA.TYPES.MONTH),
+    value: "month"
+  },
+  WEEK: {
+    label: i18n.t(i18nConstants.AGENDA.TYPES.WEEK),
+    value: "week"
+  },
+  DAY: {
+    label: i18n.t(i18nConstants.AGENDA.TYPES.DAY),
+    value: "day"
+  },
 }

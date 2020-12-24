@@ -47,14 +47,7 @@
           <template v-slot:item.status="{ item }">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  :color="getColor(item)"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                  fab
-                  x-small
-                >
+                <v-btn :color="getColor(item)" dark v-bind="attrs" v-on="on" fab x-small>
                 </v-btn>
               </template>
               <span>{{ getText(item) }}</span>
@@ -126,12 +119,7 @@ import {
 } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
-import {
-  SCHEDULES_ADD,
-  SCHEDULES_FINISH,
-  SCHEDULES_DETAILS,
-} from "@/router/routes";
-import moment from "moment";
+import { SCHEDULES_ADD, SCHEDULES_FINISH, SCHEDULES_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
@@ -207,10 +195,7 @@ export default {
         };
       }
 
-      if (
-        prevSort.orderBy !== this.sort.orderBy ||
-        prevSort.asc !== this.sort.asc
-      ) {
+      if (prevSort.orderBy !== this.sort.orderBy || prevSort.asc !== this.sort.asc) {
         this.searchAgenda();
       }
 
@@ -228,7 +213,7 @@ export default {
       return getScheduleStatusColor(item.status);
     },
     getText(item) {
-      return this.$t(getScheduleStatusText(item.status));
+      return getScheduleStatusText(item.status);
     },
     cancelItem(item) {
       this.showCancel = true;
@@ -243,12 +228,7 @@ export default {
     this.i18nConstants = { ...i18nConstants };
   },
   computed: {
-    ...mapState(agendaConstants.MODULE_NAME, [
-      "agenda",
-      "search",
-      "showFilter",
-      "page",
-    ]),
+    ...mapState(agendaConstants.MODULE_NAME, ["agenda", "search", "showFilter", "page"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
   beforeRouteLeave(to, from, next) {

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <core-page-title :title="$tc(i18nConstants.SCHEDULE.NAME, 2)">
-    </core-page-title>
-
     <v-row class="fill-height">
       <v-col>
         <v-card
@@ -24,17 +21,8 @@
               {{ $refs.calendar.title }}
             </v-toolbar-title>
             <v-spacer />
-            <material-agenda-month-picker
-              @changeDate="changeDate"
-              color="accent"
-            />
-            <v-btn
-              text
-              outlined
-              @click="refresh"
-              :class="`ml-1`"
-              color="accent"
-            >
+            <material-agenda-month-picker @changeDate="changeDate" color="accent" />
+            <v-btn text outlined @click="refresh" :class="`ml-1`" color="accent">
               <v-icon>mdi-refresh</v-icon>
             </v-btn>
             <v-btn
@@ -49,31 +37,41 @@
             </v-btn>
             <v-menu bottom right>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  v-bind="attrs"
-                  v-on="on"
-                  outlined
-                  text
-                  color="accent"
-                >
-                  <span>{{ typeToLabel[type] }}</span>
+                <v-btn v-bind="attrs" v-on="on" outlined text color="accent">
+                  <span>{{ type.label }}</span>
                   <v-icon right> mdi-menu-down </v-icon>
                 </v-btn>
               </template>
               <v-list>
-                <v-list-item @click="type = 'day'">
-                  <v-list-item-title>Diário</v-list-item-title>
+                <v-list-item @click="type = types.DAY">
+                  <v-list-item-title>{{ types.DAY.label }}</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="type = 'week'">
-                  <v-list-item-title>Semanal</v-list-item-title>
+                <v-list-item @click="type = types.WEEK">
+                  <v-list-item-title>{{ types.WEEK.label }}</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="type = 'month'">
-                  <v-list-item-title>Mensal</v-list-item-title>
+                <v-list-item @click="type = types.MONTH">
+                  <v-list-item-title>{{ types.MONTH.label }}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
           </v-card-title>
           <v-card-text>
+            <v-row justify="start" align="center">
+              <v-col
+                cols="auto"
+                v-for="status in SCHEDULE_STATUS"
+                :key="status"
+                class="d-flex align-center"
+              >
+                <v-badge
+                  inline
+                  tile
+                  left
+                  :color="getScheduleStatusColor(status)"
+                ></v-badge>
+                {{ getScheduleStatusText(status) }}
+              </v-col>
+            </v-row>
             <v-sheet height="600">
               <v-calendar
                 ref="calendar"
@@ -81,7 +79,7 @@
                 color="primary"
                 :events="events"
                 :event-color="getEventColor"
-                :type="type"
+                :type="type.value"
                 @click:event="showEvent"
                 @click:more="viewDay"
                 @click:date="viewDay"
@@ -109,31 +107,19 @@
 <script>
 import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
-import {
-  formatDate,
-  getScheduleStatusText,
-  getScheduleStatusColor,
-  checkDisabledCancelScheduleFromStatus,
-} from "@/utils/methods";
+import { mapState } from "vuex";
+import { getScheduleStatusColor, getScheduleStatusText } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
-import {
-  SCHEDULES_ADD,
-  SCHEDULES_FINISH,
-  SCHEDULES_DETAILS,
-} from "@/router/routes";
+import { SCHEDULES_ADD } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { AGENDA_TYPES, SCHEDULE_STATUS } from "@/utils/constants";
 
 export default {
   data: () => ({
     focus: "",
-    type: "month",
-    typeToLabel: {
-      month: "Mensal",
-      week: "Semanal",
-      day: "Diário",
-    },
+    type: AGENDA_TYPES.MONTH,
+    types: AGENDA_TYPES,
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
@@ -142,6 +128,8 @@ export default {
     beginDate: "",
     endDate: "",
     SCHEDULES_ADD: SCHEDULES_ADD,
+    getScheduleStatusColor: getScheduleStatusColor,
+    getScheduleStatusText: getScheduleStatusText,
   }),
   mounted() {
     this.$refs.calendar.checkChange();
@@ -149,11 +137,11 @@ export default {
   methods: {
     changeDate(date) {
       this.focus = `${date}-01`;
-      this.type = "month";
+      this.type = this.types.MONTH;
     },
     viewDay({ date }) {
       this.focus = date;
-      this.type = "day";
+      this.type = this.types.DAY;
     },
     getEventColor(event) {
       return event.color;
@@ -169,7 +157,7 @@ export default {
     },
     refresh() {
       this.focus = "";
-      this.type = "month";
+      this.type = this.types.MONTH;
       this.searchAgenda();
     },
     showEvent({ nativeEvent, event }) {
@@ -231,6 +219,10 @@ export default {
   },
   created() {
     this.i18nConstants = { ...i18nConstants };
+
+    this.SCHEDULE_STATUS = Object.entries(SCHEDULE_STATUS).map(([key, value]) => {
+      return value;
+    });
   },
   computed: {
     ...mapState(agendaConstants.MODULE_NAME, ["agenda", "search"]),

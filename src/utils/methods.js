@@ -2,6 +2,7 @@ import actionTypes from '@/store/actionTypes'
 import moment from 'moment';
 import i18nConstants from "@/i18n/constants";
 import { MATERIAL_STATUS, SCHEDULE_STATUS } from './constants'
+import i18n from '@/plugins/i18n';
 
 export const ToDecimal = (value) => {
   value = value || "";
@@ -33,17 +34,17 @@ export const formatDate = (date, formatter = "DD/MM/YYYY") => moment(date).forma
 export const getScheduleStatusText = (idStatus) => {
   switch (idStatus) {
     case SCHEDULE_STATUS.LATE:
-      return i18nConstants.SCHEDULE.STATUS.LATE;
+      return i18n.t(i18nConstants.SCHEDULE.STATUS.LATE);
     case SCHEDULE_STATUS.WITHOT_STOCK:
-      return i18nConstants.SCHEDULE.STATUS.NEED_ITEMS;
+      return i18n.t(i18nConstants.SCHEDULE.STATUS.NEED_ITEMS);
     case SCHEDULE_STATUS.CANCELED:
-      return i18nConstants.SCHEDULE.STATUS.CANCELED;
+      return i18n.t(i18nConstants.SCHEDULE.STATUS.CANCELED);
     case SCHEDULE_STATUS.FINISHED:
-      return i18nConstants.SCHEDULE.STATUS.REALIZED;
+      return i18n.t(i18nConstants.SCHEDULE.STATUS.REALIZED);
     case SCHEDULE_STATUS.OK:
-      return i18nConstants.SCHEDULE.STATUS.NO_PROBLEM;
+      return i18n.t(i18nConstants.SCHEDULE.STATUS.NO_PROBLEM);
     default:
-      return i18nConstants.SCHEDULE.STATUS.NO_PROBLEM;
+      return i18n.t(i18nConstants.SCHEDULE.STATUS.NO_PROBLEM);
   }
 }
 
@@ -79,11 +80,11 @@ export const getMaterialStatusColor = (idStatus) => {
 
 export const getMaterialStatusText = (idStatus) => {
   if (idStatus == MATERIAL_STATUS.OK)
-    return i18nConstants.MATERIAL.STATUS.OK;
+    return i18n.t(i18nConstants.MATERIAL.STATUS.OK);
   else if (idStatus == MATERIAL_STATUS.WARNING)
-    return i18nConstants.MATERIAL.STATUS.WARNING;
+    return i18n.t(i18nConstants.MATERIAL.STATUS.WARNING);
   else
-    return i18nConstants.MATERIAL.STATUS.ERROR;
+    return i18n.t(i18nConstants.MATERIAL.STATUS.ERROR);
 }
 
 export const randomColor = () => {

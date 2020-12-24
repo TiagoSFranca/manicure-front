@@ -37,6 +37,7 @@
           :to="DASHBOARD"
           exact
           v-if="checkRoute()"
+          @click="closeModal"
         >
           <v-icon left>mdi-arrow-left</v-icon>
           {{ $t(GENERAL.MESSAGES.NO_CONNECTION.COME_BACK) }}

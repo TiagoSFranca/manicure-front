@@ -73,6 +73,9 @@ export default {
   [constants.DASHBOARD.NAME]: "Dashboard",
 
   [constants.AGENDA.NAME]: "Agenda",
+  [constants.AGENDA.TYPES.MONTH]: "Mensal",
+  [constants.AGENDA.TYPES.DAY]: "Diário",
+  [constants.AGENDA.TYPES.WEEK]: "Semanal",
 
   [constants.SCHEDULE.NAME]: "Agendamento | Agendamentos",
   [constants.SCHEDULE.LIST.ID]: "Identificador",
