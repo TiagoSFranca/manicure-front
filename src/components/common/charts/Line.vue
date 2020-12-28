@@ -1,5 +1,10 @@
 <template>
-  <apexchart type="line" :options="chartOptions" :series="series"></apexchart>
+  <apexchart
+    type="line"
+    :options="chartOptions"
+    :series="series"
+    :height="height || 300"
+  ></apexchart>
 </template>
 
 <script>

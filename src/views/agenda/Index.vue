@@ -117,6 +117,7 @@ import { AGENDA_TYPES, SCHEDULE_STATUS } from "@/utils/constants";
 
 export default {
   data: () => ({
+    source: "",
     focus: "",
     type: AGENDA_TYPES.MONTH,
     types: AGENDA_TYPES,
@@ -220,8 +221,8 @@ export default {
   created() {
     this.i18nConstants = { ...i18nConstants };
 
-    this.SCHEDULE_STATUS = Object.entries(SCHEDULE_STATUS).map(([key, value]) => {
-      return value;
+    this.SCHEDULE_STATUS = Object.entries(SCHEDULE_STATUS).map((item) => {
+      return item[1];
     });
   },
   computed: {

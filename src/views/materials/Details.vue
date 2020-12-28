@@ -26,104 +26,7 @@
       </v-col>
     </v-row>
     <v-divider class="my-2" />
-    <v-row justify="end">
-      <v-col cols="12" md="2" lg="2">
-        <v-select
-          :items="years"
-          v-model="yearSelected"
-          :label="$t(MATERIAL.DETAILS.LABELS.YEAR)"
-          :loading="loading[LOADING_IDENTIFIER_YEARS]"
-        ></v-select>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" sm="12" lg="6" md="6">
-        <v-row>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-              :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
-                  year: yearSelected,
-                })
-              "
-            >
-              <span class="title white--text">
-                {{ reportYear.totalRegisterYear }}
-              </span>
-            </common-simple-card>
-          </v-col>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-              :title="$t(MATERIAL.DETAILS.LABELS.REGISTER_TOTAL)"
-            >
-              <span class="title white--text">
-                {{ reportYear.totalRegister }}
-              </span>
-            </common-simple-card>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <material-materials-card-graphs
-              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-              :labels="labels"
-              :series="getRegisters()"
-              :colors="[randomColor()]"
-              :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
-                  year: yearSelected,
-                })
-              "
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" sm="12" lg="6" md="6">
-        <v-row>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-              :title="
-                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
-                  year: yearSelected,
-                })
-              "
-            >
-              <span class="title white--text">
-                {{ reportYear.totalRemove }}
-              </span>
-            </common-simple-card>
-          </v-col>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-              :title="$t(MATERIAL.DETAILS.LABELS.REMOVE_TOTAL)"
-            >
-              <span class="title white--text">
-                {{ reportYear.totalRemove }}
-              </span>
-            </common-simple-card>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <material-materials-card-graphs
-              :isLoading="loading[LOADING_IDENTIFIER_YEARS]"
-              :labels="labels"
-              :series="getRemoves()"
-              :colors="[randomColor()]"
-              :title="
-                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
-                  year: yearSelected,
-                })
-              "
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <material-materials-card-graphs />
     <v-divider class="my-2" />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
@@ -146,99 +49,37 @@ import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import { MATERIALS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
-import moment from "moment";
-import { randomColor } from "@/utils/methods";
 
 export default {
   data() {
     return {
       source: "",
       LOADING_IDENTIFIER: "searchMaterial",
-      LOADING_IDENTIFIER_YEARS: "searchMaterialYears",
       MATERIALS: MATERIALS,
-      yearSelected: moment().year(),
-      labels: [
-        "jan",
-        "feb",
-        "mar",
-        "abr",
-        "mai",
-        "jun",
-        "jul",
-        "ago",
-        "set",
-        "out",
-        "nov",
-        "dez",
-      ],
-      randomColor: randomColor,
     };
   },
   methods: {
     ...mapMutations(materialsConstants.MODULE_NAME, [
-      materialsConstants.MUTATION_SET_REPORT_YEAR,
+      materialsConstants.MUTATION_SET_REPORT_REGISTER_YEAR,
+      materialsConstants.MUTATION_SET_REPORT_REMOVE_YEAR,
     ]),
     searchMaterial() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
       materialsActions.get(id, this.source, this.LOADING_IDENTIFIER);
     },
-    searchYears() {
-      let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      materialsActions.getYears(id, this.source, this.LOADING_IDENTIFIER_YEARS);
-    },
-    searchReportYear() {
-      let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      materialsActions.getReportYear(
-        id,
-        this.yearSelected,
-        this.source,
-        this.LOADING_IDENTIFIER_YEARS
-      );
-    },
-    getRegisters() {
-      var registers = (this.reportYear.register || []).map((e) => e.value);
-      return [
-        {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REGISTER),
-          data: registers,
-        },
-      ];
-    },
-    getRemoves() {
-      var registers = (this.reportYear.remove || []).map((e) => e.value);
-      return [
-        {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REMOVE),
-          data: registers,
-        },
-      ];
-    },
   },
   created() {
-    this[materialsConstants.MUTATION_SET_REPORT_YEAR]({});
     this.searchMaterial();
-    this.searchYears();
-    this.searchReportYear();
     this.MATERIAL = i18nConstants.MATERIAL;
   },
   computed: {
-    ...mapState(materialsConstants.MODULE_NAME, [
-      "material",
-      "search",
-      "years",
-      "reportYear",
-    ]),
+    ...mapState(materialsConstants.MODULE_NAME, ["material", "search"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
   watch: {
     search(val) {
       if (val) this.searchMaterial();
-    },
-    yearSelected() {
-      this.searchReportYear();
     },
   },
   beforeRouteLeave(to, from, next) {

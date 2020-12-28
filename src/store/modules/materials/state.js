@@ -5,9 +5,11 @@ export default {
   page: {},
   material: {},
   years: [],
-  reportYear: {
-    register: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    remove: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  reportRegisterYear: {
+    months: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  reportRemoveYear: {
+    months: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
   materialStocks: [],
   materialStockPage: {},

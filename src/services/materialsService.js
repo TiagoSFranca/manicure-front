@@ -58,9 +58,9 @@ export const getYears = (id, source) => {
   })
 }
 
-export const getReportYear = (id, year, source) => {
+export const getReportYear = (id, year, source, isRegister) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}/report/${year}`, {
+    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}/report/${year}?isRegister=${isRegister}`, {
       cancelToken: source.token
     })
       .then((e) => resolve(e))

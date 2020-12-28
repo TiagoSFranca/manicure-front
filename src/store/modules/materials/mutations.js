@@ -10,7 +10,8 @@ export default {
   [constants.MUTATION_SET_PAGE]: set('page'),
   [constants.MUTATION_SET_MATERIAL]: set('material'),
   [constants.MUTATION_SET_YEARS]: set('years'),
-  [constants.MUTATION_SET_REPORT_YEAR]: set('reportYear'),
+  [constants.MUTATION_SET_REPORT_REGISTER_YEAR]: set('reportRegisterYear'),
+  [constants.MUTATION_SET_REPORT_REMOVE_YEAR]: set('reportRemoveYear'),
   [constants.MUTATION_SET_MATERIAL_STOCKS]: set('materialStocks'),
   [constants.MUTATION_SET_MATERIAL_STOCK_PAGE]: set('materialStockPage'),
 }

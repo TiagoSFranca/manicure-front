@@ -101,15 +101,30 @@ export const getYears = (id, source, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getReportYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+export const getReportRegisterYear = (id, year, source, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .getReportYear(id, year, source)
+    .getReportYear(id, year, source, true)
     .then((response) => {
       let data = response.data
-      store.commit(mutationTypes.MATERIALS_SET_REPORT_YEAR, data);
+      store.commit(mutationTypes.MATERIALS_SET_REPORT_REGISTER_YEAR, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getReportRemoveYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  materialsService
+    .getReportYear(id, year, source, false)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.MATERIALS_SET_REPORT_REMOVE_YEAR, data);
     }).catch(() => {
     }).finally(() => {
       store.dispatch(endLoading(LOADING_IDENTIFIER));
@@ -154,7 +169,8 @@ export default {
   edit,
   updateStock,
   getYears,
-  getReportYear,
+  getReportRegisterYear,
+  getReportRemoveYear,
   searchMaterialStocks,
   toggleActive
 }
