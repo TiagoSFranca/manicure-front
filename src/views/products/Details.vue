@@ -42,116 +42,9 @@
         />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" sm="12" lg="6" md="6">
-        <v-row>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Agendamentos em 2020"
-            >
-              <span class="title white--text">38</span>
-            </common-simple-card>
-          </v-col>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Agendamentos totais"
-            >
-              <span class="title white--text">7503</span>
-            </common-simple-card>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <material-products-card-graphs
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              :labels="labels"
-              :datasets="datasets"
-              title="Agendamentos em 2020"
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" sm="12" lg="6" md="6">
-        <v-row>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Faturamento em 2020"
-            >
-              <span class="title white--text">38</span>
-            </common-simple-card>
-          </v-col>
-          <v-col cols="6" sm="6" lg="6" md="6">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Faturamento total"
-            >
-              <span class="title white--text">7503</span>
-            </common-simple-card>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <material-products-card-graphs
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              :labels="labels"
-              :datasets="datasets"
-              title="Faturamento em 2020"
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" sm="12" lg="12" md="12">
-        <v-row>
-          <v-col cols="6" sm="6" lg="3" md="3">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Materiais reservados em 2020"
-            >
-              <span class="title white--text">38</span>
-            </common-simple-card>
-          </v-col>
-          <v-col cols="6" sm="6" lg="3" md="3">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Materiais usados em 2020"
-            >
-              <span class="title white--text">7503</span>
-            </common-simple-card>
-          </v-col>
-          <v-col cols="12" sm="12" lg="3" md="3">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Valores gastos em 2020"
-            >
-              <span class="title white--text">7503</span>
-            </common-simple-card>
-          </v-col>
-          <v-col cols="12" sm="12" lg="3" md="3">
-            <common-simple-card
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              title="Valores gastos totais"
-            >
-              <span class="title white--text">7503</span>
-            </common-simple-card>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <material-products-card-graphs
-              :isLoading="loading[LOADING_IDENTIFIER_GRAPHS]"
-              :labels="labels"
-              :datasets="datasets"
-              title="Materiais em 2020"
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <v-divider />
+    <material-products-card-graphs />
+    <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
         <material-products-card-images
@@ -171,7 +64,7 @@
 <script>
 import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS } from "@/router/routes";
@@ -223,17 +116,29 @@ export default {
     getImages() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      productsActions.getImages(id, this.source, this.LOADING_IDENTIFIER_IMAGES);
+      productsActions.getImages(
+        id,
+        this.source,
+        this.LOADING_IDENTIFIER_IMAGES
+      );
     },
     getCombos() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      productsActions.getCombos(id, this.source, this.LOADING_IDENTIFIER_COMBOS);
+      productsActions.getCombos(
+        id,
+        this.source,
+        this.LOADING_IDENTIFIER_COMBOS
+      );
     },
     getMaterials() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      productsActions.getMaterials(id, this.source, this.LOADING_IDENTIFIER_MATERIALS);
+      productsActions.getMaterials(
+        id,
+        this.source,
+        this.LOADING_IDENTIFIER_MATERIALS
+      );
     },
     comeBack() {
       this.$router.push({ path: PRODUCTS });

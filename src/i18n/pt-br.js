@@ -56,6 +56,7 @@ export default {
   [constants.MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR]: "Saidas em {year}",
   [constants.MATERIAL.DETAILS.LABELS.REMOVE_TOTAL]: "Saidas totais",
   [constants.MATERIAL.DETAILS.LABELS.REMOVE]: "Saidas",
+  [constants.MATERIAL.DETAILS.LABELS.REGISTER_AND_REMOVE_IN_YEAR]: "Entradas e Saidas em {year}",
   [constants.MATERIAL.CARD_HISTORIC.NAME]: "Histórico",
   [constants.MATERIAL.CARD_HISTORIC.LABELS.INITIAL_DATE]: "Dt inicial",
   [constants.MATERIAL.CARD_HISTORIC.LABELS.FINAL_DATE]: "Dt final",

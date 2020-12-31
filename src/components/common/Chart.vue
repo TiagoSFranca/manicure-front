@@ -1,6 +1,6 @@
 <template>
   <apexchart
-    type="line"
+    :type="type || 'bar'"
     :options="chartOptions"
     :series="series"
     :height="height || 300"
@@ -18,6 +18,7 @@ export default {
     "curve",
     "dataLabel",
     "theme",
+    "type",
   ],
   data() {
     return {
@@ -43,10 +44,8 @@ export default {
         },
         legend: {
           position: "top",
-          horizontalAlign: "right",
+          horizontalAlign: "center",
           floating: true,
-          offsetY: -25,
-          offsetX: -5,
         },
       },
     };

@@ -1,30 +1,17 @@
 <template>
   <div>
     <core-page-title :title="$tc(i18nConstants.SCHEDULE.NAME, 2)">
-      <v-col cols="auto" class="ml-auto">
+      <v-col cols="auto">
         <v-btn
           color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          icon
+          large
           @click="onShowFilter()"
           :disabled="showFilter"
         >
           <v-icon>mdi-filter</v-icon>
         </v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn
-          color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
-          :to="SCHEDULES_ADD"
-        >
+        <v-btn color="accent" icon large :to="SCHEDULES_ADD">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-col>
@@ -47,7 +34,14 @@
           <template v-slot:item.status="{ item }">
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn :color="getColor(item)" dark v-bind="attrs" v-on="on" fab x-small>
+                <v-btn
+                  :color="getColor(item)"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                  fab
+                  x-small
+                >
                 </v-btn>
               </template>
               <span>{{ getText(item) }}</span>
@@ -119,7 +113,11 @@ import {
 } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
-import { SCHEDULES_ADD, SCHEDULES_FINISH, SCHEDULES_DETAILS } from "@/router/routes";
+import {
+  SCHEDULES_ADD,
+  SCHEDULES_FINISH,
+  SCHEDULES_DETAILS,
+} from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
@@ -195,7 +193,10 @@ export default {
         };
       }
 
-      if (prevSort.orderBy !== this.sort.orderBy || prevSort.asc !== this.sort.asc) {
+      if (
+        prevSort.orderBy !== this.sort.orderBy ||
+        prevSort.asc !== this.sort.asc
+      ) {
         this.searchAgenda();
       }
 
@@ -228,7 +229,12 @@ export default {
     this.i18nConstants = { ...i18nConstants };
   },
   computed: {
-    ...mapState(agendaConstants.MODULE_NAME, ["agenda", "search", "showFilter", "page"]),
+    ...mapState(agendaConstants.MODULE_NAME, [
+      "agenda",
+      "search",
+      "showFilter",
+      "page",
+    ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
   beforeRouteLeave(to, from, next) {

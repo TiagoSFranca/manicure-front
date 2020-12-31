@@ -1,19 +1,39 @@
 <template>
   <div>
     <core-page-title :title="$t(SCHEDULE.DETAILS.NAME)">
-      <v-col cols="auto" class="ml-auto">
+      <v-col cols="auto">
         <v-btn
+          icon
+          large
+          color="success"
+          :to="{
+            name: SCHEDULES_FINISH.name,
+            params: { id: $route.params.id },
+          }"
+          v-if="!setCancelDisabled()"
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-check</v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          large
           color="error"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          @click="cancel()"
+          v-if="!setCancelDisabled()"
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-delete-outline</v-icon>
+        </v-btn>
+        <v-btn
+          color="primary"
+          icon
+          large
           :loading="loading[LOADING_IDENTIFIER]"
           :to="SCHEDULES"
           exact
         >
-          <v-icon>mdi-arrow-left</v-icon>
+          <v-icon>{{ SCHEDULES.icon }}</v-icon>
         </v-btn>
       </v-col>
     </core-page-title>
@@ -87,17 +107,25 @@
         />
       </v-col>
     </v-row>
+    <material-schedules-cancel
+      :showCancel="showCancel"
+      @close="showCancel = false"
+      :schedule="schedule"
+    />
   </div>
 </template>
 
 <script>
 import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
-import { SCHEDULES } from "@/router/routes";
-import { ToCurrency } from "@/utils/methods";
+import { SCHEDULES, SCHEDULES_FINISH } from "@/router/routes";
+import {
+  ToCurrency,
+  checkDisabledCancelScheduleFromStatus,
+} from "@/utils/methods";
 import i18nConstants from "@/i18n/constants";
 
 export default {
@@ -109,6 +137,8 @@ export default {
       LOADING_IDENTIFIER_PRODUCTS: "searchScheduleProducts",
       LOADING_IDENTIFIER_COMBOS: "searchScheduleCombos",
       SCHEDULES: SCHEDULES,
+      SCHEDULES_FINISH: SCHEDULES_FINISH,
+      showCancel: false,
     };
   },
   methods: {
@@ -142,6 +172,14 @@ export default {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
       agendaActions.getCombos(id, this.source, this.LOADING_IDENTIFIER_COMBOS);
+    },
+    cancel() {
+      this.showCancel = true;
+    },
+    setCancelDisabled() {
+      return this.schedule
+        ? checkDisabledCancelScheduleFromStatus(this.schedule.status)
+        : true;
     },
   },
   computed: {

@@ -1,17 +1,29 @@
 <template>
   <div>
     <core-page-title :title="$t(MATERIAL.DETAILS.NAME)">
-      <v-col cols="auto" class="ml-auto">
+      <v-col cols="auto">
         <v-btn
-          color="error"
-          outlined
+          color="accent"
+          icon
+          large
+          :loading="loading[LOADING_IDENTIFIER]"
+          :to="{
+            name: MATERIALS_EDIT.name,
+            params: { id: $route.params.id },
+          }"
+          exact
+        >
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn
+          color="primary"
           icon
           large
           :loading="loading[LOADING_IDENTIFIER]"
           :to="MATERIALS"
           exact
         >
-          <v-icon>mdi-arrow-left</v-icon>
+          <v-icon>{{ MATERIALS.icon }}</v-icon>
         </v-btn>
       </v-col>
     </core-page-title>
@@ -25,9 +37,9 @@
         />
       </v-col>
     </v-row>
-    <v-divider class="my-2" />
+    <v-divider />
     <material-materials-card-graphs />
-    <v-divider class="my-2" />
+    <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
         <material-materials-card-historic
@@ -47,7 +59,7 @@ import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
-import { MATERIALS } from "@/router/routes";
+import { MATERIALS, MATERIALS_EDIT } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
@@ -56,6 +68,7 @@ export default {
       source: "",
       LOADING_IDENTIFIER: "searchMaterial",
       MATERIALS: MATERIALS,
+      MATERIALS_EDIT: MATERIALS_EDIT,
     };
   },
   methods: {

@@ -1,30 +1,17 @@
 <template>
   <div>
     <core-page-title :title="$tc(i18nConstants.MATERIAL.NAME, 2)">
-      <v-col cols="auto" class="ml-auto">
+      <v-col cols="auto">
         <v-btn
           color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          icon
+          large
           @click="onShowFilter()"
           :disabled="showFilter"
         >
           <v-icon>mdi-filter</v-icon>
         </v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn
-          color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
-          @click="showAdd = true"
-        >
+        <v-btn color="accent" icon large @click="showAdd = true">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-col>
