@@ -1,7 +1,7 @@
 export const INDEX = { name: "index", path: '/' };
 export const DASHBOARD = { name: "dashboard", path: '/dashboard' };
 
-export const PRODUCTS = { name: "products_index", path: "/products" }
+export const PRODUCTS = { name: "products_index", path: "/products", icon: "mdi-cube-outline" }
 export const PRODUCTS_EDIT = { name: "products_edit", path: `${PRODUCTS.path}/edit/:id` };
 export const PRODUCTS_DETAILS = { name: "products_details", path: `${PRODUCTS.path}/details/:id` };
 

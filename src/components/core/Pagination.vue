@@ -2,7 +2,9 @@
   <v-row align="center">
     <v-col cols="3" class="text-left">
       <span class="caption white--text">
-        {{ $t(i18nConstants.PAGINATION.SHOWING) }} {{ getStart() }}-{{ getEnd() }}
+        {{ $t(i18nConstants.PAGINATION.SHOWING) }} {{ getStart() }}-{{
+          getEnd()
+        }}
         {{ $t(i18nConstants.PAGINATION.FROM) }} {{ page.total }}
         {{ $t(i18nConstants.PAGINATION.ITEMS) }}
       </span>
@@ -36,7 +38,9 @@ export default {
   },
   methods: {
     getStart() {
-      return (this.page.number - 1) * this.page.limit + 1;
+      return this.page.total > 0
+        ? (this.page.number - 1) * this.page.limit + 1
+        : 0;
     },
     getEnd() {
       let calc = this.page.number * this.page.limit;

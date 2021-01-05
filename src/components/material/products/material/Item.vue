@@ -3,43 +3,35 @@
     <v-expansion-panel>
       <v-expansion-panel-header v-slot="{ open }">
         {{ isOpen(open) }}
-        <span v-if="open" key="0"></span>
-        <span v-else key="1" class="overline text-truncate">
+        <span key="1" :class="`overline ${!open ? 'text-truncate' : ''}`">
           {{ material.material.name }}
         </span>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <v-card-title>
-          <span class="overline text-justify">
-            {{ material.material.name }}
-          </span>
-        </v-card-title>
         <div v-if="!isEdit">
-          <v-card-text>
-            <v-row align="center" justify="space-between">
-              <v-col cols="12" class="text-left">
-                <span class="overline">
-                  {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.QTY) }}:
-                </span>
-                <span class="ml-2 caption">{{ material.qty }}</span>
-              </v-col>
-              <v-col cols="12" class="text-left pt-0">
-                <span class="overline">
-                  {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.PRICE) }}:
-                </span>
-                <span class="ml-2 caption">{{
-                  toCurrency(material.material.price)
-                }}</span>
-              </v-col>
-              <v-col cols="12" class="text-left pt-0">
-                <span class="overline">
-                  {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.TOTAL) }}:
-                </span>
-                <span class="ml-2 caption">{{ calcTotal(material) }}</span>
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-card-actions v-if="showActions">
+          <v-row align="center" justify="space-between" no-gutters>
+            <v-col cols="12" class="text-left">
+              <span class="overline">
+                {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.QTY) }}:
+              </span>
+              <span class="ml-1 caption">{{ material.qty }}</span>
+            </v-col>
+            <v-col cols="12" class="text-left pt-0">
+              <span class="overline">
+                {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.PRICE) }}:
+              </span>
+              <span class="ml-1 caption">{{
+                toCurrency(material.material.price)
+              }}</span>
+            </v-col>
+            <v-col cols="12" class="text-left pt-0">
+              <span class="overline">
+                {{ $t(PRODUCT.MATERIAL_ITEM.LABELS.TOTAL) }}:
+              </span>
+              <span class="ml-1 caption">{{ calcTotal(material) }}</span>
+            </v-col>
+          </v-row>
+          <v-row v-if="showActions">
             <v-spacer></v-spacer>
             <v-btn dark icon color="accent" @click="onEdit">
               <v-icon>mdi-pencil</v-icon>
@@ -47,7 +39,21 @@
             <v-btn dark icon color="error" @click="onShowDialog()">
               <v-icon>mdi-delete</v-icon>
             </v-btn>
-          </v-card-actions>
+          </v-row>
+          <v-row v-else>
+            <v-spacer></v-spacer>
+            <v-btn
+              dark
+              icon
+              target="_blank"
+              :to="{
+                name: MATERIALS_DETAILS.name,
+                params: { id: material.idMaterial },
+              }"
+            >
+              <v-icon>mdi-eye-outline</v-icon>
+            </v-btn>
+          </v-row>
         </div>
         <div v-else>
           <validation-observer ref="form" v-slot="{ handleSubmit }">
@@ -126,6 +132,7 @@ import productsActions from "@/actions/productsActions";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
+import { MATERIALS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
@@ -142,6 +149,7 @@ export default {
       object: {
         qty: null,
       },
+      MATERIALS_DETAILS: MATERIALS_DETAILS,
     };
   },
   computed: {

@@ -61,7 +61,7 @@ export default {
         },
         {
           to: routes.PRODUCTS,
-          icon: "mdi-cube-outline",
+          icon: routes.PRODUCTS.icon,
           text: this.$tc(i18nConstants.PRODUCT.NAME, 2),
         },
         {

@@ -1,17 +1,29 @@
 <template>
   <div>
     <core-page-title :title="$t(PRODUCT.EDIT.NAME)">
-      <v-col cols="auto" class="ml-auto">
+      <v-col cols="auto">
         <v-btn
-          color="error"
-          elevation="2"
+          color="white"
           icon
           large
           :loading="loading[LOADING_IDENTIFIER]"
-          :to="{ name: PRODUCTS.name }"
+          :to="{
+            name: PRODUCTS_DETAILS.name,
+            params: { id: $route.params.id },
+          }"
           exact
         >
-          <v-icon>mdi-arrow-left</v-icon>
+          <v-icon>mdi-eye</v-icon>
+        </v-btn>
+        <v-btn
+          color="primary"
+          icon
+          large
+          :loading="loading[LOADING_IDENTIFIER]"
+          :to="PRODUCTS"
+          exact
+        >
+          <v-icon>{{ PRODUCTS.icon }}</v-icon>
         </v-btn>
       </v-col>
     </core-page-title>
@@ -47,10 +59,10 @@
 <script>
 import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
-import { PRODUCTS } from "@/router/routes";
+import { PRODUCTS, PRODUCTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
@@ -62,6 +74,7 @@ export default {
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
       LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
       PRODUCTS: PRODUCTS,
+      PRODUCTS_DETAILS: PRODUCTS_DETAILS,
     };
   },
   methods: {

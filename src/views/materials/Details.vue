@@ -42,12 +42,7 @@
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-materials-card-historic
-          :isEdit="false"
-          :isLoading="loading[LOADING_IDENTIFIER]"
-          :object="material"
-          :showActions="false"
-        />
+        <material-materials-card-historic />
       </v-col>
     </v-row>
   </div>

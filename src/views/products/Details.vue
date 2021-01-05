@@ -1,25 +1,33 @@
 <template>
   <div>
-    <v-row align="center">
-      <v-col cols="auto" class="mr-auto">
-        <span class="title white--text">Visualizar Produto</span>
-      </v-col>
-
-      <v-col cols="auto" class="ml-auto">
+    <core-page-title :title="$t(PRODUCT.DETAILS.NAME)">
+      <v-col cols="auto">
         <v-btn
-          color="error"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          color="accent"
+          icon
+          large
           :loading="loading[LOADING_IDENTIFIER]"
-          @click="comeBack"
+          :to="{
+            name: PRODUCTS_EDIT.name,
+            params: { id: $route.params.id },
+          }"
+          exact
         >
-          <v-icon>mdi-arrow-left</v-icon>
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn
+          color="primary"
+          icon
+          large
+          :loading="loading[LOADING_IDENTIFIER]"
+          :to="PRODUCTS"
+          exact
+        >
+          <v-icon>{{ PRODUCTS.icon }}</v-icon>
         </v-btn>
       </v-col>
-    </v-row>
+    </core-page-title>
+
     <v-row>
       <v-col cols="12">
         <material-products-card-info
@@ -42,9 +50,6 @@
         />
       </v-col>
     </v-row>
-    <v-divider />
-    <material-products-card-graphs />
-    <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
         <material-products-card-images
@@ -58,16 +63,25 @@
       <v-col cols="12" sm="12" lg="6" md="6"> SALES </v-col>
       <v-col cols="12" sm="12" lg="6" md="6"> CHANGES </v-col>
     </v-row>
+    <v-divider />
+    <material-products-card-graphs />
+    <v-divider />
+    <v-row>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-products-card-schedules />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
-import { PRODUCTS } from "@/router/routes";
+import { PRODUCTS, PRODUCTS_EDIT } from "@/router/routes";
+import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
@@ -78,33 +92,8 @@ export default {
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
       LOADING_IDENTIFIER_COMBOS: "searchProductCombos",
       LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
-      LOADING_IDENTIFIER_GRAPHS: "searchProductGraphs",
-      labels: [
-        "jan",
-        "feb",
-        "mar",
-        "abr",
-        "mai",
-        "jun",
-        "jul",
-        "ago",
-        "set",
-        "out",
-        "nov",
-        "dez",
-      ],
-      datasets: [
-        {
-          label: "Data One",
-          backgroundColor: "#f83379",
-          data: [this.getRandomInt(), this.getRandomInt()],
-        },
-        {
-          label: "Data Two",
-          backgroundColor: "#f87979",
-          data: [this.getRandomInt(), this.getRandomInt()],
-        },
-      ],
+      PRODUCTS: PRODUCTS,
+      PRODUCTS_EDIT: PRODUCTS_EDIT,
     };
   },
   methods: {
@@ -140,18 +129,13 @@ export default {
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },
-    comeBack() {
-      this.$router.push({ path: PRODUCTS });
-    },
-    getRandomInt() {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
-    },
   },
   created() {
     this.searchProduct();
     this.getImages();
     this.getCombos();
     this.getMaterials();
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [

@@ -3,13 +3,13 @@
     <v-row justify="end">
       <v-col cols="12" md="2" lg="2">
         <v-select
-          :items="years"
+          :items="scheduleYears"
           v-model="yearSelected"
-          :label="$t(MATERIAL.DETAILS.LABELS.YEAR)"
+          :label="$t(PRODUCT.CARD_GRAPHS.LABELS.YEAR)"
           :loading="
             loading[LOADING_IDENTIFIER_YEARS] ||
-            loading[LOADING_IDENTIFIER_REPORT_REGISTER] ||
-            loading[LOADING_IDENTIFIER_REPORT_REMOVE]
+            loading[LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED] ||
+            loading[LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED]
           "
         ></v-select>
       </v-col>
@@ -21,16 +21,16 @@
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
-                loading[LOADING_IDENTIFIER_REPORT_REGISTER]
+                loading[LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED]
               "
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
+                $t(PRODUCT.CARD_GRAPHS.LABELS.SCHEDULE_FINISHED_IN_YEAR, {
                   year: yearSelected,
                 })
               "
             >
               <span class="title white--text">
-                {{ reportRegisterYear.totalInYear }}
+                {{ reportScheduleFinishedYear.totalInYear }}
               </span>
             </common-simple-card>
           </v-col>
@@ -38,12 +38,12 @@
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
-                loading[LOADING_IDENTIFIER_REPORT_REGISTER]
+                loading[LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED]
               "
-              :title="$t(MATERIAL.DETAILS.LABELS.REGISTER_TOTAL)"
+              :title="$t(PRODUCT.CARD_GRAPHS.LABELS.SCHEDULE_FINISHED_TOTAL)"
             >
               <span class="title white--text">
-                {{ reportRegisterYear.total }}
+                {{ reportScheduleFinishedYear.total }}
               </span>
             </common-simple-card>
           </v-col>
@@ -51,16 +51,16 @@
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
-                loading[LOADING_IDENTIFIER_REPORT_REMOVE]
+                loading[LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED]
               "
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
+                $t(PRODUCT.CARD_GRAPHS.LABELS.SCHEDULE_CANCELED_IN_YEAR, {
                   year: yearSelected,
                 })
               "
             >
               <span class="title white--text">
-                {{ reportRemoveYear.totalInYear }}
+                {{ reportScheduleCanceledYear.totalInYear }}
               </span>
             </common-simple-card>
           </v-col>
@@ -68,12 +68,12 @@
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
-                loading[LOADING_IDENTIFIER_REPORT_REMOVE]
+                loading[LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED]
               "
-              :title="$t(MATERIAL.DETAILS.LABELS.REMOVE_TOTAL)"
+              :title="$t(PRODUCT.CARD_GRAPHS.LABELS.SCHEDULE_CANCELED_TOTAL)"
             >
               <span class="title white--text">
-                {{ reportRemoveYear.total }}
+                {{ reportScheduleCanceledYear.total }}
               </span>
             </common-simple-card>
           </v-col>
@@ -83,15 +83,22 @@
             <common-card-graph
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
-                loading[LOADING_IDENTIFIER_REPORT_REGISTER]
+                loading[LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED]
               "
               :labels="labels"
               :series="getRegisters()"
-              :colors="[randomColor(), randomColor()]"
+              :colors="[
+                $vuetify.theme.themes.dark.success,
+                $vuetify.theme.themes.dark.error,
+              ]"
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_AND_REMOVE_IN_YEAR, {
-                  year: yearSelected,
-                })
+                $t(
+                  PRODUCT.CARD_GRAPHS.LABELS
+                    .SCHEDULE_FINISHED_AND_CANCELED_IN_YEAR,
+                  {
+                    year: yearSelected,
+                  }
+                )
               "
             />
           </v-col>
@@ -102,12 +109,12 @@
 </template>
 
 <script>
-import materialsActions from "@/actions/materialsActions";
+import productsActions from "@/actions/productsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
-import materialsConstants from "@/store/modules/materials/constants";
-import { MATERIALS } from "@/router/routes";
+import productsConstants from "@/store/modules/products/constants";
+import { PRODUCTS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import moment from "moment";
 import { randomColor } from "@/utils/methods";
@@ -116,10 +123,12 @@ export default {
   data() {
     return {
       source: "",
-      LOADING_IDENTIFIER_YEARS: "searchMaterialYears",
-      LOADING_IDENTIFIER_REPORT_REGISTER: "searchMaterialReportRegister",
-      LOADING_IDENTIFIER_REPORT_REMOVE: "searchMaterialReportRemove",
-      MATERIALS: MATERIALS,
+      LOADING_IDENTIFIER_YEARS: "searchScheduleYears",
+      LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED:
+        "searchReportScheduleFinished",
+      LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED:
+        "searchReportScheduleCanceled",
+      PRODUCTS: PRODUCTS,
       yearSelected: moment().year(),
       labels: [
         "jan",
@@ -139,70 +148,76 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(materialsConstants.MODULE_NAME, [
-      materialsConstants.MUTATION_SET_REPORT_REGISTER_YEAR,
-      materialsConstants.MUTATION_SET_REPORT_REMOVE_YEAR,
+    ...mapMutations(productsConstants.MODULE_NAME, [
+      productsConstants.MUTATION_SET_REPORT_SCHEDULE_FINISHED_YEAR,
+      productsConstants.MUTATION_SET_REPORT_SCHEDULE_CANCELED_YEAR,
     ]),
     searchYears() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      materialsActions.getYears(id, this.source, this.LOADING_IDENTIFIER_YEARS);
+      productsActions.getScheduleYears(
+        id,
+        this.source,
+        this.LOADING_IDENTIFIER_YEARS
+      );
     },
     searchReports() {
-      this.searchReportRegisterYear();
-      this.searchReportRemoveYear();
+      this.searchReportScheduleFinishedYear();
+      this.searchReportScheduleCanceledYear();
     },
-    searchReportRegisterYear() {
+    searchReportScheduleFinishedYear() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      materialsActions.getReportRegisterYear(
+      productsActions.getReportScheduleFinishedYear(
         id,
         this.yearSelected,
         this.source,
-        this.LOADING_IDENTIFIER_REPORT_REGISTER,
+        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED,
         true
       );
     },
-    searchReportRemoveYear() {
+    searchReportScheduleCanceledYear() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      materialsActions.getReportRemoveYear(
+      productsActions.getReportScheduleCanceledYear(
         id,
         this.yearSelected,
         this.source,
-        this.LOADING_IDENTIFIER_REPORT_REMOVE,
+        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED,
         false
       );
     },
     getRegisters() {
-      let registers = (this.reportRegisterYear.months || []).map(
+      let registers = (this.reportScheduleFinishedYear.months || []).map(
         (e) => e.value
       );
-      let removes = (this.reportRemoveYear.months || []).map((e) => e.value);
+      let removes = (this.reportScheduleCanceledYear.months || []).map(
+        (e) => e.value
+      );
       return [
         {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REGISTER),
+          name: this.$t(this.PRODUCT.CARD_GRAPHS.LABELS.SCHEDULE_FINISHED),
           data: registers,
         },
         {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REMOVE),
+          name: this.$t(this.PRODUCT.CARD_GRAPHS.LABELS.SCHEDULE_CANCELED),
           data: removes,
         },
       ];
     },
   },
   created() {
-    this[materialsConstants.MUTATION_SET_REPORT_REGISTER_YEAR]({});
-    this[materialsConstants.MUTATION_SET_REPORT_REMOVE_YEAR]({});
+    this[productsConstants.MUTATION_SET_REPORT_SCHEDULE_FINISHED_YEAR]({});
+    this[productsConstants.MUTATION_SET_REPORT_SCHEDULE_CANCELED_YEAR]({});
     this.searchYears();
     this.searchReports();
-    this.MATERIAL = i18nConstants.MATERIAL;
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
   computed: {
-    ...mapState(materialsConstants.MODULE_NAME, [
-      "years",
-      "reportRegisterYear",
-      "reportRemoveYear",
+    ...mapState(productsConstants.MODULE_NAME, [
+      "scheduleYears",
+      "reportScheduleFinishedYear",
+      "reportScheduleCanceledYear",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },

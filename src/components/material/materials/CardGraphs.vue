@@ -5,7 +5,7 @@
         <v-select
           :items="years"
           v-model="yearSelected"
-          :label="$t(MATERIAL.DETAILS.LABELS.YEAR)"
+          :label="$t(MATERIAL.CARD_GRAPHS.LABELS.YEAR)"
           :loading="
             loading[LOADING_IDENTIFIER_YEARS] ||
             loading[LOADING_IDENTIFIER_REPORT_REGISTER] ||
@@ -24,7 +24,7 @@
                 loading[LOADING_IDENTIFIER_REPORT_REGISTER]
               "
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
+                $t(MATERIAL.CARD_GRAPHS.LABELS.REGISTER_IN_YEAR, {
                   year: yearSelected,
                 })
               "
@@ -40,7 +40,7 @@
                 loading[LOADING_IDENTIFIER_YEARS] ||
                 loading[LOADING_IDENTIFIER_REPORT_REGISTER]
               "
-              :title="$t(MATERIAL.DETAILS.LABELS.REGISTER_TOTAL)"
+              :title="$t(MATERIAL.CARD_GRAPHS.LABELS.REGISTER_TOTAL)"
             >
               <span class="title white--text">
                 {{ reportRegisterYear.total }}
@@ -54,7 +54,7 @@
                 loading[LOADING_IDENTIFIER_REPORT_REMOVE]
               "
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
+                $t(MATERIAL.CARD_GRAPHS.LABELS.REMOVE_IN_YEAR, {
                   year: yearSelected,
                 })
               "
@@ -70,7 +70,7 @@
                 loading[LOADING_IDENTIFIER_YEARS] ||
                 loading[LOADING_IDENTIFIER_REPORT_REMOVE]
               "
-              :title="$t(MATERIAL.DETAILS.LABELS.REMOVE_TOTAL)"
+              :title="$t(MATERIAL.CARD_GRAPHS.LABELS.REMOVE_TOTAL)"
             >
               <span class="title white--text">
                 {{ reportRemoveYear.total }}
@@ -89,7 +89,7 @@
               :series="getRegisters()"
               :colors="[randomColor(), randomColor()]"
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_AND_REMOVE_IN_YEAR, {
+                $t(MATERIAL.CARD_GRAPHS.LABELS.REGISTER_AND_REMOVE_IN_YEAR, {
                   year: yearSelected,
                 })
               "
@@ -181,11 +181,11 @@ export default {
       let removes = (this.reportRemoveYear.months || []).map((e) => e.value);
       return [
         {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REGISTER),
+          name: this.$t(this.MATERIAL.CARD_GRAPHS.LABELS.REGISTER),
           data: registers,
         },
         {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REMOVE),
+          name: this.$t(this.MATERIAL.CARD_GRAPHS.LABELS.REMOVE),
           data: removes,
         },
       ];
