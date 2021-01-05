@@ -94,7 +94,7 @@
 <script>
 import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { SCHEDULES } from "@/router/routes";
 import { ToCurrency } from "@/utils/methods";

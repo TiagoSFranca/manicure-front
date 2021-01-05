@@ -53,6 +53,12 @@
           <template v-slot:item.date="{ item }">
             <span>{{ formatDate(item.date) }}</span>
           </template>
+          <template v-slot:item.finishDate="{ item }">
+            <span>{{ formatDate(item.finishDate) }}</span>
+          </template>
+          <template v-slot:item.cancelDate="{ item }">
+            <span>{{ formatDate(item.cancelDate) }}</span>
+          </template>
           <template v-slot:item.inLoco="{ item }">
             <v-simple-checkbox v-model="item.inLoco" disabled color="primary" />
           </template>
@@ -147,6 +153,16 @@ export default {
         {
           text: this.$t(i18nConstants.SCHEDULE.LIST.DATE),
           value: "date",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.SCHEDULE.LIST.FINISH_DATE),
+          value: "finishDate",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.SCHEDULE.LIST.CANCEL_DATE),
+          value: "cancelDate",
           align: "center",
         },
         {

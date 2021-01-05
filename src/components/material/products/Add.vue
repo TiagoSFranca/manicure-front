@@ -66,19 +66,8 @@
                 </v-col>
               </v-row>
               <v-row align="start">
-                <v-col cols="4">
-                  <validation-provider v-slot="{ errors }">
-                    <v-checkbox
-                      v-model="object.active"
-                      :label="$t(PRODUCT.ADD.LABELS.ACTIVE)"
-                      color="primary"
-                      hide-details
-                      :error-messages="errors"
-                    ></v-checkbox>
-                  </validation-provider>
-                </v-col>
-                <v-col cols="4"></v-col>
-                <v-col cols="4">
+                <v-col cols="8" class="d-sm-none d-md-flex d-lg-flex"></v-col>
+                <v-col cols="4" sm="12" md="4" lg="4">
                   <common-date-picker
                     :date="object.endSale"
                     :disabled="!object.onSale"
@@ -171,7 +160,14 @@ export default {
         price: "",
         promotionalPrice: null,
         onSale: false,
-        active: true,
+        endSale: null,
+        comments: "",
+      },
+      defObject: {
+        name: "",
+        price: "",
+        promotionalPrice: null,
+        onSale: false,
         endSale: null,
         comments: "",
       },
@@ -186,7 +182,7 @@ export default {
       this.$emit("close");
       this.visible = false;
       this.showDialog = false;
-      this.object = { active: true };
+      this.object = this.defObject;
     },
     show() {
       this.visible = true;
@@ -202,14 +198,6 @@ export default {
     },
     changeDate(date) {
       this.object.endSale = date;
-    },
-    redirect(toEdit) {
-      this.hide();
-      if (toEdit) {
-        this.$router.push({
-          path: PRODUCTS_EDIT.replace(":id", this.idProduct),
-        });
-      }
     },
   },
   mounted() {

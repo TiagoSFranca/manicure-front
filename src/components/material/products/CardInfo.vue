@@ -62,30 +62,19 @@
                   color="primary"
                   hide-details
                   :error-messages="errors"
-                  :readonly="!isEdit"
+                  :readonly="true"
+                  :disabled="true"
                 ></v-checkbox>
               </validation-provider>
             </v-col>
           </v-row>
           <v-row align="start">
-            <v-col cols="4">
-              <validation-provider v-slot="{ errors }">
-                <v-checkbox
-                  v-model="item.active"
-                  :label="$t(PRODUCT.CARD_INFO.LABELS.ACTIVE)"
-                  color="primary"
-                  hide-details
-                  :error-messages="errors"
-                  :readonly="!isEdit"
-                ></v-checkbox>
-              </validation-provider>
-            </v-col>
-            <v-col cols="4" class="d-sm-none d-md-flex d-lg-flex"></v-col>
-            <v-col cols="4" sm="8" md="4" lg="4">
+            <v-col cols="8" class="d-sm-none d-md-flex d-lg-flex"></v-col>
+            <v-col cols="4" sm="12" md="4" lg="4">
               <common-date-picker
                 :date="item.endSale"
-                :disabled="!(isEdit && item.onSale)"
-                :readonly="!isEdit"
+                :disabled="true"
+                :readonly="true"
                 :label="$t(PRODUCT.CARD_INFO.LABELS.END_SALE)"
                 @changeDate="changeDate"
               />

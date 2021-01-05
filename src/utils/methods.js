@@ -29,7 +29,7 @@ export const startLoading = (identifier) => ({ type: actionTypes.APP_LOADING, lo
 
 export const endLoading = (identifier) => ({ type: actionTypes.APP_LOADING, loading: { [identifier]: false } });
 
-export const formatDate = (date, formatter = "DD/MM/YYYY") => moment(date).format(formatter)
+export const formatDate = (date, formatter = "DD/MM/YYYY") => date ? moment(date).format(formatter) : '-'
 
 export const getScheduleStatusText = (idStatus) => {
   switch (idStatus) {

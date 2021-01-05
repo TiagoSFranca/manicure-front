@@ -36,6 +36,54 @@
           :showActions="true"
         />
       </v-col>
+    </v-row>
+    <v-row justify="space-between" v-if="product">
+      <v-col cols="auto">
+        <v-btn
+          elevation="2"
+          color="warning"
+          outlined
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon left>mdi-calendar-arrow-left</v-icon>
+          ANTECIPAR PROMOÇÃO
+        </v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn
+          elevation="2"
+          color="warning"
+          outlined
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon left>mdi-calendar-arrow-right</v-icon>
+          PRORROGAR PROMOÇÃO
+        </v-btn>
+      </v-col>
+      <v-col cols="auto" v-if="product.onSale">
+        <v-btn
+          elevation="2"
+          color="error"
+          outlined
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon left>mdi-calendar-remove</v-icon>
+          PARAR PROMOÇÃO
+        </v-btn>
+      </v-col>
+      <v-col cols="auto" v-else>
+        <v-btn
+          elevation="2"
+          color="accent"
+          outlined
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon left>mdi-calendar-plus</v-icon>
+          INICIAR PROMOÇÃO
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
         <material-products-card-materials
           :isEdit="true"

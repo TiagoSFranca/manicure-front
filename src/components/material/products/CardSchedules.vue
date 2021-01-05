@@ -6,7 +6,7 @@
     >
       <v-card-title>
         <span class="overline">
-          {{ $t(i18nConstants.MATERIAL.CARD_HISTORIC.NAME) }}
+          {{ $t(i18nConstants.PRODUCT.CARD_SCHEDULES.NAME) }}
         </span>
       </v-card-title>
       <v-card-text>
@@ -15,7 +15,7 @@
             <common-date-picker
               :date="filter.beginDate"
               :label="
-                $t(i18nConstants.MATERIAL.CARD_HISTORIC.LABELS.INITIAL_DATE)
+                $t(i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS.INITIAL_DATE)
               "
               @changeDate="(date) => changeDate(date, true)"
             />
@@ -24,7 +24,7 @@
             <common-date-picker
               :date="filter.endDate"
               :label="
-                $t(i18nConstants.MATERIAL.CARD_HISTORIC.LABELS.FINAL_DATE)
+                $t(i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS.FINAL_DATE)
               "
               @changeDate="(date) => changeDate(date, false)"
             />
@@ -37,7 +37,7 @@
               item-value="value"
               item-text="label"
               :label="
-                $t(i18nConstants.MATERIAL.CARD_HISTORIC.LABELS.STOCK_TYPE)
+                $t(i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS.STOCK_TYPE)
               "
             >
               <template v-slot:selection="{ item, index }">
@@ -47,7 +47,7 @@
                 <span v-if="index === 1" class="grey--text caption">
                   {{
                     $t(
-                      i18nConstants.MATERIAL.CARD_HISTORIC.LABELS
+                      i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS
                         .STOCK_TYPE_MULTIPLE_SELECTED,
                       { length: filter.IdScheduleStatus.length - 1 }
                     )
@@ -112,6 +112,12 @@
               <template v-slot:item.date="{ item }">
                 <span>{{ formatDate(item.date) }}</span>
               </template>
+              <template v-slot:item.finishDate="{ item }">
+                <span>{{ formatDate(item.finishDate) }}</span>
+              </template>
+              <template v-slot:item.cancelDate="{ item }">
+                <span>{{ formatDate(item.cancelDate) }}</span>
+              </template>
               <template v-slot:item.inLoco="{ item }">
                 <v-simple-checkbox
                   v-model="item.inLoco"
@@ -153,11 +159,7 @@ import {
 } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
-import {
-  SCHEDULES_ADD,
-  SCHEDULES_FINISH,
-  SCHEDULES_DETAILS,
-} from "@/router/routes";
+import { SCHEDULES_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
@@ -167,27 +169,39 @@ export default {
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
         {
-          text: this.$t(i18nConstants.SCHEDULE.LIST.ID),
+          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.ID),
           align: "start",
           value: "id",
         },
         {
-          text: this.$t(i18nConstants.SCHEDULE.LIST.CLIENT_NAME),
+          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.CLIENT_NAME),
           value: "client.name",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.SCHEDULE.LIST.SCHEDULE_STATUS_NAME),
+          text: this.$t(
+            i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.SCHEDULE_STATUS_NAME
+          ),
           value: "scheduleStatus.name",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.SCHEDULE.LIST.DATE),
+          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.DATE),
           value: "date",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.SCHEDULE.LIST.IN_LOCO),
+          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.FINISH_DATE),
+          value: "finishDate",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.CANCEL_DATE),
+          value: "cancelDate",
+          align: "center",
+        },
+        {
+          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.IN_LOCO),
           value: "inLoco",
           align: "center",
         },
@@ -205,10 +219,8 @@ export default {
       },
       pagination: {},
       sort: {},
-      LOADING_IDENTIFIER: "searchSchedules",
+      LOADING_IDENTIFIER: "searchProductSchedules",
       formatDate: formatDate,
-      SCHEDULES_ADD: SCHEDULES_ADD,
-      SCHEDULES_FINISH: SCHEDULES_FINISH,
       SCHEDULES_DETAILS: SCHEDULES_DETAILS,
     };
   },

@@ -74,12 +74,13 @@
             </v-btn>
             <v-btn
               icon
-              color="error"
-              @click="deleteItem(item)"
               :disabled="loading[LOADING_IDENTIFIER]"
-              small
+              :color="item.active ? 'error' : 'success'"
+              @click="deleteItem(item)"
             >
-              <v-icon>mdi-delete-outline</v-icon>
+              <v-icon>
+                {{ item.active ? "mdi-delete-outline" : "mdi-delete-restore" }}
+              </v-icon>
             </v-btn>
           </template>
         </v-data-table>
@@ -92,6 +93,35 @@
       :loading="loading[LOADING_IDENTIFIER]"
       :filtered="filter"
     />
+    <common-confirm-dialog
+      :showDialog="showDialog"
+      :title="title"
+      :message="message"
+      @close="showDialog = false"
+    >
+      <template slot="actions">
+        <v-spacer></v-spacer>
+        <v-btn
+          color="error"
+          @click="showDialog = false"
+          icon
+          fab
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-btn
+          color="success"
+          submit
+          icon
+          fab
+          @click="confirmDialog()"
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-check</v-icon>
+        </v-btn>
+      </template>
+    </common-confirm-dialog>
   </div>
 </template>
 
@@ -109,6 +139,10 @@ export default {
   data() {
     return {
       showAdd: false,
+      showDialog: false,
+      title: "",
+      message: "",
+      productSelected: {},
       source: "",
       headers: [
         {
@@ -143,7 +177,7 @@ export default {
         },
         { text: "", value: "actions", align: "end", sortable: false },
       ],
-      filter: {},
+      filter: { active: true },
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchProducts",
@@ -204,6 +238,25 @@ export default {
         this.$router.push({ path: PRODUCTS_EDIT.replace(":id", item.id) });
       else
         this.$router.push({ path: PRODUCTS_DETAILS.replace(":id", item.id) });
+    },
+    deleteItem(item) {
+      this.showDialog = true;
+
+      var message = item.active
+        ? this.i18nConstants.PRODUCT.LIST.MESSAGES.CONFIRM_DELETE
+        : this.i18nConstants.PRODUCT.LIST.MESSAGES.CONFIRM_RESTORE;
+
+      this.message = this.$t(message.MESSAGE);
+      this.title = this.$t(message.TITLE);
+
+      this.productSelected = item;
+    },
+    confirmDialog() {
+      this.showDialog = false;
+      productsActions.toggleActive(
+        this.productSelected.id,
+        this.LOADING_IDENTIFIER
+      );
     },
   },
   created() {

@@ -247,6 +247,20 @@ export const searchSchedules = (id, source, filter, pagination, sort, LOADING_ID
     })
 };
 
+export const toggleActive = (id, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return productsService
+    .toggleActive(id)
+    .then(() => {
+      store.commit(mutationTypes.PRODUCTS_SET_SEARCH, true)
+      toastr.success(messages.sucesso.exclusao)
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
 export default {
   search,
   add,
@@ -263,5 +277,6 @@ export default {
   getScheduleYears,
   getReportScheduleFinishedYear,
   getReportScheduleCanceledYear,
-  searchSchedules
+  searchSchedules,
+  toggleActive
 }
