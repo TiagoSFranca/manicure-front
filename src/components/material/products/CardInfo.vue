@@ -10,7 +10,7 @@
       <v-card-text>
         <v-form>
           <v-row>
-            <v-col cols="12">
+            <v-col cols="8">
               <validation-provider rules="required|max:64" v-slot="{ errors }">
                 <v-text-field
                   :label="$t(PRODUCT.CARD_INFO.LABELS.NAME)"
@@ -22,8 +22,6 @@
                 ></v-text-field>
               </validation-provider>
             </v-col>
-          </v-row>
-          <v-row align="start">
             <v-col cols="4">
               <validation-provider
                 rules="required|greater_than:0"
@@ -37,22 +35,27 @@
                 />
               </validation-provider>
             </v-col>
+          </v-row>
+          <v-row align="start">
             <v-col cols="4">
-              <validation-provider
-                :rules="`${
-                  item.onSale ? 'required|' : ''
-                }greater_than:0|lower_than_other:${item.price},'${$t(
-                  PRODUCT.CARD_INFO.LABELS.PRICE
-                )}'`"
-                v-slot="{ errors }"
-              >
+              <validation-provider v-slot="{ errors }">
                 <v-currency-field
                   :label="$t(PRODUCT.CARD_INFO.LABELS.PROMOTIONAL_PRICE)"
                   v-model="item.promotionalPrice"
                   :error-messages="errors"
-                  :readonly="!isEdit"
+                  :readonly="true"
+                  :disabled="true"
                 />
               </validation-provider>
+            </v-col>
+            <v-col cols="4">
+              <common-date-picker
+                :date="item.endSale"
+                :disabled="true"
+                :readonly="true"
+                :label="$t(PRODUCT.CARD_INFO.LABELS.END_SALE)"
+                @changeDate="changeDate"
+              />
             </v-col>
             <v-col cols="4">
               <validation-provider v-slot="{ errors }">
@@ -66,18 +69,6 @@
                   :disabled="true"
                 ></v-checkbox>
               </validation-provider>
-            </v-col>
-          </v-row>
-          <v-row align="start">
-            <v-col cols="8" class="d-sm-none d-md-flex d-lg-flex"></v-col>
-            <v-col cols="4" sm="12" md="4" lg="4">
-              <common-date-picker
-                :date="item.endSale"
-                :disabled="true"
-                :readonly="true"
-                :label="$t(PRODUCT.CARD_INFO.LABELS.END_SALE)"
-                @changeDate="changeDate"
-              />
             </v-col>
           </v-row>
           <v-row>

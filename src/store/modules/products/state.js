@@ -18,4 +18,6 @@ export default {
   },
   schedules: [],
   schedulesPage: {},
+  sales: [],
+  salesPage: {},
 }

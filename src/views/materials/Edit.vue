@@ -38,23 +38,25 @@
       </v-col>
     </v-row>
     <v-row justify="space-between">
-      <v-col cols="auto">
+      <v-col cols="12" sm="6" md="auto" lg="auto">
         <v-btn
           elevation="2"
           color="error"
           outlined
           @click="() => onShowUpdateStock(false)"
+          block
         >
           <v-icon left>mdi-minus</v-icon>
           {{ $t(MATERIAL.EDIT.LABELS.REMOVE_FROM_STOCK) }}
         </v-btn>
       </v-col>
-      <v-col cols="auto">
+      <v-col cols="12" sm="6" md="auto" lg="auto">
         <v-btn
           elevation="2"
           color="accent"
           outlined
           @click="() => onShowUpdateStock(true)"
+          block
         >
           <v-icon left>mdi-plus</v-icon>
           {{ $t(MATERIAL.EDIT.LABELS.ADD_ON_STOCK) }}

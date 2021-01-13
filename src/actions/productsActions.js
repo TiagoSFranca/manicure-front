@@ -49,6 +49,7 @@ export const get = (id, source, LOADING_IDENTIFIER = '') => {
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.PRODUCTS_SET_PRODUCT, data);
+      store.commit(mutationTypes.PRODUCTS_SET_SEARCH, false)
     }).catch(() => {
     }).finally(() => {
       store.dispatch(endLoading(LOADING_IDENTIFIER));
@@ -261,6 +262,39 @@ export const toggleActive = (id, LOADING_IDENTIFIER = '') => {
     })
 }
 
+export const changeSale = (id, object, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return productsService
+    .changeSale(id, object)
+    .then(() => {
+      store.commit(mutationTypes.PRODUCTS_SET_SEARCH, true);
+      toastr.success(messages.sucesso.cadastro)
+      return true;
+    }).catch(() => {
+      return false;
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const searchSales = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  productsService
+    .searchSales(id, query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.PRODUCTS_SET_SALES, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
 export default {
   search,
   add,
@@ -278,5 +312,7 @@ export default {
   getReportScheduleFinishedYear,
   getReportScheduleCanceledYear,
   searchSchedules,
-  toggleActive
+  toggleActive,
+  changeSale,
+  searchSales
 }

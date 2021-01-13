@@ -1,0 +1,9 @@
+export const MODULE_NAME = 'scheduleStatus';
+
+//MUTATIONS
+export const MUTATION_SET_SCHEDULE_STATUS = 'MUTATION_SET_SCHEDULE_STATUS'
+
+export default {
+  MODULE_NAME,
+  MUTATION_SET_SCHEDULE_STATUS,
+}

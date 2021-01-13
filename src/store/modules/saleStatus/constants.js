@@ -1,0 +1,9 @@
+export const MODULE_NAME = 'saleStatus';
+
+//MUTATIONS
+export const MUTATION_SET_SALE_STATUS = 'MUTATION_SET_SALE_STATUS'
+
+export default {
+  MODULE_NAME,
+  MUTATION_SET_SALE_STATUS,
+}

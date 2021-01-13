@@ -9,7 +9,7 @@
           <v-card-text>
             <v-form>
               <v-row>
-                <v-col cols="12">
+                <v-col cols="8">
                   <validation-provider
                     rules="required|max:64"
                     v-slot="{ errors }"
@@ -23,8 +23,6 @@
                     ></v-text-field>
                   </validation-provider>
                 </v-col>
-              </v-row>
-              <v-row align="start">
                 <v-col cols="4">
                   <validation-provider
                     rules="required|greater_than:0"
@@ -36,44 +34,6 @@
                       :error-messages="errors"
                     />
                   </validation-provider>
-                </v-col>
-                <v-col cols="4">
-                  <validation-provider
-                    :rules="`${
-                      object.onSale ? 'required|' : ''
-                    }greater_than:0|lower_than_other:${object.price},'${$t(
-                      PRODUCT.ADD.LABELS.PRICE
-                    )}'`"
-                    v-slot="{ errors }"
-                  >
-                    <v-currency-field
-                      :label="$t(PRODUCT.ADD.LABELS.PROMOTIONAL_PRICE)"
-                      v-model="object.promotionalPrice"
-                      :error-messages="errors"
-                    />
-                  </validation-provider>
-                </v-col>
-                <v-col cols="4">
-                  <validation-provider v-slot="{ errors }">
-                    <v-checkbox
-                      v-model="object.onSale"
-                      :label="$t(PRODUCT.ADD.LABELS.ON_SALE)"
-                      color="primary"
-                      hide-details
-                      :error-messages="errors"
-                    ></v-checkbox>
-                  </validation-provider>
-                </v-col>
-              </v-row>
-              <v-row align="start">
-                <v-col cols="8" class="d-sm-none d-md-flex d-lg-flex"></v-col>
-                <v-col cols="4" sm="12" md="4" lg="4">
-                  <common-date-picker
-                    :date="object.endSale"
-                    :disabled="!object.onSale"
-                    :label="$t(PRODUCT.ADD.LABELS.END_SALE)"
-                    @changeDate="changeDate"
-                  />
                 </v-col>
               </v-row>
               <v-row>

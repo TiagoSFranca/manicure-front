@@ -19,4 +19,6 @@ export default {
   [constants.MUTATION_SET_REPORT_SCHEDULE_CANCELED_YEAR]: set('reportScheduleCanceledYear'),
   [constants.MUTATION_SET_SCHEDULES]: set('schedules'),
   [constants.MUTATION_SET_SCHEDULES_PAGE]: set('schedulesPage'),
+  [constants.MUTATION_SET_SALES]: set('sales'),
+  [constants.MUTATION_SET_SALES_PAGE]: set('salesPage'),
 }

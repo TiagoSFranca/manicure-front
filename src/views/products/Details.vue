@@ -59,9 +59,11 @@
         />
       </v-col>
     </v-row>
+    <v-divider />
     <v-row>
-      <v-col cols="12" sm="12" lg="6" md="6"> SALES </v-col>
-      <v-col cols="12" sm="12" lg="6" md="6"> CHANGES </v-col>
+      <v-col cols="12" sm="12" lg="12" md="12">
+        <material-products-card-sales />
+      </v-col>
     </v-row>
     <v-divider />
     <material-products-card-graphs />

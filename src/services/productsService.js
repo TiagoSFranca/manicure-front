@@ -5,6 +5,7 @@ const MATERIALS = "/materials"
 const IMAGES = "/images"
 const COMBOS = "/combos"
 const SCHEDULES = "/schedules"
+const SALES = "/sale"
 
 export const search = (query, source) => {
   return new Promise((resolve, reject) => {
@@ -160,6 +161,25 @@ export const toggleActive = (id) => {
   })
 }
 
+export const changeSale = (id, object) => {
+  return new Promise((resolve, reject) => {
+    return axios.put(`${RESOURCE_NAME}/${id}${SALES}`, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
+export const searchSales = (id, query, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${SALES}`, {
+      params: query,
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+};
+
 export default {
   search,
   add,
@@ -176,5 +196,7 @@ export default {
   getScheduleYears,
   getReportScheduleYear,
   searchSchedules,
-  toggleActive
+  toggleActive,
+  changeSale,
+  searchSales
 }

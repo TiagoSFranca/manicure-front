@@ -52,3 +52,10 @@ export const AGENDA_TYPES = {
     value: "day"
   },
 }
+
+export const SALE_STATUS = {
+  START: 1,
+  END: 2,
+  EXTEND: 3,
+  ANTECIPATE: 4
+}

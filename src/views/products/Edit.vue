@@ -37,49 +37,60 @@
         />
       </v-col>
     </v-row>
-    <v-row justify="space-between" v-if="product">
-      <v-col cols="auto">
+    <v-row
+      :justify="product.onSale ? 'space-between' : 'center'"
+      v-if="product"
+    >
+      <v-col cols="auto" v-if="product.onSale" sm="12" md="auto" lg="auto">
         <v-btn
           elevation="2"
           color="warning"
           outlined
           :loading="loading[LOADING_IDENTIFIER]"
+          @click="onShowChangeSale(SALE_STATUS.ANTECIPATE)"
+          block
         >
           <v-icon left>mdi-calendar-arrow-left</v-icon>
-          ANTECIPAR PROMOÇÃO
+          {{ $t(PRODUCT.EDIT.LABELS.ANTECIPATE) }}
         </v-btn>
       </v-col>
-      <v-col cols="auto">
-        <v-btn
-          elevation="2"
-          color="warning"
-          outlined
-          :loading="loading[LOADING_IDENTIFIER]"
-        >
-          <v-icon left>mdi-calendar-arrow-right</v-icon>
-          PRORROGAR PROMOÇÃO
-        </v-btn>
-      </v-col>
-      <v-col cols="auto" v-if="product.onSale">
+      <v-col cols="auto" v-if="product.onSale" sm="12" md="auto" lg="auto">
         <v-btn
           elevation="2"
           color="error"
           outlined
           :loading="loading[LOADING_IDENTIFIER]"
+          @click="onShowChangeSale(SALE_STATUS.END)"
+          block
         >
           <v-icon left>mdi-calendar-remove</v-icon>
-          PARAR PROMOÇÃO
+          {{ $t(PRODUCT.EDIT.LABELS.END) }}
         </v-btn>
       </v-col>
-      <v-col cols="auto" v-else>
+      <v-col cols="auto" v-else sm="12" md="auto" lg="auto">
         <v-btn
           elevation="2"
           color="accent"
           outlined
           :loading="loading[LOADING_IDENTIFIER]"
+          @click="onShowChangeSale(SALE_STATUS.START)"
+          block
         >
           <v-icon left>mdi-calendar-plus</v-icon>
-          INICIAR PROMOÇÃO
+          {{ $t(PRODUCT.EDIT.LABELS.START) }}
+        </v-btn>
+      </v-col>
+      <v-col cols="auto" v-if="product.onSale" sm="12" md="auto" lg="auto">
+        <v-btn
+          elevation="2"
+          color="warning"
+          outlined
+          :loading="loading[LOADING_IDENTIFIER]"
+          @click="onShowChangeSale(SALE_STATUS.EXTEND)"
+          block
+        >
+          <v-icon left>mdi-calendar-arrow-right</v-icon>
+          {{ $t(PRODUCT.EDIT.LABELS.EXTEND) }}
         </v-btn>
       </v-col>
     </v-row>
@@ -101,6 +112,14 @@
         />
       </v-col>
     </v-row>
+    <material-products-change-sale
+      :showChangeSale="showChangeSale"
+      :type="saleType"
+      :price="product.price"
+      :idProduct="product.id"
+      :date="product.endSale"
+      @close="showChangeSale = false"
+    />
   </div>
 </template>
 
@@ -112,17 +131,19 @@ import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS, PRODUCTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { SALE_STATUS } from "@/utils/constants";
 
 export default {
   data() {
     return {
-      showAdd: false,
+      showChangeSale: false,
       source: "",
       LOADING_IDENTIFIER: "searchProduct",
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
       LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
       PRODUCTS: PRODUCTS,
       PRODUCTS_DETAILS: PRODUCTS_DETAILS,
+      saleType: "",
     };
   },
   methods: {
@@ -149,12 +170,17 @@ export default {
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },
+    onShowChangeSale(type) {
+      this.showChangeSale = true;
+      this.saleType = type;
+    },
   },
   created() {
     this.searchProduct();
     this.getImages();
     this.getMaterials();
     this.PRODUCT = i18nConstants.PRODUCT;
+    this.SALE_STATUS = SALE_STATUS;
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [
