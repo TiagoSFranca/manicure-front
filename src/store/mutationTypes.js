@@ -5,6 +5,8 @@ import combos from './modules/combos/constants'
 import clients from './modules/clients/constants'
 import address from './modules/address/constants'
 import agenda from './modules/agenda/constants'
+import saleStatus from './modules/saleStatus/constants'
+import scheduleStatus from './modules/scheduleStatus/constants'
 
 // APP
 export const APP_SET_LOADING = `${app.MODULE_NAME}/${app.MUTATION_SET_LOADING}`;
@@ -28,6 +30,13 @@ export const PRODUCTS_SET_SEARCH_IMAGES = `${products.MODULE_NAME}/${products.MU
 export const PRODUCTS_SET_COMBOS = `${products.MODULE_NAME}/${products.MUTATION_SET_COMBOS}`;
 export const PRODUCTS_SET_MATERIALS = `${products.MODULE_NAME}/${products.MUTATION_SET_MATERIALS}`;
 export const PRODUCTS_SET_SEARCH_MATERIALS = `${products.MODULE_NAME}/${products.MUTATION_SET_SEARCH_MATERIALS}`;
+export const PRODUCTS_SET_YEARS = `${products.MODULE_NAME}/${products.MUTATION_SET_SCHEDULE_YEARS}`;
+export const PRODUCTS_SET_REPORT_SCHEDULE_FINISHED_YEAR = `${products.MODULE_NAME}/${products.MUTATION_SET_REPORT_SCHEDULE_FINISHED_YEAR}`;
+export const PRODUCTS_SET_REPORT_SCHEDULE_CANCELED_YEAR = `${products.MODULE_NAME}/${products.MUTATION_SET_REPORT_SCHEDULE_CANCELED_YEAR}`;
+export const PRODUCTS_SET_SCHEDULES = `${products.MODULE_NAME}/${products.MUTATION_SET_SCHEDULES}`;
+export const PRODUCTS_SET_SCHEDULES_PAGE = `${products.MODULE_NAME}/${products.MUTATION_SET_SCHEDULES_PAGE}`;
+export const PRODUCTS_SET_SALES = `${products.MODULE_NAME}/${products.MUTATION_SET_SALES}`;
+export const PRODUCTS_SET_SALES_PAGE = `${products.MODULE_NAME}/${products.MUTATION_SET_SALES_PAGE}`;
 
 // MATERIALS
 export const MATERIALS_SET_MATERIALS = `${materials.MODULE_NAME}/${materials.MUTATION_SET_MATERIALS}`;
@@ -71,6 +80,12 @@ export const AGENDA_SET_MATERIALS = `${agenda.MODULE_NAME}/${agenda.MUTATION_SET
 export const AGENDA_SET_PRODUCTS = `${agenda.MODULE_NAME}/${agenda.MUTATION_SET_PRODUCTS}`;
 export const AGENDA_SET_COMBOS = `${agenda.MODULE_NAME}/${agenda.MUTATION_SET_COMBOS}`;
 
+// SALE STATUS
+export const SALE_STATUS_SET_SALE_STATUS = `${saleStatus.MODULE_NAME}/${saleStatus.MUTATION_SET_SALE_STATUS}`;
+
+// SCHEDULE STATUS
+export const SCHEDULE_STATUS_SET_SCHEDULE_STATUS = `${scheduleStatus.MODULE_NAME}/${scheduleStatus.MUTATION_SET_SCHEDULE_STATUS}`;
+
 export default {
   APP_SET_LOADING,
   APP_SET_DRAWER,
@@ -92,6 +107,13 @@ export default {
   PRODUCTS_SET_COMBOS,
   PRODUCTS_SET_MATERIALS,
   PRODUCTS_SET_SEARCH_MATERIALS,
+  PRODUCTS_SET_YEARS,
+  PRODUCTS_SET_REPORT_SCHEDULE_FINISHED_YEAR,
+  PRODUCTS_SET_REPORT_SCHEDULE_CANCELED_YEAR,
+  PRODUCTS_SET_SCHEDULES,
+  PRODUCTS_SET_SCHEDULES_PAGE,
+  PRODUCTS_SET_SALES,
+  PRODUCTS_SET_SALES_PAGE,
 
   MATERIALS_SET_MATERIALS,
   MATERIALS_SET_SEARCH,
@@ -128,5 +150,9 @@ export default {
   AGENDA_SET_SCHEDULE,
   AGENDA_SET_MATERIALS,
   AGENDA_SET_PRODUCTS,
-  AGENDA_SET_COMBOS
+  AGENDA_SET_COMBOS,
+
+  SALE_STATUS_SET_SALE_STATUS,
+  
+  SCHEDULE_STATUS_SET_SCHEDULE_STATUS
 }

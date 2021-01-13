@@ -1,19 +1,16 @@
 <template>
   <div>
     <core-page-title :title="$t(SCHEDULE.FINISH.NAME)">
-      <v-col cols="auto" class="ml-auto">
+      <v-col cols="auto">
         <v-btn
           color="error"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          icon
+          large
           :loading="loading[LOADING_IDENTIFIER]"
           :to="SCHEDULES"
           exact
         >
-          <v-icon>mdi-arrow-left</v-icon>
+          <v-icon>mdi-cancel</v-icon>
         </v-btn>
       </v-col>
     </core-page-title>
@@ -82,12 +79,16 @@
 <script>
 import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
 import { SCHEDULES } from "@/router/routes";
-import { ToCurrency } from "@/utils/methods";
+import {
+  ToCurrency,
+  checkDisabledCancelScheduleFromStatus,
+} from "@/utils/methods";
 import i18nConstants from "@/i18n/constants";
+import toastr from "@/utils/toastr";
 
 export default {
   data() {
@@ -129,6 +130,14 @@ export default {
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },
+    checkStatus() {
+      if (checkDisabledCancelScheduleFromStatus(this.schedule.status)) {
+        this.$router.push(SCHEDULES);
+        toastr.error(
+          this.$t(i18nConstants.GENERAL.MESSAGES.RESOURCE_NOT_FOUND.TITLE)
+        );
+      }
+    },
   },
   computed: {
     ...mapState(agendaConstants.MODULE_NAME, [
@@ -149,6 +158,13 @@ export default {
     this.searchSchedule();
     this.getMaterials();
     this.SCHEDULE = i18nConstants.SCHEDULE;
+  },
+  watch: {
+    schedule() {
+      if (this.schedule) {
+        this.checkStatus();
+      }
+    },
   },
 };
 </script>

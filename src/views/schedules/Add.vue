@@ -1,28 +1,19 @@
 <template>
   <div>
-    <v-row align="center">
-      <v-col cols="auto" class="mr-auto">
-        <span class="title white--text">
-          {{ $t(SCHEDULE.ADD.NAME) }}
-        </span>
-      </v-col>
-
-      <v-col cols="auto" class="ml-auto">
+    <core-page-title :title="$t(SCHEDULE.ADD.NAME)">
+      <v-col cols="auto">
         <v-btn
           color="error"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          icon
+          large
           :loading="loading[LOADING_IDENTIFIER]"
           :to="SCHEDULES"
           exact
         >
-          <v-icon>mdi-arrow-left</v-icon>
+          <v-icon>mdi-cancel</v-icon>
         </v-btn>
       </v-col>
-    </v-row>
+    </core-page-title>
 
     <validation-observer ref="form" v-slot="{ handleSubmit }" @submit.prevent>
       <v-row align="center">
@@ -103,7 +94,7 @@
 <script>
 import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { SCHEDULES } from "@/router/routes";
 import { ToCurrency } from "@/utils/methods";

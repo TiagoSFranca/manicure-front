@@ -43,11 +43,11 @@
                 ></v-radio>
                 <v-radio
                   :label="$t(PRODUCT.FILTER.LABELS.ACTIVE_OPTIONS.YES)"
-                  value="true"
+                  :value="true"
                 ></v-radio>
                 <v-radio
                   :label="$t(PRODUCT.FILTER.LABELS.ACTIVE_OPTIONS.NOT)"
-                  value="false"
+                  :value="false"
                 ></v-radio>
               </v-radio-group>
             </v-col>
@@ -63,11 +63,11 @@
                 ></v-radio>
                 <v-radio
                   :label="$t(PRODUCT.FILTER.LABELS.ON_SALE_OPTIONS.YES)"
-                  value="true"
+                  :value="true"
                 ></v-radio>
                 <v-radio
                   :label="$t(PRODUCT.FILTER.LABELS.ON_SALE_OPTIONS.NOT)"
-                  value="false"
+                  :value="false"
                 ></v-radio>
               </v-radio-group>
             </v-col>
@@ -126,7 +126,7 @@ export default {
       page: 1,
       filter: {
         name: "",
-        active: NOT_SELECTED,
+        active: true,
         onSale: NOT_SELECTED,
         beginEndSale: "",
         endEndSale: "",
@@ -141,11 +141,11 @@ export default {
   watch: {
     showFilter(val) {
       if (val === true) {
-        if (this.filtered.onSale == undefined) {
+        if (this.filtered.onSale == undefined || this.filtered.onSale == "") {
           this.filtered.onSale = NOT_SELECTED;
         }
 
-        if (this.filtered.active == undefined) {
+        if (this.filtered.active == undefined || this.filtered.active == "") {
           this.filtered.active = NOT_SELECTED;
         }
 

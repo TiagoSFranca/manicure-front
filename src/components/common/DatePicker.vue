@@ -20,6 +20,7 @@
         :error-messages="errors"
         :clearable="!disabled"
         @click:clear="clear"
+        :disabled="disabled"
       ></v-text-field>
     </template>
     <v-date-picker
@@ -30,6 +31,7 @@
       @change="change"
       @blur="blur"
       :min="min"
+      :max="max"
     />
   </v-menu>
 </template>
@@ -39,7 +41,7 @@ import { formatDate } from "@/utils/methods";
 import moment from "moment";
 
 export default {
-  props: ["disabled", "label", "date", "errors", "min"],
+  props: ["disabled", "label", "date", "errors", "min", "max"],
   data() {
     return {
       menu: false,
@@ -53,7 +55,7 @@ export default {
     },
   },
   watch: {
-    dateValue(curr, old) {
+    dateValue() {
       this.dateFormatted = this.formatDate(this.dateValue);
       // if (this.date && !this.curr) this.changeDate(null);
     },

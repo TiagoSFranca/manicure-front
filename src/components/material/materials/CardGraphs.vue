@@ -5,7 +5,7 @@
         <v-select
           :items="years"
           v-model="yearSelected"
-          :label="$t(MATERIAL.DETAILS.LABELS.YEAR)"
+          :label="$t(MATERIAL.CARD_GRAPHS.LABELS.YEAR)"
           :loading="
             loading[LOADING_IDENTIFIER_YEARS] ||
             loading[LOADING_IDENTIFIER_REPORT_REGISTER] ||
@@ -15,16 +15,16 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" sm="12" lg="6" md="6">
+      <v-col cols="12" sm="12" lg="12" md="12">
         <v-row>
-          <v-col cols="6" sm="6" lg="6" md="6">
+          <v-col cols="6" sm="6" lg="3" md="3">
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
                 loading[LOADING_IDENTIFIER_REPORT_REGISTER]
               "
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
+                $t(MATERIAL.CARD_GRAPHS.LABELS.REGISTER_IN_YEAR, {
                   year: yearSelected,
                 })
               "
@@ -34,49 +34,27 @@
               </span>
             </common-simple-card>
           </v-col>
-          <v-col cols="6" sm="6" lg="6" md="6">
+          <v-col cols="6" sm="6" lg="3" md="3">
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
                 loading[LOADING_IDENTIFIER_REPORT_REGISTER]
               "
-              :title="$t(MATERIAL.DETAILS.LABELS.REGISTER_TOTAL)"
+              :title="$t(MATERIAL.CARD_GRAPHS.LABELS.REGISTER_TOTAL)"
             >
               <span class="title white--text">
                 {{ reportRegisterYear.total }}
               </span>
             </common-simple-card>
           </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <material-materials-card-graph
-              :isLoading="
-                loading[LOADING_IDENTIFIER_YEARS] ||
-                loading[LOADING_IDENTIFIER_REPORT_REGISTER]
-              "
-              :labels="labels"
-              :series="getRegisters()"
-              :colors="[randomColor()]"
-              :title="
-                $t(MATERIAL.DETAILS.LABELS.REGISTER_IN_YEAR, {
-                  year: yearSelected,
-                })
-              "
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" sm="12" lg="6" md="6">
-        <v-row>
-          <v-col cols="6" sm="6" lg="6" md="6">
+          <v-col cols="6" sm="6" lg="3" md="3">
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
                 loading[LOADING_IDENTIFIER_REPORT_REMOVE]
               "
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
+                $t(MATERIAL.CARD_GRAPHS.LABELS.REMOVE_IN_YEAR, {
                   year: yearSelected,
                 })
               "
@@ -86,13 +64,13 @@
               </span>
             </common-simple-card>
           </v-col>
-          <v-col cols="6" sm="6" lg="6" md="6">
+          <v-col cols="6" sm="6" lg="3" md="3">
             <common-simple-card
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
                 loading[LOADING_IDENTIFIER_REPORT_REMOVE]
               "
-              :title="$t(MATERIAL.DETAILS.LABELS.REMOVE_TOTAL)"
+              :title="$t(MATERIAL.CARD_GRAPHS.LABELS.REMOVE_TOTAL)"
             >
               <span class="title white--text">
                 {{ reportRemoveYear.total }}
@@ -102,16 +80,16 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <material-materials-card-graph
+            <common-card-graph
               :isLoading="
                 loading[LOADING_IDENTIFIER_YEARS] ||
-                loading[LOADING_IDENTIFIER_REPORT_REMOVE]
+                loading[LOADING_IDENTIFIER_REPORT_REGISTER]
               "
               :labels="labels"
-              :series="getRemoves()"
-              :colors="[randomColor()]"
+              :series="getRegisters()"
+              :colors="[randomColor(), randomColor()]"
               :title="
-                $t(MATERIAL.DETAILS.LABELS.REMOVE_IN_YEAR, {
+                $t(MATERIAL.CARD_GRAPHS.LABELS.REGISTER_AND_REMOVE_IN_YEAR, {
                   year: yearSelected,
                 })
               "
@@ -197,19 +175,17 @@ export default {
       );
     },
     getRegisters() {
-      let registers = (this.reportRegisterYear.months || []).map((e) => e.value);
-      return [
-        {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REGISTER),
-          data: registers,
-        },
-      ];
-    },
-    getRemoves() {
+      let registers = (this.reportRegisterYear.months || []).map(
+        (e) => e.value
+      );
       let removes = (this.reportRemoveYear.months || []).map((e) => e.value);
       return [
         {
-          name: this.$t(this.MATERIAL.DETAILS.LABELS.REMOVE),
+          name: this.$t(this.MATERIAL.CARD_GRAPHS.LABELS.REGISTER),
+          data: registers,
+        },
+        {
+          name: this.$t(this.MATERIAL.CARD_GRAPHS.LABELS.REMOVE),
           data: removes,
         },
       ];

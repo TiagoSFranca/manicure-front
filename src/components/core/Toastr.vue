@@ -5,9 +5,15 @@
     :timeout="toastr.timeout"
     bottom
     right
+    shaped
+    multi-line
   >
     {{ toastr.text }}
-    <v-btn color="primary" text @click="onClickBtn()"> Fechar </v-btn>
+    <template v-slot:action="{ attrs }">
+      <v-btn color="primary" text v-bind="attrs" @click="onClickBtn()">
+        Fechar
+      </v-btn>
+    </template>
   </v-snackbar>
 </template>
 <script>

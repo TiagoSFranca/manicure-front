@@ -8,5 +8,16 @@ export default {
   combos: [],
   materials: [],
   searchMaterials: false,
-  page: {}
+  page: {},
+  scheduleYears: [],
+  reportScheduleFinishedYear: {
+    months: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  reportScheduleCanceledYear: {
+    months: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  },
+  schedules: [],
+  schedulesPage: {},
+  sales: [],
+  salesPage: {},
 }

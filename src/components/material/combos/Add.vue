@@ -134,10 +134,15 @@
     >
       <template slot="actions">
         <v-spacer></v-spacer>
-        <v-btn color="error" @click="() => redirect(false)" icon fab>
+        <v-btn color="error" @click="() => hide()" icon fab>
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-btn color="success" icon fab @click="() => redirect(true)">
+        <v-btn
+          color="success"
+          icon
+          fab
+          :to="{ name: COMBOS_EDIT.name, params: { id: idCombo } }"
+        >
           <v-icon>mdi-check</v-icon>
         </v-btn>
       </template>
@@ -172,6 +177,7 @@ export default {
       },
       LOADING_IDENTIFIER: "addCombo",
       idCombo: "",
+      COMBOS_EDIT: COMBOS_EDIT
     };
   },
   methods: {
@@ -196,14 +202,6 @@ export default {
     },
     changeDate(date) {
       this.object.endSale = date;
-    },
-    redirect(toEdit) {
-      this.hide();
-      if (toEdit) {
-        this.$router.push({
-          path: COMBOS_EDIT.replace(":id", this.idCombo),
-        });
-      }
     },
   },
   mounted() {

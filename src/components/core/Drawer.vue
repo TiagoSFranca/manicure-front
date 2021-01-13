@@ -56,12 +56,12 @@ export default {
         },
         {
           to: routes.SCHEDULES,
-          icon: "mdi-calendar-multiple",
+          icon: routes.SCHEDULES.icon,
           text: this.$tc(i18nConstants.SCHEDULE.NAME, 2),
         },
         {
           to: routes.PRODUCTS,
-          icon: "mdi-cube-outline",
+          icon: routes.PRODUCTS.icon,
           text: this.$tc(i18nConstants.PRODUCT.NAME, 2),
         },
         {
@@ -71,7 +71,7 @@ export default {
         },
         {
           to: routes.MATERIALS,
-          icon: "mdi-hexagon-slice-1",
+          icon: routes.MATERIALS.icon,
           text: this.$tc(i18nConstants.MATERIAL.NAME, 2),
         },
         {
