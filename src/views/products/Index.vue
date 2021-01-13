@@ -181,9 +181,6 @@ export default {
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchProducts",
-      formatDate: formatDate,
-      PRODUCTS_EDIT: PRODUCTS_EDIT,
-      PRODUCTS_DETAILS: PRODUCTS_DETAILS,
     };
   },
   methods: {
@@ -233,12 +230,6 @@ export default {
     toCurrency(value) {
       return ToCurrency(value, true, false);
     },
-    seeItem(item, isEdit = true) {
-      if (isEdit)
-        this.$router.push({ path: PRODUCTS_EDIT.replace(":id", item.id) });
-      else
-        this.$router.push({ path: PRODUCTS_DETAILS.replace(":id", item.id) });
-    },
     deleteItem(item) {
       this.showDialog = true;
 
@@ -262,6 +253,9 @@ export default {
   created() {
     this.searchProducts();
     this.i18nConstants = { ...i18nConstants };
+    this.formatDate = formatDate;
+    this.PRODUCTS_EDIT = PRODUCTS_EDIT;
+    this.PRODUCTS_DETAILS = PRODUCTS_DETAILS;
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [

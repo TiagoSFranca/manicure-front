@@ -6,7 +6,7 @@
     >
       <v-card-title>
         <span class="overline">
-          {{ $t(i18nConstants.PRODUCT.CARD_SALES.NAME) }}
+          {{ $t(i18nConstants.COMBO.CARD_SALES.NAME) }}
         </span>
       </v-card-title>
       <v-card-text>
@@ -14,14 +14,14 @@
           <v-col cols="12" md="6" lg="3">
             <common-date-picker
               :date="filter.beginDate"
-              :label="$t(i18nConstants.PRODUCT.CARD_SALES.LABELS.INITIAL_DATE)"
+              :label="$t(i18nConstants.COMBO.CARD_SALES.LABELS.INITIAL_DATE)"
               @changeDate="(date) => changeDate(date, true)"
             />
           </v-col>
           <v-col cols="12" md="6" lg="3">
             <common-date-picker
               :date="filter.endDate"
-              :label="$t(i18nConstants.PRODUCT.CARD_SALES.LABELS.FINAL_DATE)"
+              :label="$t(i18nConstants.COMBO.CARD_SALES.LABELS.FINAL_DATE)"
               @changeDate="(date) => changeDate(date, false)"
             />
           </v-col>
@@ -32,7 +32,7 @@
               :items="saleStatuses"
               item-value="id"
               item-text="name"
-              :label="$t(i18nConstants.PRODUCT.CARD_SALES.LABELS.SALE_STATUS)"
+              :label="$t(i18nConstants.COMBO.CARD_SALES.LABELS.SALE_STATUS)"
             >
               <template v-slot:selection="{ item, index }">
                 <v-chip
@@ -53,7 +53,7 @@
                 >
                   {{
                     $t(
-                      i18nConstants.PRODUCT.CARD_SALES.LABELS
+                      i18nConstants.COMBO.CARD_SALES.LABELS
                         .SALE_STATUS_MULTIPLE_SELECTED,
                       { length: filter.IdSaleStatus.length - 1 }
                     )
@@ -68,7 +68,7 @@
                 >
                   {{
                     $t(
-                      i18nConstants.PRODUCT.CARD_SALES.LABELS
+                      i18nConstants.COMBO.CARD_SALES.LABELS
                         .SALE_STATUS_ALL_SELECTED
                     )
                   }}
@@ -129,13 +129,13 @@
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
+import combosActions from "@/actions/combosActions";
 import saleStatusActions from "@/actions/saleStatusActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import { formatDate, ToCurrency } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
-import productsConstants from "@/store/modules/products/constants";
+import combosConstants from "@/store/modules/combos/constants";
 import saleStatusConstants from "@/store/modules/saleStatus/constants";
 import i18nConstants from "@/i18n/constants";
 
@@ -145,25 +145,25 @@ export default {
       source: "",
       headers: [
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SALES.LIST.SALE_STATUS_NAME),
+          text: this.$t(i18nConstants.COMBO.CARD_SALES.LIST.SALE_STATUS_NAME),
           value: "saleStatus.name",
           align: "start",
           sortable: false,
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SALES.LIST.DATE),
+          text: this.$t(i18nConstants.COMBO.CARD_SALES.LIST.DATE),
           value: "date",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SALES.LIST.CREATED_AT),
+          text: this.$t(i18nConstants.COMBO.CARD_SALES.LIST.CREATED_AT),
           value: "createdAt",
           align: "center",
           sortable: false,
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SALES.LIST.PRICE),
+          text: this.$t(i18nConstants.COMBO.CARD_SALES.LIST.PRICE),
           value: "price",
           align: "center",
           sortable: false,
@@ -181,7 +181,7 @@ export default {
       },
       pagination: {},
       sort: {},
-      LOADING_IDENTIFIER: "searchProductSales",
+      LOADING_IDENTIFIER: "searchComboSales",
     };
   },
   methods: {
@@ -189,7 +189,7 @@ export default {
       this.source = axiosSourceToken.obterToken();
       let id = this.$route.params.id;
 
-      productsActions.searchSales(
+      combosActions.searchSales(
         id,
         this.source,
         this.filter,
@@ -246,7 +246,7 @@ export default {
     this.formatDate = formatDate;
   },
   computed: {
-    ...mapState(productsConstants.MODULE_NAME, ["sales", "salesPage"]),
+    ...mapState(combosConstants.MODULE_NAME, ["sales", "salesPage"]),
     ...mapState(saleStatusConstants.MODULE_NAME, ["saleStatuses"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },

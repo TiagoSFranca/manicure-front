@@ -49,6 +49,7 @@ export const get = (id, source, LOADING_IDENTIFIER = '') => {
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_COMBO, data);
+      store.commit(mutationTypes.COMBOS_SET_SEARCH, false)
     }).catch(() => {
     }).finally(() => {
       store.dispatch(endLoading(LOADING_IDENTIFIER));
@@ -185,6 +186,115 @@ export const editProduct = (id, idProduct, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
+export const getScheduleYears = (id, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  combosService
+    .getScheduleYears(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.COMBOS_SET_YEARS, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getReportScheduleFinishedYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  combosService
+    .getReportScheduleYear(id, year, source, true)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.COMBOS_SET_REPORT_SCHEDULE_FINISHED_YEAR, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getReportScheduleCanceledYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  combosService
+    .getReportScheduleYear(id, year, source, false)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.COMBOS_SET_REPORT_SCHEDULE_CANCELED_YEAR, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const searchSchedules = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  combosService
+    .searchSchedules(id, query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.COMBOS_SET_SCHEDULES, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
+export const toggleActive = (id, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return combosService
+    .toggleActive(id)
+    .then(() => {
+      store.commit(mutationTypes.COMBOS_SET_SEARCH, true)
+      toastr.success(messages.sucesso.exclusao)
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const changeSale = (id, object, LOADING_IDENTIFIER = '') => {
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  return combosService
+    .changeSale(id, object)
+    .then(() => {
+      store.commit(mutationTypes.COMBOS_SET_SEARCH, true);
+      toastr.success(messages.sucesso.cadastro)
+      return true;
+    }).catch(() => {
+      return false;
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const searchSales = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  combosService
+    .searchSales(id, query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.COMBOS_SET_SALES, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
 export default {
   search,
   add,
@@ -197,5 +307,12 @@ export default {
   addProduct,
   getProducts,
   deleteProduct,
-  editProduct
+  editProduct,
+  getScheduleYears,
+  getReportScheduleFinishedYear,
+  getReportScheduleCanceledYear,
+  searchSchedules,
+  toggleActive,
+  changeSale,
+  searchSales
 }

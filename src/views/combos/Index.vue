@@ -1,40 +1,21 @@
 <template>
   <div>
-    <v-row align="center">
-      <v-col cols="auto" class="mr-auto">
-        <span class="title white--text">
-          {{ $tc(i18nConstants.COMBO.NAME, 2) }}
-        </span>
-      </v-col>
-
-      <v-col cols="auto" class="ml-auto">
+    <core-page-title :title="$tc(i18nConstants.COMBO.NAME, 2)">
+      <v-col cols="auto">
         <v-btn
           color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          icon
+          large
           @click="onShowFilter()"
           :disabled="showFilter"
         >
           <v-icon>mdi-filter</v-icon>
         </v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn
-          color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
-          @click="showAdd = true"
-        >
+        <v-btn color="accent" icon large @click="showAdd = true">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-col>
-    </v-row>
+    </core-page-title>
     <v-row>
       <v-col cols="12">
         <v-data-table
@@ -74,24 +55,33 @@
             ></v-simple-checkbox>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon
-              @click="seeItem(item, false)"
-              dark
+            <v-btn
+              icon
               :disabled="loading[LOADING_IDENTIFIER]"
-              >mdi-eye-outline</v-icon
+              :to="{ name: COMBOS_DETAILS.name, params: { id: item.id } }"
+              small
             >
-            <v-icon
-              @click="seeItem(item)"
+              <v-icon>mdi-eye-outline</v-icon>
+            </v-btn>
+            <v-btn
+              icon
               color="accent"
               :disabled="loading[LOADING_IDENTIFIER]"
-              >mdi-pencil-outline</v-icon
+              :to="{ name: COMBOS_EDIT.name, params: { id: item.id } }"
+              small
             >
-            <v-icon
-              @click="deleteItem(item)"
-              color="error"
+              <v-icon>mdi-pencil-outline</v-icon>
+            </v-btn>
+            <v-btn
+              icon
               :disabled="loading[LOADING_IDENTIFIER]"
-              >mdi-delete-outline</v-icon
+              :color="item.active ? 'error' : 'success'"
+              @click="deleteItem(item)"
             >
+              <v-icon>
+                {{ item.active ? "mdi-delete-outline" : "mdi-delete-restore" }}
+              </v-icon>
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
@@ -103,6 +93,35 @@
       :loading="loading[LOADING_IDENTIFIER]"
       :filtered="filter"
     />
+    <common-confirm-dialog
+      :showDialog="showDialog"
+      :title="title"
+      :message="message"
+      @close="showDialog = false"
+    >
+      <template slot="actions">
+        <v-spacer></v-spacer>
+        <v-btn
+          color="error"
+          @click="showDialog = false"
+          icon
+          fab
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-btn
+          color="success"
+          submit
+          icon
+          fab
+          @click="confirmDialog()"
+          :loading="loading[LOADING_IDENTIFIER]"
+        >
+          <v-icon>mdi-check</v-icon>
+        </v-btn>
+      </template>
+    </common-confirm-dialog>
   </div>
 </template>
 
@@ -120,6 +139,10 @@ export default {
   data() {
     return {
       showAdd: false,
+      showDialog: false,
+      title: "",
+      message: "",
+      productSelected: {},
       source: "",
       headers: [
         {
@@ -154,11 +177,10 @@ export default {
         },
         { text: "", value: "actions", align: "end", sortable: false },
       ],
-      filter: {},
+      filter: { active: true },
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchCombos",
-      formatDate: formatDate,
     };
   },
   methods: {
@@ -208,15 +230,32 @@ export default {
     toCurrency(value) {
       return ToCurrency(value, true, false);
     },
-    seeItem(item, isEdit = true) {
-      if (isEdit)
-        this.$router.push({ path: COMBOS_EDIT.replace(":id", item.id) });
-      else this.$router.push({ path: COMBOS_DETAILS.replace(":id", item.id) });
+    deleteItem(item) {
+      this.showDialog = true;
+
+      var message = item.active
+        ? this.i18nConstants.COMBO.LIST.MESSAGES.CONFIRM_DELETE
+        : this.i18nConstants.COMBO.LIST.MESSAGES.CONFIRM_RESTORE;
+
+      this.message = this.$t(message.MESSAGE);
+      this.title = this.$t(message.TITLE);
+
+      this.comboSelected = item;
+    },
+    confirmDialog() {
+      this.showDialog = false;
+      combosActions.toggleActive(
+        this.comboSelected.id,
+        this.LOADING_IDENTIFIER
+      );
     },
   },
   created() {
     this.searchCombos();
     this.i18nConstants = { ...i18nConstants };
+    this.formatDate = formatDate;
+    this.COMBOS_EDIT = COMBOS_EDIT;
+    this.COMBOS_DETAILS = COMBOS_DETAILS;
   },
   computed: {
     ...mapState(combosConstants.MODULE_NAME, [

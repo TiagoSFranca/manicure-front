@@ -8,70 +8,70 @@
           </v-col>
         </v-row>
         <v-form ref="form" lazy-validation @submit.prevent="submit">
-            <v-row align="start" justify="center">
-              <v-col cols="12" md="3">
-                <v-text-field
-                  v-model="filter.name"
-                  :label="$t(COMBO.FILTER.LABELS.NAME)"
-                ></v-text-field>
-              </v-col>
+          <v-row align="start" justify="center">
+            <v-col cols="12" md="3">
+              <v-text-field
+                v-model="filter.name"
+                :label="$t(COMBO.FILTER.LABELS.NAME)"
+              ></v-text-field>
+            </v-col>
 
-              <v-col cols="12" md="3">
-                <common-date-picker
-                  :date="filter.beginEndSale"
-                  :label="$t(COMBO.FILTER.LABELS.BEGIN_END_SALE)"
-                  @changeDate="(date) => changeDate(date, true)"
-                />
-              </v-col>
+            <v-col cols="12" md="3">
+              <common-date-picker
+                :date="filter.beginEndSale"
+                :label="$t(COMBO.FILTER.LABELS.BEGIN_END_SALE)"
+                @changeDate="(date) => changeDate(date, true)"
+              />
+            </v-col>
 
-              <v-col cols="12" md="3">
-                <common-date-picker
-                  :date="filter.endEndSale"
-                  :label="$t(COMBO.FILTER.LABELS.END_END_SALE)"
-                  @changeDate="(date) => changeDate(date, false)"
-                />
-              </v-col>
+            <v-col cols="12" md="3">
+              <common-date-picker
+                :date="filter.endEndSale"
+                :label="$t(COMBO.FILTER.LABELS.END_END_SALE)"
+                @changeDate="(date) => changeDate(date, false)"
+              />
+            </v-col>
 
-              <v-col cols="auto">
-                <v-radio-group
-                  v-model="filter.active"
-                  :label="$t(COMBO.FILTER.LABELS.ACTIVE)"
-                >
-                  <v-radio
-                    :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.ALL)"
-                    :value="NOT_SELECTED"
-                  ></v-radio>
-                  <v-radio
-                    :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.YES)"
-                    value="true"
-                  ></v-radio>
-                  <v-radio
-                    :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.NOT)"
-                    value="false"
-                  ></v-radio>
-                </v-radio-group>
-              </v-col>
+            <v-col cols="auto">
+              <v-radio-group
+                v-model="filter.active"
+                :label="$t(COMBO.FILTER.LABELS.ACTIVE)"
+              >
+                <v-radio
+                  :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.ALL)"
+                  :value="NOT_SELECTED"
+                ></v-radio>
+                <v-radio
+                  :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.YES)"
+                  :value="true"
+                ></v-radio>
+                <v-radio
+                  :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.NOT)"
+                  :value="false"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
 
-              <v-col cols="auto">
-                <v-radio-group
-                  v-model="filter.onSale"
-                  :label="$t(COMBO.FILTER.LABELS.ON_SALE)"
-                >
-                  <v-radio
-                    :label="$t(COMBO.FILTER.LABELS.ON_SALE_OPTIONS.ALL)"
-                    :value="NOT_SELECTED"
-                  ></v-radio>
-                  <v-radio
-                    :label="$t(COMBO.FILTER.LABELS.ON_SALE_OPTIONS.YES)"
-                    value="true"
-                  ></v-radio>
-                  <v-radio
-                    :label="$t(COMBO.FILTER.LABELS.ON_SALE_OPTIONS.NOT)"
-                    value="false"
-                  ></v-radio>
-                </v-radio-group>
-              </v-col>
-            </v-row>
+            <v-col cols="auto">
+              <v-radio-group
+                v-model="filter.onSale"
+                :label="$t(COMBO.FILTER.LABELS.ON_SALE)"
+              >
+                <v-radio
+                  :label="$t(COMBO.FILTER.LABELS.ON_SALE_OPTIONS.ALL)"
+                  :value="NOT_SELECTED"
+                ></v-radio>
+                <v-radio
+                  :label="$t(COMBO.FILTER.LABELS.ON_SALE_OPTIONS.YES)"
+                  :value="true"
+                ></v-radio>
+                <v-radio
+                  :label="$t(COMBO.FILTER.LABELS.ON_SALE_OPTIONS.NOT)"
+                  :value="false"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
+          </v-row>
         </v-form>
         <v-row>
           <v-col>
@@ -126,12 +126,11 @@ export default {
       page: 1,
       filter: {
         name: "",
-        active: NOT_SELECTED,
+        active: true,
         onSale: NOT_SELECTED,
         beginEndSale: "",
         endEndSale: "",
       },
-      NOT_SELECTED: NOT_SELECTED,
       source: "",
     };
   },
@@ -141,11 +140,11 @@ export default {
   watch: {
     showFilter(val) {
       if (val === true) {
-        if (this.filtered.onSale == undefined) {
+        if (this.filtered.onSale == undefined || this.filtered.onSale == "") {
           this.filtered.onSale = NOT_SELECTED;
         }
 
-        if (this.filtered.active == undefined) {
+        if (this.filtered.active == undefined || this.filtered.active == "") {
           this.filtered.active = NOT_SELECTED;
         }
 
@@ -183,6 +182,7 @@ export default {
   },
   created() {
     this.COMBO = i18nConstants.COMBO;
+    this.NOT_SELECTED = NOT_SELECTED;
   },
 };
 </script>

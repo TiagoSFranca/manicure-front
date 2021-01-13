@@ -37,6 +37,7 @@
         />
       </v-col>
     </v-row>
+
     <v-row
       :justify="product.onSale ? 'space-between' : 'center'"
       v-if="product"
@@ -94,6 +95,7 @@
         </v-btn>
       </v-col>
     </v-row>
+
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
         <material-products-card-materials
@@ -103,6 +105,7 @@
         />
       </v-col>
     </v-row>
+
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
         <material-products-card-images
@@ -112,6 +115,7 @@
         />
       </v-col>
     </v-row>
+
     <material-products-change-sale
       :showChangeSale="showChangeSale"
       :type="saleType"
@@ -141,8 +145,6 @@ export default {
       LOADING_IDENTIFIER: "searchProduct",
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
       LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
-      PRODUCTS: PRODUCTS,
-      PRODUCTS_DETAILS: PRODUCTS_DETAILS,
       saleType: "",
     };
   },
@@ -181,6 +183,8 @@ export default {
     this.getMaterials();
     this.PRODUCT = i18nConstants.PRODUCT;
     this.SALE_STATUS = SALE_STATUS;
+    this.PRODUCTS = PRODUCTS;
+    this.PRODUCTS_DETAILS = PRODUCTS_DETAILS;
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [

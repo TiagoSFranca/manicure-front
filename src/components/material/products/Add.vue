@@ -118,22 +118,15 @@ export default {
       object: {
         name: "",
         price: "",
-        promotionalPrice: null,
-        onSale: false,
-        endSale: null,
         comments: "",
       },
       defObject: {
         name: "",
         price: "",
-        promotionalPrice: null,
-        onSale: false,
-        endSale: null,
         comments: "",
       },
       LOADING_IDENTIFIER: "addProduct",
       idProduct: "",
-      PRODUCTS_EDIT: PRODUCTS_EDIT,
     };
   },
   methods: {
@@ -178,6 +171,7 @@ export default {
   },
   created() {
     this.PRODUCT = i18nConstants.PRODUCT;
+    this.PRODUCTS_EDIT = PRODUCTS_EDIT;
   },
 };
 </script>

@@ -49,9 +49,7 @@
           :combos="combos"
         />
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" sm="12" lg="12" md="12">
+      <v-col cols="12">
         <material-products-card-images
           :isEdit="false"
           :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
@@ -59,6 +57,7 @@
         />
       </v-col>
     </v-row>
+
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
@@ -88,14 +87,11 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      showAdd: false,
       source: "",
       LOADING_IDENTIFIER: "searchProduct",
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
       LOADING_IDENTIFIER_COMBOS: "searchProductCombos",
       LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
-      PRODUCTS: PRODUCTS,
-      PRODUCTS_EDIT: PRODUCTS_EDIT,
     };
   },
   methods: {
@@ -138,6 +134,8 @@ export default {
     this.getCombos();
     this.getMaterials();
     this.PRODUCT = i18nConstants.PRODUCT;
+    this.PRODUCTS = PRODUCTS;
+    this.PRODUCTS_EDIT = PRODUCTS_EDIT;
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [

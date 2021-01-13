@@ -128,7 +128,6 @@ export default {
         "searchReportScheduleFinished",
       LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED:
         "searchReportScheduleCanceled",
-      PRODUCTS: PRODUCTS,
       yearSelected: moment().year(),
       labels: [
         "jan",
@@ -144,7 +143,6 @@ export default {
         "nov",
         "dez",
       ],
-      randomColor: randomColor,
     };
   },
   methods: {
@@ -212,6 +210,8 @@ export default {
     this.searchYears();
     this.searchReports();
     this.PRODUCT = i18nConstants.PRODUCT;
+    this.PRODUCTS = PRODUCTS;
+    this.randomColor = randomColor;
   },
   computed: {
     ...mapState(productsConstants.MODULE_NAME, [

@@ -13,4 +13,11 @@ export default {
   [constants.MUTATION_SET_SEARCH_PRODUCTS]: set('searchProducts'),
   [constants.MUTATION_SET_PAGE]: set('page'),
   [constants.MUTATION_CLEAR_COMBOS]: set('combos', []),
+  [constants.MUTATION_SET_SCHEDULE_YEARS]: set('scheduleYears'),
+  [constants.MUTATION_SET_REPORT_SCHEDULE_FINISHED_YEAR]: set('reportScheduleFinishedYear'),
+  [constants.MUTATION_SET_REPORT_SCHEDULE_CANCELED_YEAR]: set('reportScheduleCanceledYear'),
+  [constants.MUTATION_SET_SCHEDULES]: set('schedules'),
+  [constants.MUTATION_SET_SCHEDULES_PAGE]: set('schedulesPage'),
+  [constants.MUTATION_SET_SALES]: set('sales'),
+  [constants.MUTATION_SET_SALES_PAGE]: set('salesPage'),
 }

@@ -66,7 +66,7 @@ export default {
         },
         {
           to: routes.COMBOS,
-          icon: "mdi-cards-outline",
+          icon: routes.COMBOS.icon,
           text: this.$tc(i18nConstants.COMBO.NAME, 2),
         },
         {

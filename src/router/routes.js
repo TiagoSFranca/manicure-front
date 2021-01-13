@@ -5,7 +5,7 @@ export const PRODUCTS = { name: "products_index", path: "/products", icon: "mdi-
 export const PRODUCTS_EDIT = { name: "products_edit", path: `${PRODUCTS.path}/edit/:id` };
 export const PRODUCTS_DETAILS = { name: "products_details", path: `${PRODUCTS.path}/details/:id` };
 
-export const COMBOS = { name: "combos_index", path: "/combos" }
+export const COMBOS = { name: "combos_index", path: "/combos", icon: "mdi-cards-outline" }
 export const COMBOS_EDIT = { name: "combos_edit", path: `${COMBOS.path}/edit/:id` };
 export const COMBOS_DETAILS = { name: "combos_details", path: `${COMBOS.path}/details/:id` };
 

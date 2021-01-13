@@ -45,12 +45,11 @@ import i18nConstants from "@/i18n/constants";
 export default {
   props: ["combo"],
   data() {
-    return {
-      COMBOS_DETAILS: COMBOS_DETAILS,
-    };
+    return {};
   },
   created() {
     this.GENERAL = i18nConstants.GENERAL;
+    this.COMBOS_DETAILS = COMBOS_DETAILS;
   },
 };
 </script>

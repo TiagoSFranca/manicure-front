@@ -6,7 +6,7 @@
     >
       <v-card-title>
         <span class="overline">
-          {{ $t(i18nConstants.PRODUCT.CARD_SCHEDULES.NAME) }}
+          {{ $t(i18nConstants.COMBO.CARD_SCHEDULES.NAME) }}
         </span>
       </v-card-title>
       <v-card-text>
@@ -15,7 +15,7 @@
             <common-date-picker
               :date="filter.beginDate"
               :label="
-                $t(i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS.INITIAL_DATE)
+                $t(i18nConstants.COMBO.CARD_SCHEDULES.LABELS.INITIAL_DATE)
               "
               @changeDate="(date) => changeDate(date, true)"
             />
@@ -23,9 +23,7 @@
           <v-col cols="12" md="6" lg="3">
             <common-date-picker
               :date="filter.endDate"
-              :label="
-                $t(i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS.FINAL_DATE)
-              "
+              :label="$t(i18nConstants.COMBO.CARD_SCHEDULES.LABELS.FINAL_DATE)"
               @changeDate="(date) => changeDate(date, false)"
             />
           </v-col>
@@ -37,7 +35,7 @@
               item-value="id"
               item-text="name"
               :label="
-                $t(i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS.SCHEDULE_STATUS)
+                $t(i18nConstants.COMBO.CARD_SCHEDULES.LABELS.SCHEDULE_STATUS)
               "
             >
               <template v-slot:selection="{ item, index }">
@@ -59,7 +57,7 @@
                 >
                   {{
                     $t(
-                      i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS
+                      i18nConstants.COMBO.CARD_SCHEDULES.LABELS
                         .SCHEDULE_STATUS_MULTIPLE_SELECTED,
                       { length: filter.IdScheduleStatus.length - 1 }
                     )
@@ -74,7 +72,7 @@
                 >
                   {{
                     $t(
-                      i18nConstants.PRODUCT.CARD_SCHEDULES.LABELS
+                      i18nConstants.COMBO.CARD_SCHEDULES.LABELS
                         .SCHEDULE_STATUS_ALL_SELECTED
                     )
                   }}
@@ -175,7 +173,7 @@
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
+import combosActions from "@/actions/combosActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import scheduleStatusActions from "@/actions/scheduleStatusActions";
 import { mapState } from "vuex";
@@ -185,7 +183,7 @@ import {
   getScheduleStatusColor,
 } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
-import productsConstants from "@/store/modules/products/constants";
+import combosConstants from "@/store/modules/combos/constants";
 import scheduleStatusConstants from "@/store/modules/scheduleStatus/constants";
 import { SCHEDULES_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
@@ -197,39 +195,39 @@ export default {
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.ID),
+          text: this.$t(i18nConstants.COMBO.CARD_SCHEDULES.LIST.ID),
           align: "start",
           value: "id",
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.CLIENT_NAME),
+          text: this.$t(i18nConstants.COMBO.CARD_SCHEDULES.LIST.CLIENT_NAME),
           value: "client.name",
           align: "center",
         },
         {
           text: this.$t(
-            i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.SCHEDULE_STATUS_NAME
+            i18nConstants.COMBO.CARD_SCHEDULES.LIST.SCHEDULE_STATUS_NAME
           ),
           value: "scheduleStatus.name",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.DATE),
+          text: this.$t(i18nConstants.COMBO.CARD_SCHEDULES.LIST.DATE),
           value: "date",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.FINISH_DATE),
+          text: this.$t(i18nConstants.COMBO.CARD_SCHEDULES.LIST.FINISH_DATE),
           value: "finishDate",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.CANCEL_DATE),
+          text: this.$t(i18nConstants.COMBO.CARD_SCHEDULES.LIST.CANCEL_DATE),
           value: "cancelDate",
           align: "center",
         },
         {
-          text: this.$t(i18nConstants.PRODUCT.CARD_SCHEDULES.LIST.IN_LOCO),
+          text: this.$t(i18nConstants.COMBO.CARD_SCHEDULES.LIST.IN_LOCO),
           value: "inLoco",
           align: "center",
         },
@@ -247,7 +245,7 @@ export default {
       },
       pagination: {},
       sort: {},
-      LOADING_IDENTIFIER: "searchProductSchedules",
+      LOADING_IDENTIFIER: "searchComboSchedules",
     };
   },
   methods: {
@@ -255,7 +253,7 @@ export default {
       this.source = axiosSourceToken.obterToken();
       let id = this.$route.params.id;
 
-      productsActions.searchSchedules(
+      combosActions.searchSchedules(
         id,
         this.source,
         this.filter,
@@ -316,7 +314,7 @@ export default {
     this.formatDate = formatDate;
   },
   computed: {
-    ...mapState(productsConstants.MODULE_NAME, ["schedules", "schedulesPage"]),
+    ...mapState(combosConstants.MODULE_NAME, ["schedules", "schedulesPage"]),
     ...mapState(scheduleStatusConstants.MODULE_NAME, ["scheduleStatuses"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },

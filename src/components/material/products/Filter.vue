@@ -131,7 +131,6 @@ export default {
         beginEndSale: "",
         endEndSale: "",
       },
-      NOT_SELECTED: NOT_SELECTED,
       source: "",
     };
   },
@@ -183,6 +182,7 @@ export default {
   },
   created() {
     this.PRODUCT = i18nConstants.PRODUCT;
+    this.NOT_SELECTED = NOT_SELECTED;
   },
 };
 </script>

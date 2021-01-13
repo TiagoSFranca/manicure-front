@@ -3,6 +3,8 @@ import axios from 'axios'
 const RESOURCE_NAME = '/combos'
 const PRODUCTS = "/products"
 const IMAGES = "/images"
+const SCHEDULES = "/schedules"
+const SALES = "/sale"
 
 export const search = (query, source) => {
   return new Promise((resolve, reject) => {
@@ -109,6 +111,64 @@ export const editProduct = (id, idProduct, object) => {
   })
 };
 
+export const getScheduleYears = (id, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
+export const getReportScheduleYear = (id, year, source, isFinish) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`, {
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
+export const searchSchedules = (id, query, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
+      params: query,
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+};
+
+export const toggleActive = (id) => {
+  return new Promise((resolve, reject) => {
+    return axios.post(`${RESOURCE_NAME}/${id}/toggleActive`)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
+export const changeSale = (id, object) => {
+  return new Promise((resolve, reject) => {
+    return axios.put(`${RESOURCE_NAME}/${id}${SALES}`, object)
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+}
+
+export const searchSales = (id, query, source) => {
+  return new Promise((resolve, reject) => {
+    return axios.get(`${RESOURCE_NAME}/${id}${SALES}`, {
+      params: query,
+      cancelToken: source.token
+    })
+      .then((e) => resolve(e))
+      .catch((error) => reject(error));
+  })
+};
+
 export default {
   search,
   add,
@@ -120,5 +180,11 @@ export default {
   addProduct,
   getProducts,
   deleteProduct,
-  editProduct
+  editProduct,
+  getScheduleYears,
+  getReportScheduleYear,
+  searchSchedules,
+  toggleActive,
+  changeSale,
+  searchSales
 }
