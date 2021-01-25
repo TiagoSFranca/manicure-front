@@ -176,8 +176,8 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import scheduleStatusActions from "@/actions/scheduleStatusActions";
+import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import {
   formatDate,

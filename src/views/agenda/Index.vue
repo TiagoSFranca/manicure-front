@@ -21,8 +21,17 @@
               {{ $refs.calendar.title }}
             </v-toolbar-title>
             <v-spacer />
-            <material-agenda-month-picker @changeDate="changeDate" color="accent" />
-            <v-btn text outlined @click="refresh" :class="`ml-1`" color="accent">
+            <material-agenda-month-picker
+              @changeDate="changeDate"
+              color="accent"
+            />
+            <v-btn
+              text
+              outlined
+              @click="refresh"
+              :class="`ml-1`"
+              color="accent"
+            >
               <v-icon>mdi-refresh</v-icon>
             </v-btn>
             <v-btn
@@ -120,7 +129,6 @@ export default {
     source: "",
     focus: "",
     type: AGENDA_TYPES.MONTH,
-    types: AGENDA_TYPES,
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
@@ -128,9 +136,6 @@ export default {
     LOADING_IDENTIFIER: "searchSchedules",
     beginDate: "",
     endDate: "",
-    SCHEDULES_ADD: SCHEDULES_ADD,
-    getScheduleStatusColor: getScheduleStatusColor,
-    getScheduleStatusText: getScheduleStatusText,
   }),
   mounted() {
     this.$refs.calendar.checkChange();
@@ -191,14 +196,22 @@ export default {
       let newList = this.agenda.map((item) => {
         return {
           name: "#" + item.id,
-          start: new Date(item.date),
+          start: new Date(this.getStart(item)),
           schedule: item,
-          end: new Date(item.date),
+          end: new Date(this.getEnd(item)),
           color: getScheduleStatusColor(item.status),
         };
       });
 
       this.events = newList;
+    },
+    getStart(item) {
+      if (item.status === SCHEDULE_STATUS.FINISHED) return item.finishDate;
+      if (item.status === SCHEDULE_STATUS.CANCELED) return item.cancelDate;
+      return item.date;
+    },
+    getEnd(item) {
+      return this.getStart(item);
     },
     searchAgenda() {
       this.source = axiosSourceToken.obterToken();
@@ -224,6 +237,11 @@ export default {
     this.SCHEDULE_STATUS = Object.entries(SCHEDULE_STATUS).map((item) => {
       return item[1];
     });
+
+    this.SCHEDULES_ADD = SCHEDULES_ADD;
+    this.getScheduleStatusColor = getScheduleStatusColor;
+    this.getScheduleStatusText = getScheduleStatusText;
+    this.types = AGENDA_TYPES;
   },
   computed: {
     ...mapState(agendaConstants.MODULE_NAME, ["agenda", "search"]),
