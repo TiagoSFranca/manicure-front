@@ -125,6 +125,14 @@ export default [
     }
   },
   {
+    path: routes.CLIENTS_DETAILS.path,
+    name: routes.CLIENTS_DETAILS.name,
+    view: 'clients.Details',
+    meta: {
+      middleware: guest
+    }
+  },
+  {
     path: routes.SCHEDULES.path,
     name: routes.SCHEDULES.name,
     view: 'schedules.Index',

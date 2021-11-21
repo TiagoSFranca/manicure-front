@@ -31,6 +31,15 @@ export const endLoading = (identifier) => ({ type: actionTypes.APP_LOADING, load
 
 export const formatDate = (date, formatter = "DD/MM/YYYY") => date ? moment(date).format(formatter) : '-'
 
+export const format = (value, pattern) => {
+  if (value) {
+    let i = 0;
+    let v = value.toString();
+    return pattern.replace(/#/g, _ => v[i++]);
+  }
+  return '-';
+}
+
 export const getScheduleStatusText = (idStatus) => {
   switch (idStatus) {
     case SCHEDULE_STATUS.LATE:

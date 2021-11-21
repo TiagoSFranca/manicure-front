@@ -4,7 +4,7 @@
       <validation-observer ref="form" v-slot="{ handleSubmit }">
         <v-card :disabled="loading[LOADING_IDENTIFIER]">
           <v-card-title>
-            <span class="headline">{{ $t(CLIENT.ADD.NAME) }}</span>
+            <span class="headline">{{ $t(CLIENT.EDIT.NAME) }}</span>
           </v-card-title>
           <v-card-text>
             <v-form>
@@ -15,7 +15,7 @@
                     v-slot="{ errors }"
                   >
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.NAME)"
+                      :label="$t(CLIENT.EDIT.LABELS.NAME)"
                       v-model="object.name"
                       :error-messages="errors"
                       counter="64"
@@ -27,7 +27,7 @@
                 <v-col cols="8">
                   <validation-provider rules="max:32" v-slot="{ errors }">
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.NICKNAME)"
+                      :label="$t(CLIENT.EDIT.LABELS.NICKNAME)"
                       v-model="object.nickname"
                       :error-messages="errors"
                       counter="32"
@@ -45,11 +45,11 @@
                       :error-messages="errors"
                     >
                       <v-radio
-                        :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.MALE)"
+                        :label="$t(CLIENT.EDIT.LABELS.SEX_OPTIONS.MALE)"
                         value="m"
                       ></v-radio>
                       <v-radio
-                        :label="$t(CLIENT.ADD.LABELS.SEX_OPTIONS.FEMALE)"
+                        :label="$t(CLIENT.EDIT.LABELS.SEX_OPTIONS.FEMALE)"
                         value="f"
                         class="mr-0"
                       ></v-radio>
@@ -65,7 +65,7 @@
                   >
                     <v-text-field
                       name="email"
-                      :label="$t(CLIENT.ADD.LABELS.EMAIL)"
+                      :label="$t(CLIENT.EDIT.LABELS.EMAIL)"
                       v-model="object.email"
                       :error-messages="errors"
                       counter="128"
@@ -75,7 +75,7 @@
                 <v-col cols="4">
                   <common-date-picker
                     :date="object.birthday"
-                    :label="$t(CLIENT.ADD.LABELS.BIRTHDAY)"
+                    :label="$t(CLIENT.EDIT.LABELS.BIRTHDAY)"
                     @changeDate="changeDate"
                   />
                 </v-col>
@@ -84,7 +84,7 @@
                 <v-col cols="4">
                   <validation-provider rules="min:14" v-slot="{ errors }">
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.PHONE)"
+                      :label="$t(CLIENT.EDIT.LABELS.PHONE)"
                       v-model="object.phone"
                       :error-messages="errors"
                       v-mask="'(##) #?####-####'"
@@ -94,7 +94,7 @@
                 <v-col cols="4">
                   <validation-provider rules="min:14" v-slot="{ errors }">
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.CELL_PHONE)"
+                      :label="$t(CLIENT.EDIT.LABELS.CELL_PHONE)"
                       v-model="object.cellPhone"
                       :error-messages="errors"
                       v-mask="'(##) #?####-####'"
@@ -104,7 +104,7 @@
                 <v-col cols="4">
                   <validation-provider rules="max:64" v-slot="{ errors }">
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.OCCUPATION)"
+                      :label="$t(CLIENT.EDIT.LABELS.OCCUPATION)"
                       v-model="object.occupation"
                       :error-messages="errors"
                       counter="64"
@@ -120,7 +120,7 @@
                     v-slot="{ errors }"
                   >
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.STREET)"
+                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.STREET)"
                       v-model="object.address.street"
                       :error-messages="errors"
                       counter="64"
@@ -130,7 +130,7 @@
                 <v-col cols="3">
                   <validation-provider rules="max:10" v-slot="{ errors }">
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.NUMBER)"
+                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.NUMBER)"
                       v-model="object.address.number"
                       :error-messages="errors"
                       counter="10"
@@ -145,7 +145,7 @@
                     v-slot="{ errors }"
                   >
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.DISTRICT)"
+                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.DISTRICT)"
                       v-model="object.address.district"
                       :error-messages="errors"
                       counter="64"
@@ -156,7 +156,7 @@
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-autocomplete
                       clearable
-                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.COUNTRY)"
+                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.COUNTRY)"
                       v-model="object.address.idCountry"
                       :error-messages="errors"
                       :items="countries"
@@ -172,7 +172,7 @@
                   <validation-provider rules="required" v-slot="{ errors }">
                     <v-autocomplete
                       clearable
-                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.CITY)"
+                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.CITY)"
                       v-model="object.address.idCity"
                       :error-messages="errors"
                       :items="cities"
@@ -189,7 +189,7 @@
                 <v-col cols="12">
                   <validation-provider rules="max:512" v-slot="{ errors }">
                     <v-text-field
-                      :label="$t(CLIENT.ADD.LABELS.ADDRESS.COMPLEMENT)"
+                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.COMPLEMENT)"
                       v-model="object.address.complement"
                       :error-messages="errors"
                       counter="512"
@@ -234,10 +234,11 @@ import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import addressConstants from "@/store/modules/address/constants";
+import clientsConstants from "@/store/modules/clients/constants";
 import i18nConstants from "@/i18n/constants";
 
 export default {
-  props: ["showAdd"],
+  props: ["showEdit", "id"],
   data() {
     return {
       visible: false,
@@ -275,16 +276,19 @@ export default {
       this.searchCountries();
     },
     save() {
-      clientsActions.add(this.object, this.LOADING_IDENTIFIER).then((res) => {
-        if (res.success) {
-          this.visible = false;
-        }
-      });
+      clientsActions
+        .edit(this.id, this.object, this.LOADING_IDENTIFIER)
+        .then((res) => {
+          if (res) {
+            this.hide();
+          }
+        });
     },
     changeDate(date) {
       this.object.birthday = date;
     },
     searchCountries() {
+      this.source = axiosSourceToken.obterToken();
       addressActions.searchCountries(
         this.source,
         this.LOADING_IDENTIFIER_COUNTRIES
@@ -292,6 +296,7 @@ export default {
     },
     searchCities() {
       let idCountry = this.object.address.idCountry;
+      this.source = axiosSourceToken.obterToken();
       if (idCountry) {
         addressActions.searchCities(
           idCountry,
@@ -302,6 +307,10 @@ export default {
         this[addressConstants.MUTATION_CLEAR_CITIES]();
       }
     },
+    getClient() {
+      this.source = axiosSourceToken.obterToken();
+      clientsActions.get(this.id, this.source, this.LOADING_IDENTIFIER);
+    },
   },
   mounted() {
     this.source = axiosSourceToken.obterToken();
@@ -309,14 +318,27 @@ export default {
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
     ...mapState(addressConstants.MODULE_NAME, ["countries", "cities"]),
+    ...mapState(clientsConstants.MODULE_NAME, ["client"]),
   },
   watch: {
-    showAdd() {
-      if (this.showAdd && !this.visible) this.show();
-      else if (!this.showAdd && this.visible) this.hide();
+    showEdit() {
+      if (this.showEdit && !this.visible) this.show();
+      else if (!this.showEdit && this.visible) this.hide();
     },
     "object.address.idCountry"() {
       this.searchCities();
+    },
+    id() {
+      if (this.id) {
+        this.getClient();
+      }
+    },
+    client() {
+      if (this.client) {
+        this.object = this.client;
+        this.object.address.idCountry = this.client.address.city.idCountry;
+        this.object.sex = this.client.sex.toLowerCase();
+      }
     },
   },
   beforeRouteLeave(to, from, next) {

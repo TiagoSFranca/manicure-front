@@ -63,7 +63,9 @@ export const edit = (id, object, LOADING_IDENTIFIER = '') => {
     .then(() => {
       store.commit(mutationTypes.CLIENTS_SET_SEARCH, true)
       toastr.success(messages.sucesso.edicao)
+      return true;
     }).catch(() => {
+      return false;
     }).finally(() => {
       store.dispatch(endLoading(LOADING_IDENTIFIER));
     })

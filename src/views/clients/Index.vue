@@ -1,40 +1,22 @@
 <template>
   <div>
-    <v-row align="center">
-      <v-col cols="auto" class="mr-auto">
-        <span class="title white--text">
-          {{ $tc(i18nConstants.CLIENT.NAME, 2) }}
-        </span>
-      </v-col>
-
+    <core-page-title :title="$tc(i18nConstants.CLIENT.NAME, 2)">
       <v-col cols="auto" class="ml-auto">
         <v-btn
           color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
+          icon
+          large
           @click="onShowFilter()"
           :disabled="showFilter"
         >
           <v-icon>mdi-filter</v-icon>
         </v-btn>
-      </v-col>
-      <v-col cols="auto">
-        <v-btn
-          color="accent"
-          elevation="2"
-          fab
-          outlined
-          rounded
-          small
-          @click="showAdd = true"
-        >
+        <v-btn color="accent" icon large @click="showAdd = true">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-col>
-    </v-row>
+    </core-page-title>
+
     <v-row>
       <v-col cols="12">
         <v-data-table
@@ -51,7 +33,7 @@
           :multi-sort="false"
         >
           <template v-slot:item.birthday="{ item }">
-            <span>{{ item.birthday && formatDate(item.birthday) }}</span>
+            <span>{{ formatDate(item.birthday) }}</span>
           </template>
           <template v-slot:item.sex="{ item }">
             <v-icon :color="getSex(item.sex) ? 'accent' : 'primary'">
@@ -65,30 +47,43 @@
             <span>{{ getCellPhone(item.cellPhone) }}</span>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon
-              @click="seeItem(item, false)"
-              dark
+            <v-btn
+              icon
+              :to="{
+                name: CLIENTS_DETAILS.name,
+                params: { id: item.id },
+              }"
               :disabled="loading[LOADING_IDENTIFIER]"
-              >mdi-eye-outline</v-icon
             >
-            <v-icon
-              @click="seeItem(item)"
+              <v-icon>mdi-eye-outline</v-icon>
+            </v-btn>
+            <v-btn
+              icon
+              @click="edit(item)"
               color="accent"
               :disabled="loading[LOADING_IDENTIFIER]"
-              >mdi-pencil-outline</v-icon
             >
-            <v-icon
+              <v-icon>mdi-pencil-outline</v-icon>
+            </v-btn>
+            <v-btn
+              icon
               @click="deleteItem(item)"
               color="error"
               :disabled="loading[LOADING_IDENTIFIER]"
-              >mdi-delete-outline</v-icon
             >
+              <v-icon>mdi-delete-outline</v-icon>
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
     </v-row>
     <core-pagination :page="page" @onPaging="onPaging" />
     <material-clients-add :showAdd="showAdd" @close="showAdd = false" />
+    <material-clients-edit
+      :showEdit="showEdit"
+      @close="closeEdit"
+      :id="clientSelected.id"
+    />
     <material-clients-filter
       @onFilter="onFilter"
       :loading="loading[LOADING_IDENTIFIER]"
@@ -101,16 +96,18 @@
 import clientsActions from "@/actions/clientsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
-import { ToCurrency, formatDate } from "@/utils/methods";
+import { ToCurrency, formatDate, format } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import clientsConstants from "@/store/modules/clients/constants";
-import { CLIENTS_EDIT, CLIENTS_DETAILS } from "@/router/routes";
+import { CLIENTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
     return {
       showAdd: false,
+      showEdit: false,
+      clientSelected: {},
       source: "",
       headers: [
         {
@@ -149,7 +146,6 @@ export default {
       pagination: {},
       sort: {},
       LOADING_IDENTIFIER: "searchClients",
-      formatDate: formatDate,
     };
   },
   methods: {
@@ -199,24 +195,29 @@ export default {
     toCurrency(value) {
       return ToCurrency(value, true, false);
     },
-    seeItem(item, isEdit = true) {
-      if (isEdit)
-        this.$router.push({ path: CLIENTS_EDIT.replace(":id", item.id) });
-      else this.$router.push({ path: CLIENTS_DETAILS.replace(":id", item.id) });
-    },
     getSex(sex) {
       return sex === "M" || sex === "m";
     },
     getPhone(phone) {
-      return phone;
+      return format(phone, "(##) #####-####");
     },
     getCellPhone(cellPhone) {
-      return cellPhone;
+      return format(cellPhone, "(##) #####-####");
+    },
+    edit(item) {
+      this.showEdit = true;
+      this.clientSelected = item;
+    },
+    closeEdit() {
+      this.showEdit = false;
+      this.clientSelected = {};
     },
   },
   created() {
     this.searchClients();
     this.i18nConstants = { ...i18nConstants };
+    this.formatDate = formatDate;
+    this.CLIENTS_DETAILS = CLIENTS_DETAILS;
   },
   computed: {
     ...mapState(clientsConstants.MODULE_NAME, [

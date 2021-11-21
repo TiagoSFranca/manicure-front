@@ -16,7 +16,6 @@ export const MATERIALS_DETAILS = { name: "materials_details", path: `${MATERIALS
 export const AGENDA = { name: "agenda_index", path: "/agenda" }
 
 export const CLIENTS = { name: "clients_index", path: "/clients" }
-export const CLIENTS_EDIT = { name: "clients_edit", path: `${CLIENTS.path}/edit/:id` };
 export const CLIENTS_DETAILS = { name: "clients_details", path: `${CLIENTS.path}/details/:id` };
 
 export const SCHEDULES = { name: "schedules_index", path: "/schedules", icon: "mdi-calendar-multiple" }
@@ -46,7 +45,6 @@ export default {
   AGENDA,
 
   CLIENTS,
-  CLIENTS_EDIT,
   CLIENTS_DETAILS,
 
   SCHEDULES,
