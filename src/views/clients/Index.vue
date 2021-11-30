@@ -65,14 +65,6 @@
             >
               <v-icon>mdi-pencil-outline</v-icon>
             </v-btn>
-            <v-btn
-              icon
-              @click="deleteItem(item)"
-              color="error"
-              :disabled="loading[LOADING_IDENTIFIER]"
-            >
-              <v-icon>mdi-delete-outline</v-icon>
-            </v-btn>
           </template>
         </v-data-table>
       </v-col>

@@ -71,9 +71,75 @@ export const edit = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
+export const getScheduleYears = (id, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  clientsService
+    .getScheduleYears(id, source)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.CLIENTS_SET_YEARS, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getReportScheduleFinishedYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  clientsService
+    .getReportScheduleYear(id, year, source, true)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.CLIENTS_SET_REPORT_SCHEDULE_FINISHED_YEAR, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const getReportScheduleCanceledYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  clientsService
+    .getReportScheduleYear(id, year, source, false)
+    .then((response) => {
+      let data = response.data
+      store.commit(mutationTypes.CLIENTS_SET_REPORT_SCHEDULE_CANCELED_YEAR, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+}
+
+export const searchSchedules = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  clientsService
+    .searchSchedules(id, query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.CLIENTS_SET_SCHEDULES, data);
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
 export default {
   search,
   add,
   edit,
   get,
+  getScheduleYears,
+  getReportScheduleFinishedYear,
+  getReportScheduleCanceledYear,
+  searchSchedules,
 }

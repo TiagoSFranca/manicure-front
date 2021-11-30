@@ -52,6 +52,7 @@
             <common-date-picker
               :date="item.birthday"
               :label="$t(CLIENT.EDIT.LABELS.BIRTHDAY)"
+              disabled
             />
           </v-col>
         </v-row>

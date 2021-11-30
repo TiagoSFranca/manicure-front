@@ -9,4 +9,9 @@ export default {
   [constants.MUTATION_SET_CLIENT]: set('client'),
   [constants.MUTATION_SET_PAGE]: set('page'),
   [constants.MUTATION_CLEAR_CLIENTS]: set('clients', []),
+  [constants.MUTATION_SET_SCHEDULE_YEARS]: set('scheduleYears'),
+  [constants.MUTATION_SET_REPORT_SCHEDULE_FINISHED_YEAR]: set('reportScheduleFinishedYear'),
+  [constants.MUTATION_SET_REPORT_SCHEDULE_CANCELED_YEAR]: set('reportScheduleCanceledYear'),
+  [constants.MUTATION_SET_SCHEDULES]: set('schedules'),
+  [constants.MUTATION_SET_SCHEDULES_PAGE]: set('schedulesPage'),
 }

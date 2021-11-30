@@ -24,6 +24,7 @@ export const COMBOS_SET_SALES = `${combos.MODULE_NAME}/${combos.ACTION_SET_SALES
 
 // CLIENTS
 export const CLIENTS_SET_CLIENTS = `${clients.MODULE_NAME}/${clients.ACTION_SET_CLIENTS}`;
+export const CLIENTS_SET_SCHEDULES = `${clients.MODULE_NAME}/${clients.ACTION_SET_SCHEDULES}`;
 
 // AGENDA
 export const AGENDA_SET_AGENDA = `${agenda.MODULE_NAME}/${agenda.ACTION_SET_AGENDA}`;
@@ -43,6 +44,7 @@ export default {
   COMBOS_SET_SALES,
 
   CLIENTS_SET_CLIENTS,
+  CLIENTS_SET_SCHEDULES,
 
   AGENDA_SET_AGENDA
 }

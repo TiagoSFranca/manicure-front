@@ -25,19 +25,13 @@
     </v-row>
 
     <v-divider />
-    <!-- <v-row>
-      <v-col cols="12" sm="12" lg="12" md="12">
-        <material-clients-card-sales />
-      </v-col>
-    </v-row>
-    <v-divider />
     <material-clients-card-graphs />
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
         <material-clients-card-schedules />
       </v-col>
-    </v-row> -->
+    </v-row>
   </div>
 </template>
 
@@ -66,39 +60,9 @@ export default {
       this.source = axiosSourceToken.obterToken();
       clientsActions.get(id, this.source, this.LOADING_IDENTIFIER);
     },
-    // getImages() {
-    //   let id = this.$route.params.id;
-    //   this.source = axiosSourceToken.obterToken();
-    //   clientsActions.getImages(
-    //     id,
-    //     this.source,
-    //     this.LOADING_IDENTIFIER_IMAGES
-    //   );
-    // },
-    // getCombos() {
-    //   let id = this.$route.params.id;
-    //   this.source = axiosSourceToken.obterToken();
-    //   clientsActions.getCombos(
-    //     id,
-    //     this.source,
-    //     this.LOADING_IDENTIFIER_COMBOS
-    //   );
-    // },
-    // getMaterials() {
-    //   let id = this.$route.params.id;
-    //   this.source = axiosSourceToken.obterToken();
-    //   clientsActions.getMaterials(
-    //     id,
-    //     this.source,
-    //     this.LOADING_IDENTIFIER_MATERIALS
-    //   );
-    // },
   },
   created() {
     this.searchClient();
-    // this.getImages();
-    // this.getCombos();
-    // this.getMaterials();
     this.CLIENT = i18nConstants.CLIENT;
     this.CLIENTS = CLIENTS;
   },
@@ -106,11 +70,7 @@ export default {
     ...mapState(clientsConstants.MODULE_NAME, [
       "client",
       "images",
-      "combos",
-      "materials",
       "search",
-      "searchImages",
-      "searchMaterials",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
@@ -118,12 +78,6 @@ export default {
     search() {
       this.searchClient();
     },
-    // searchImages() {
-    //   this.getImages();
-    // },
-    // searchMaterials() {
-    //   this.getMaterials();
-    // },
   },
   beforeRouteLeave(to, from, next) {
     this.source.cancel();
