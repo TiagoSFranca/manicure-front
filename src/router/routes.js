@@ -13,9 +13,9 @@ export const MATERIALS = { name: "materials_index", path: "/materials", icon: "m
 export const MATERIALS_EDIT = { name: "materials_edit", path: `${MATERIALS.path}/edit/:id` };
 export const MATERIALS_DETAILS = { name: "materials_details", path: `${MATERIALS.path}/details/:id` };
 
-export const AGENDA = { name: "agenda_index", path: "/agenda" }
+export const AGENDA = { name: "agenda_index", path: "/agenda", icon: "mdi-calendar-month-outline" }
 
-export const CLIENTS = { name: "clients_index", path: "/clients" }
+export const CLIENTS = { name: "clients_index", path: "/clients", icon: "mdi-account-group-outline" }
 export const CLIENTS_DETAILS = { name: "clients_details", path: `${CLIENTS.path}/details/:id` };
 
 export const SCHEDULES = { name: "schedules_index", path: "/schedules", icon: "mdi-calendar-multiple" }

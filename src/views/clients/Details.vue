@@ -1,132 +1,110 @@
 <template>
   <div>
-    <core-page-title :title="$t(PRODUCT.DETAILS.NAME)">
+    <core-page-title :title="$t(CLIENT.DETAILS.NAME)">
       <v-col cols="auto">
         <v-btn
           color="primary"
           icon
           large
           :loading="loading[LOADING_IDENTIFIER]"
-          :to="PRODUCTS"
+          :to="CLIENTS"
           exact
         >
-          <v-icon>{{ PRODUCTS.icon }}</v-icon>
+          <v-icon>{{ CLIENTS.icon }}</v-icon>
         </v-btn>
       </v-col>
     </core-page-title>
 
     <v-row>
       <v-col cols="12">
-        <material-products-card-info
-          :isEdit="false"
+        <material-clients-card-info
           :isLoading="loading[LOADING_IDENTIFIER]"
-          :object="product"
-        />
-      </v-col>
-      <v-col cols="12">
-        <material-products-card-materials
-          :isEdit="false"
-          :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
-          :materials="materials"
-        />
-      </v-col>
-      <v-col cols="12">
-        <material-products-card-combos
-          :isLoading="loading[LOADING_IDENTIFIER_COMBOS]"
-          :combos="combos"
-        />
-      </v-col>
-      <v-col cols="12">
-        <material-products-card-images
-          :isEdit="false"
-          :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
-          :images="images"
+          :object="client"
         />
       </v-col>
     </v-row>
 
     <v-divider />
-    <v-row>
+    <!-- <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-products-card-sales />
+        <material-clients-card-sales />
       </v-col>
     </v-row>
     <v-divider />
-    <material-products-card-graphs />
+    <material-clients-card-graphs />
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-products-card-schedules />
+        <material-clients-card-schedules />
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
+import clientsActions from "@/actions/clientsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
-import productsConstants from "@/store/modules/products/constants";
-import { PRODUCTS, PRODUCTS_EDIT } from "@/router/routes";
+import clientsConstants from "@/store/modules/clients/constants";
+import { CLIENTS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
     return {
       source: "",
-      LOADING_IDENTIFIER: "searchProduct",
-      LOADING_IDENTIFIER_IMAGES: "searchProductImages",
-      LOADING_IDENTIFIER_COMBOS: "searchProductCombos",
-      LOADING_IDENTIFIER_MATERIALS: "searchProductMaterials",
+      LOADING_IDENTIFIER: "searchClient",
+      LOADING_IDENTIFIER_IMAGES: "searchClientImages",
+      LOADING_IDENTIFIER_COMBOS: "searchClientCombos",
+      LOADING_IDENTIFIER_MATERIALS: "searchClientMaterials",
     };
   },
   methods: {
-    searchProduct() {
+    searchClient() {
       let id = this.$route.params.id;
       this.source = axiosSourceToken.obterToken();
-      productsActions.get(id, this.source, this.LOADING_IDENTIFIER);
+      clientsActions.get(id, this.source, this.LOADING_IDENTIFIER);
     },
-    getImages() {
-      let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      productsActions.getImages(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_IMAGES
-      );
-    },
-    getCombos() {
-      let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      productsActions.getCombos(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_COMBOS
-      );
-    },
-    getMaterials() {
-      let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      productsActions.getMaterials(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_MATERIALS
-      );
-    },
+    // getImages() {
+    //   let id = this.$route.params.id;
+    //   this.source = axiosSourceToken.obterToken();
+    //   clientsActions.getImages(
+    //     id,
+    //     this.source,
+    //     this.LOADING_IDENTIFIER_IMAGES
+    //   );
+    // },
+    // getCombos() {
+    //   let id = this.$route.params.id;
+    //   this.source = axiosSourceToken.obterToken();
+    //   clientsActions.getCombos(
+    //     id,
+    //     this.source,
+    //     this.LOADING_IDENTIFIER_COMBOS
+    //   );
+    // },
+    // getMaterials() {
+    //   let id = this.$route.params.id;
+    //   this.source = axiosSourceToken.obterToken();
+    //   clientsActions.getMaterials(
+    //     id,
+    //     this.source,
+    //     this.LOADING_IDENTIFIER_MATERIALS
+    //   );
+    // },
   },
   created() {
-    this.searchProduct();
-    this.getImages();
-    this.getCombos();
-    this.getMaterials();
-    this.PRODUCT = i18nConstants.PRODUCT;
-    this.PRODUCTS = PRODUCTS;
-    this.PRODUCTS_EDIT = PRODUCTS_EDIT;
+    this.searchClient();
+    // this.getImages();
+    // this.getCombos();
+    // this.getMaterials();
+    this.CLIENT = i18nConstants.CLIENT;
+    this.CLIENTS = CLIENTS;
   },
   computed: {
-    ...mapState(productsConstants.MODULE_NAME, [
-      "product",
+    ...mapState(clientsConstants.MODULE_NAME, [
+      "client",
       "images",
       "combos",
       "materials",
@@ -138,14 +116,14 @@ export default {
   },
   watch: {
     search() {
-      this.searchProduct();
+      this.searchClient();
     },
-    searchImages() {
-      this.getImages();
-    },
-    searchMaterials() {
-      this.getMaterials();
-    },
+    // searchImages() {
+    //   this.getImages();
+    // },
+    // searchMaterials() {
+    //   this.getMaterials();
+    // },
   },
   beforeRouteLeave(to, from, next) {
     this.source.cancel();

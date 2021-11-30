@@ -417,6 +417,8 @@ export default {
   [constants.CLIENT.EDIT.LABELS.ADDRESS.COUNTRY]: "Estado",
   [constants.CLIENT.EDIT.LABELS.ADDRESS.CITY]: "Cidade",
   [constants.CLIENT.EDIT.LABELS.ADDRESS.COMPLEMENT]: "Complemento",
+  [constants.CLIENT.DETAILS.NAME]: "Visualizar Cliente",
+  [constants.CLIENT.CARD_INFO.NAME]: "Dados gerais",
 
   [constants.PAGINATION.SHOWING]: "Exibindo",
   [constants.PAGINATION.FROM]: 'de',

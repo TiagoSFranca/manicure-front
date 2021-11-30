@@ -51,7 +51,7 @@ export default {
         },
         {
           to: routes.AGENDA,
-          icon: "mdi-calendar-month-outline",
+          icon: routes.AGENDA.icon,
           text: this.$t(i18nConstants.AGENDA.NAME),
         },
         {
@@ -76,7 +76,7 @@ export default {
         },
         {
           to: routes.CLIENTS,
-          icon: "mdi-account-group-outline",
+          icon: routes.CLIENTS.icon,
           text: this.$tc(i18nConstants.CLIENT.NAME, 2),
         },
       ],

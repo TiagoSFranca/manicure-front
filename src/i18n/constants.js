@@ -770,6 +770,12 @@ const CLIENT = {
     }
   },
   FILTER: {},
+  DETAILS: {
+    NAME: 'CLIENT.DETAILS.NAME',
+  },
+  CARD_INFO: {
+    NAME: 'CLIENT.CARD_INFO.NAME',
+  },
 }
 
 const PAGINATION = {
