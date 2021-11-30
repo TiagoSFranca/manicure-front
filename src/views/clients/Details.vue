@@ -3,19 +3,6 @@
     <core-page-title :title="$t(PRODUCT.DETAILS.NAME)">
       <v-col cols="auto">
         <v-btn
-          color="accent"
-          icon
-          large
-          :loading="loading[LOADING_IDENTIFIER]"
-          :to="{
-            name: PRODUCTS_EDIT.name,
-            params: { id: $route.params.id },
-          }"
-          exact
-        >
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-        <v-btn
           color="primary"
           icon
           large

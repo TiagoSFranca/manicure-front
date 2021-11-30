@@ -433,7 +433,7 @@ export default {
   [constants.GENERAL.MESSAGES.RESOURCE_NOT_FOUND.TITLE]: 'Recurso não encontrado',
   [constants.GENERAL.MESSAGES.RESOURCE_NOT_FOUND.MESSAGE]: 'O recurso que você procura não foi encontrado.',
   [constants.GENERAL.MESSAGES.RESOURCE_NOT_FOUND.COME_BACK]: 'Voltar ao início',
-  [constants.GENERAL.MESSAGES.NO_CONNECTION.TITLE]: 'Servicos indisponíveis',
+  [constants.GENERAL.MESSAGES.NO_CONNECTION.TITLE]: 'Serviços indisponíveis',
   [constants.GENERAL.MESSAGES.NO_CONNECTION.FIRST_MESSAGE]: 'Não foi possível estabelecer conexão com o servidor.',
   [constants.GENERAL.MESSAGES.NO_CONNECTION.SECOND_MESSAGE]: 'Tente novamente mais tarde.',
   [constants.GENERAL.MESSAGES.NO_CONNECTION.COME_BACK]: 'Voltar ao início',

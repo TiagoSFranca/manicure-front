@@ -134,10 +134,10 @@ export default {
         this.$refs.form.reset();
       } else {
         let products = this.products.map((item) => {
-          return { id: item.idProduct, qty: item.qty };
+          return { idProduct: item.idProduct, qty: item.qty };
         });
         let combos = this.combos.map((item) => {
-          return { id: item.idCombo, qty: item.qty };
+          return { idCombo: item.idCombo, qty: item.qty };
         });
 
         this.requestObject = {

@@ -5,7 +5,8 @@ export default {
     show: false,
     color: 'success',
     text: 'Texto',
-    timeout: 3000
+    timeout: 3000,
+    errors: []
   },
   progressBar: false,
   loading: {},

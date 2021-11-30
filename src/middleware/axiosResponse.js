@@ -27,7 +27,7 @@ axios.interceptors.response.use((response) => {
       setNoConnection();
 
     if (errorMessage)
-      toastr.error(errorMessage)
+      toastr.error(errorMessage.errorMessage, errorMessage.errors)
       
     progressBar.show(false)
   }

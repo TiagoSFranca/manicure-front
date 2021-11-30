@@ -6,8 +6,9 @@ export default {
   montarErroNao401(error) {
     console.log('NÃO 401', error.response.data)
     let errorMessage = ''
-    if (error.response.data.message) {
-      errorMessage = error.response.data.message
+    let errors = error.response.data.errors;
+    if (error.response.data.title) {
+      errorMessage = error.response.data.title
     } else if (error.response.data.error_description) {
       let description = error.response.data.error_description
       if (description === 'invalid_username_or_password')
@@ -20,7 +21,11 @@ export default {
       errorMessage = this.erroDesconhecido
     }
 
-    return errorMessage
+    if(!errors){
+      errors = []
+    }
+
+    return { errorMessage: errorMessage, errors: errors }
   },
   sucesso: {
     cadastro: 'Cadastro realizado com sucesso!',

@@ -13,15 +13,17 @@ export default {
       show: true,
       text: text,
       color: 'success',
-      timeout: timeout
+      timeout: timeout,
+      errors: []
     })
   },
-  error(text) {
+  error(text, errors) {
     show({
       show: true,
       text: text,
       color: 'error',
-      timeout: timeout
+      timeout: timeout,
+      errors: errors
     })
   }
 }
