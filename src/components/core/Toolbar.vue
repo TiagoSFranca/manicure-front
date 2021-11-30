@@ -1,5 +1,17 @@
 <template>
-  <v-app-bar app flat dense color="primary">
+  <v-app-bar
+    app
+    flat
+    dense
+    color="primary"
+    class="deep-purple accent-4"
+    height="70"
+  >
+    <v-app-bar-nav-icon
+      @click="onToggleDrawer()"
+      v-if="$vuetify.breakpoint.smAndDown"
+    ></v-app-bar-nav-icon>
+
     <div class="flex-grow-1"></div>
     <template>
       <v-btn icon>
@@ -20,13 +32,24 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import appConstants from "@/store/modules/app/constants";
+
 export default {
   data() {
-    return {};
+    return {
+      drawer: false,
+    };
   },
   computed: {
     ...mapState("auth", ["isAuth"]),
   },
-  methods: {},
+  methods: {
+    ...mapMutations(appConstants.MODULE_NAME, [
+      appConstants.MUTATION_TOGGLE_DRAWER,
+    ]),
+    onToggleDrawer() {
+      this[appConstants.MUTATION_TOGGLE_DRAWER]();
+    },
+  },
 };
 </script>

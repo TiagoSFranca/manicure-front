@@ -1,10 +1,20 @@
 <template>
-  <v-navigation-drawer permanent expand-on-hover app color="primary">
+  <v-navigation-drawer
+    :permanent="$vuetify.breakpoint.mdAndUp"
+    :temporary="$vuetify.breakpoint.smAndDown"
+    :expand-on-hover="$vuetify.breakpoint.mdAndUp"
+    :mini-variant="$vuetify.breakpoint.smAndDown"
+    app
+    color="primary"
+    class="deep-purple accent-4"
+    mini-variant-width="90"
+    v-model="showDrawer"
+  >
     <v-list>
       <v-list-item class="px-2">
-        <v-list-item-content>
-          <v-list-item-title class="title">Manicure</v-list-item-title>
-        </v-list-item-content>
+        <v-list-item-avatar class="d-block text-center mx-auto" size="70">
+          <v-img :src="require('@/assets/images/logo.png')"></v-img>
+        </v-list-item-avatar>
       </v-list-item>
     </v-list>
 
@@ -38,11 +48,13 @@
 import { mapState, mapMutations } from "vuex";
 import routes from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import appConstants from "@/store/modules/app/constants";
 
 export default {
   data() {
     return {
       mini: true,
+      showDrawer: true,
       links: [
         {
           to: routes.DASHBOARD,
@@ -84,11 +96,20 @@ export default {
   },
   computed: {
     ...mapState("auth", ["isAuth"]),
+    ...mapState(appConstants.MODULE_NAME, ["drawer"]),
   },
   methods: {
     ...mapMutations("auth", ["setShowLogout"]),
+    ...mapMutations(appConstants.MODULE_NAME, [
+      appConstants.MUTATION_TOGGLE_DRAWER,
+    ]),
     logout() {
       this.setShowLogout(true);
+    },
+  },
+  watch: {
+    drawer() {
+      this.showDrawer = this.drawer == this.showDrawer ? !this.drawer : this.drawer;
     },
   },
 };
