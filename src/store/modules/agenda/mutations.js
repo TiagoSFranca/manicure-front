@@ -12,4 +12,6 @@ export default {
   [constants.MUTATION_SET_MATERIALS]: set('materials'),
   [constants.MUTATION_SET_PRODUCTS]: set('products'),
   [constants.MUTATION_SET_COMBOS]: set('combos'),
+  [constants.MUTATION_SET_LATE_SCHEDULES]: set('lateSchedules'),
+  [constants.MUTATION_SET_LATE_SCHEDULES_PAGE]: set('lateSchedulesPage'),
 }

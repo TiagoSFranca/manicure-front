@@ -57,8 +57,13 @@ export default {
       showDrawer: true,
       links: [
         {
+          to: routes.INDEX,
+          icon: routes.INDEX.icon,
+          text: this.$t(i18nConstants.INDEX.NAME),
+        },
+        {
           to: routes.DASHBOARD,
-          icon: "mdi-view-dashboard",
+          icon: routes.DASHBOARD.icon,
           text: this.$t(i18nConstants.DASHBOARD.NAME),
         },
         {

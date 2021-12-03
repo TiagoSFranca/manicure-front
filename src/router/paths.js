@@ -7,7 +7,7 @@ export default [
   {
     path: routes.INDEX.path,
     name: routes.INDEX.name,
-    view: 'Dashboard',
+    view: 'Index',
     meta: {
       middleware: guest
     }

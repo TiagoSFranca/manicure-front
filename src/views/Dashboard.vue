@@ -1,6 +1,13 @@
 <template>
   <div>
-    <h1>{{ $t(INITIAL_MESSAGE) }}</h1>
+    <v-row>
+      <v-col cols="12"> Grafico faturamento</v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="4"> Top 10 produtos</v-col>
+      <v-col cols="4"> Top 10 combos</v-col>
+      <v-col cols="4"> Top 10 clientes</v-col>
+    </v-row>
   </div>
 </template>
 

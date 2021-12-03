@@ -10,4 +10,6 @@ export default {
   materials: [],
   products: [],
   combos: [],
+  lateSchedules: [],
+  lateSchedulesPage: {},
 }

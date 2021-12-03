@@ -71,6 +71,8 @@ export default {
   [constants.MATERIAL.CARD_GRAPHS.LABELS.REMOVE]: "Saidas",
   [constants.MATERIAL.CARD_GRAPHS.LABELS.REGISTER_AND_REMOVE_IN_YEAR]: "Entradas e Saidas em {year}",
 
+  [constants.INDEX.NAME]: "Início",
+
   [constants.DASHBOARD.NAME]: "Dashboard",
 
   [constants.AGENDA.NAME]: "Agenda",
@@ -79,6 +81,7 @@ export default {
   [constants.AGENDA.TYPES.WEEK]: "Semanal",
 
   [constants.SCHEDULE.NAME]: "Agendamento | Agendamentos",
+  [constants.SCHEDULE.LATE_NAME]: "Agendamento Atrasado | Agendamentos Atrasados",
   [constants.SCHEDULE.LIST.ID]: "Identificador",
   [constants.SCHEDULE.LIST.CLIENT_NAME]: "Cliente",
   [constants.SCHEDULE.LIST.SCHEDULE_STATUS_NAME]: "Situação",
@@ -87,6 +90,7 @@ export default {
   [constants.SCHEDULE.LIST.CANCEL_DATE]: "Dt cancelamento",
   [constants.SCHEDULE.LIST.IN_LOCO]: "In loco",
   [constants.SCHEDULE.FILTER.NAME]: "Filtrar Agendamentos",
+  [constants.SCHEDULE.FILTER.LATE_NAME]: "Filtrar Agendamentos Atrasados",
   [constants.SCHEDULE.FILTER.LABELS.ID]: "Identificador",
   [constants.SCHEDULE.FILTER.LABELS.NAME]: "Cliente",
   [constants.SCHEDULE.FILTER.LABELS.BEGIN_DATE]: "Dt inicial",
@@ -171,6 +175,7 @@ export default {
   [constants.SCHEDULE.CARD_COMBOS.LABELS.TOTAL]: "Total",
 
   [constants.PRODUCT.NAME]: "Produto | Produtos",
+  [constants.PRODUCT.ON_SALE_NAME]: "Produto em promoção | Produtos em promoção",
   [constants.PRODUCT.LIST.NAME]: "Nome",
   [constants.PRODUCT.LIST.PRICE]: "Preço",
   [constants.PRODUCT.LIST.PROMOTIONAL_PRICE]: "Preço promocional",
@@ -191,6 +196,7 @@ export default {
   [constants.PRODUCT.ADD.MESSAGES.REDIRECT_TO_EDIT.TITLE]: "Atenção!",
   [constants.PRODUCT.ADD.MESSAGES.REDIRECT_TO_EDIT.MESSAGE]: "Produto adicionado! Deseja ir para a tela de edição?",
   [constants.PRODUCT.FILTER.NAME]: "Filtrar Produto",
+  [constants.PRODUCT.FILTER.ON_SALE_NAME]: "Filtrar Produto em promoção",
   [constants.PRODUCT.FILTER.LABELS.NAME]: "Nome",
   [constants.PRODUCT.FILTER.LABELS.BEGIN_END_SALE]: "Fim da Promoção - Início",
   [constants.PRODUCT.FILTER.LABELS.END_END_SALE]: "Fim da Promoção - Fim",
@@ -275,6 +281,7 @@ export default {
   [constants.PRODUCT.CARD_SALES.LIST.PRICE]: "Preço",
 
   [constants.COMBO.NAME]: "Combo | Combos",
+  [constants.COMBO.ON_SALE_NAME]: "Combo em promoção | Combos em promoção",
   [constants.COMBO.LIST.NAME]: "Nome",
   [constants.COMBO.LIST.PRICE]: "Preço",
   [constants.COMBO.LIST.PROMOTIONAL_PRICE]: "Preço promocional",
@@ -296,6 +303,7 @@ export default {
   [constants.COMBO.ADD.MESSAGES.REDIRECT_TO_EDIT.TITLE]: "Atenção!",
   [constants.COMBO.ADD.MESSAGES.REDIRECT_TO_EDIT.MESSAGE]: "Combo adicionado! Deseja ir para a tela de edição?",
   [constants.COMBO.FILTER.NAME]: "Filtrar Combo",
+  [constants.COMBO.FILTER.ON_SALE_NAME]: "Filtrar Combo em promoção",
   [constants.COMBO.FILTER.LABELS.NAME]: "Nome",
   [constants.COMBO.FILTER.LABELS.BEGIN_END_SALE]: "Fim da Promoção - Início",
   [constants.COMBO.FILTER.LABELS.END_END_SALE]: "Fim da Promoção - Fim",

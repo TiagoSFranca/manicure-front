@@ -1,5 +1,5 @@
-export const INDEX = { name: "index", path: '/' };
-export const DASHBOARD = { name: "dashboard", path: '/dashboard' };
+export const INDEX = { name: "index", path: '/', icon: "mdi-home" };
+export const DASHBOARD = { name: "dashboard", path: '/dashboard', icon: "mdi-view-dashboard" };
 
 export const PRODUCTS = { name: "products_index", path: "/products", icon: "mdi-cube-outline" }
 export const PRODUCTS_EDIT = { name: "products_edit", path: `${PRODUCTS.path}/edit/:id` };

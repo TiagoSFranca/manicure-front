@@ -3,6 +3,7 @@ import constants from './constants'
 
 export default {
   [constants.MUTATION_SET_PRODUCTS]: set('products'),
+  [constants.MUTATION_SET_ON_SALE_PRODUCTS]: set('onSaleProducts'),
   [constants.MUTATION_SET_SEARCH]: set('search'),
   [constants.MUTATION_SET_SHOW_FILTER]: set('showFilter'),
   [constants.MUTATION_TOGGLE_SHOW_FILTER]: toggle('showFilter'),
@@ -13,6 +14,7 @@ export default {
   [constants.MUTATION_SET_MATERIALS]: set('materials'),
   [constants.MUTATION_SET_SEARCH_MATERIALS]: set('searchMaterials'),
   [constants.MUTATION_SET_PAGE]: set('page'),
+  [constants.MUTATION_SET_ON_SALE_PAGE]: set('onSalePage'),
   [constants.MUTATION_CLEAR_PRODUCTS]: set('products', []),
   [constants.MUTATION_SET_SCHEDULE_YEARS]: set('scheduleYears'),
   [constants.MUTATION_SET_REPORT_SCHEDULE_FINISHED_YEAR]: set('reportScheduleFinishedYear'),

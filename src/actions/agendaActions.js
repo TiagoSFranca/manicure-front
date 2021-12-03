@@ -54,6 +54,30 @@ export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = ''
     })
 };
 
+export const searchLateSchedules = (source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  filter = {
+    ...filter,
+    endDate: new Date(),
+    IdScheduleStatus: 1
+  };
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  agendaService
+    .search(query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.AGENDA_SET_LATE_SCHEDULES, data);
+      store.commit(mutationTypes.AGENDA_SET_SEARCH, false)
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
 export const cancel = (id, object, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
@@ -155,4 +179,5 @@ export default {
   finish,
   getProducts,
   getCombos,
+  searchLateSchedules
 }

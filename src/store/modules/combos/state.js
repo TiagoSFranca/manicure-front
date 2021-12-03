@@ -1,5 +1,6 @@
 export default {
   combos: [],
+  onSaleCombos: [],
   search: false,
   showFilter: false,
   combo: {},
@@ -8,6 +9,7 @@ export default {
   products: [],
   searchProducts: false,
   page: {},
+  onSalePage: {},
   scheduleYears: [],
   reportScheduleFinishedYear: {
     months: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

@@ -7,24 +7,10 @@
           :disabled="loading[LOADING_IDENTIFIER]"
         >
           <v-card-title>
-            <v-btn text outlined @click="prev" color="accent">
-              <v-icon> mdi-calendar-arrow-left </v-icon>
-            </v-btn>
-            <v-btn text outlined @click="setToday" class="mx-1" color="accent">
-              <v-icon> mdi-calendar-check-outline </v-icon>
-            </v-btn>
-            <v-btn text outlined @click="next" color="accent">
-              <v-icon> mdi-calendar-arrow-right </v-icon>
-            </v-btn>
-            <v-spacer />
             <v-toolbar-title v-if="$refs.calendar">
-              {{ $refs.calendar.title }}
+              Semana atual
             </v-toolbar-title>
             <v-spacer />
-            <material-agenda-month-picker
-              @changeDate="changeDate"
-              color="accent"
-            />
             <v-btn
               text
               outlined
@@ -58,15 +44,12 @@
                 <v-list-item @click="type = types.WEEK">
                   <v-list-item-title>{{ types.WEEK.label }}</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="type = types.MONTH">
-                  <v-list-item-title>{{ types.MONTH.label }}</v-list-item-title>
-                </v-list-item>
               </v-list>
             </v-menu>
           </v-card-title>
           <v-card-text>
             <material-agenda-schedule-status />
-            <v-sheet height="600">
+            <v-sheet height="300">
               <v-calendar
                 ref="calendar"
                 v-model="focus"
@@ -102,7 +85,7 @@
 import agendaActions from "@/actions/agendaActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
-import { getScheduleStatusColor, getScheduleStatusText } from "@/utils/methods";
+import { getScheduleStatusColor } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
 import { SCHEDULES_ADD } from "@/router/routes";
@@ -113,12 +96,12 @@ export default {
   data: () => ({
     source: "",
     focus: "",
-    type: AGENDA_TYPES.MONTH,
+    type: AGENDA_TYPES.WEEK,
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
     events: [],
-    LOADING_IDENTIFIER: "searchSchedules",
+    LOADING_IDENTIFIER: "searchIndexAgenda",
     beginDate: "",
     endDate: "",
   }),
@@ -126,25 +109,12 @@ export default {
     this.$refs.calendar.checkChange();
   },
   methods: {
-    changeDate(date) {
-      this.focus = `${date}-01`;
-      this.type = this.types.MONTH;
-    },
     viewDay({ date }) {
       this.focus = date;
       this.type = this.types.DAY;
     },
     getEventColor(event) {
       return event.color;
-    },
-    setToday() {
-      this.focus = "";
-    },
-    prev() {
-      this.$refs.calendar.prev();
-    },
-    next() {
-      this.$refs.calendar.next();
     },
     refresh() {
       this.focus = "";
@@ -225,7 +195,6 @@ export default {
 
     this.SCHEDULES_ADD = SCHEDULES_ADD;
     this.getScheduleStatusColor = getScheduleStatusColor;
-    this.getScheduleStatusText = getScheduleStatusText;
     this.types = AGENDA_TYPES;
   },
   computed: {

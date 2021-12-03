@@ -6,6 +6,11 @@ export default {
     commit(constants.MUTATION_SET_COMBOS, data.content)
   },
   
+  [constants.ACTION_SET_ON_SALE_COMBOS]({ commit }, data) {
+    commit(constants.MUTATION_SET_ON_SALE_PAGE, data.page)
+    commit(constants.MUTATION_SET_ON_SALE_COMBOS, data.content)
+  },
+
   [constants.ACTION_SET_SCHEDULES]({ commit }, data) {
     commit(constants.MUTATION_SET_SCHEDULES, data.content)
     commit(constants.MUTATION_SET_SCHEDULES_PAGE, data.page)

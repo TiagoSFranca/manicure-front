@@ -24,6 +24,29 @@ export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = ''
     })
 };
 
+export const searchOnSale = (source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  filter = {
+    ...filter,
+    onSale: true
+  }
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  productsService
+    .search(query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.PRODUCTS_SET_ON_SALE_PRODUCTS, data);
+      store.commit(mutationTypes.PRODUCTS_SET_SEARCH, false)
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
 export const add = (object, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
@@ -297,6 +320,7 @@ export const searchSales = (id, source, filter, pagination, sort, LOADING_IDENTI
 
 export default {
   search,
+  searchOnSale,
   add,
   edit,
   get,

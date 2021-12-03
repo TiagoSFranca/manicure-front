@@ -1,5 +1,6 @@
 export default {
   products: [],
+  onSaleProducts: [],
   search: false,
   showFilter: false,
   product: {},
@@ -9,6 +10,7 @@ export default {
   materials: [],
   searchMaterials: false,
   page: {},
+  onSalePage: {},
   scheduleYears: [],
   reportScheduleFinishedYear: {
     months: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
