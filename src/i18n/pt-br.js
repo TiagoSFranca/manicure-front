@@ -7,6 +7,7 @@ export default {
   [constants.DATA_NOT_FOUND]: "Nenhum registro encontrado",
 
   [constants.MATERIAL.NAME]: "Material | Materiais",
+  [constants.MATERIAL.WARNING_STOCK_NAME]: "Material com estoque baixo | Materiais com estoque baixo",
   [constants.MATERIAL.LIST.NAME]: "Nome",
   [constants.MATERIAL.LIST.PRICE]: "Preço",
   [constants.MATERIAL.LIST.AVALIABLE_QTY]: "Qtd em estoque",
@@ -24,6 +25,7 @@ export default {
   [constants.MATERIAL.ADD.LABELS.QTY]: "Qtd em estoque",
   [constants.MATERIAL.ADD.LABELS.MIN_QTY]: "Qtd mínima",
   [constants.MATERIAL.FILTER.NAME]: "Filtrar Material",
+  [constants.MATERIAL.FILTER.WARNING_STOCK_NAME]: "Filtrar Material com estoque baixo",
   [constants.MATERIAL.FILTER.LABELS.NAME]: "Nome",
   [constants.MATERIAL.FILTER.LABELS.ACTIVE]: "Ativo",
   [constants.MATERIAL.FILTER.LABELS.ACTIVE_OPTIONS.ALL]: "Todos",

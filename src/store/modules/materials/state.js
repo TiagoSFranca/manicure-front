@@ -1,8 +1,10 @@
 export default {
   materials: [],
   search: false,
+  warningStockMaterials: [],
   showFilter: false,
   page: {},
+  warningStockPage: {},
   material: {},
   years: [],
   reportRegisterYear: {

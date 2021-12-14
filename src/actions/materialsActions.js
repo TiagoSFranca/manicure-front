@@ -24,6 +24,29 @@ export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = ''
     })
 };
 
+export const searchWarningStock = (source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+
+  filter = {
+    ...filter,
+    warningOrError: true
+  }
+
+  let query = { ...filter, ...pagination, ...sort }
+
+  store.dispatch(startLoading(LOADING_IDENTIFIER));
+
+  materialsService
+    .search(query, source)
+    .then((response) => {
+      let data = response.data
+      store.dispatch(actionTypes.MATERIALS_SET_WARNING_STOCK_MATERIALS, data);
+      store.commit(mutationTypes.MATERIALS_SET_SEARCH, false)
+    }).catch(() => {
+    }).finally(() => {
+      store.dispatch(endLoading(LOADING_IDENTIFIER));
+    })
+};
+
 export const add = (object, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
@@ -164,6 +187,7 @@ export const toggleActive = (id, LOADING_IDENTIFIER = '') => {
 
 export default {
   search,
+  searchWarningStock,
   add,
   get,
   edit,
