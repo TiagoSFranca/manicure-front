@@ -6,11 +6,19 @@
     color="primary"
     class="deep-purple accent-4"
     height="70"
+    clipped-left
   >
     <v-app-bar-nav-icon
       @click="onToggleDrawer()"
       v-if="$vuetify.breakpoint.smAndDown"
     ></v-app-bar-nav-icon>
+
+    <v-img
+      :src="require('@/assets/images/logo.png')"
+      max-height="60"
+      max-width="60"
+      contain
+    ></v-img>
 
     <div class="flex-grow-1"></div>
     <template>

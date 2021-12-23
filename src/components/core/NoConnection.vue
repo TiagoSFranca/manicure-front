@@ -8,7 +8,7 @@
               src="https://assets6.lottiefiles.com/datafiles/HF2l8DiOyOT4dwI/data.json"
               background="transparent"
               speed="1"
-              style="height: 300px"
+              style="height: 280px"
               loop
               autoplay
             ></lottie-player>
@@ -34,7 +34,7 @@
         <v-btn
           outlined
           color="primary"
-          :to="DASHBOARD"
+          :to="INDEX"
           exact
           v-if="checkRoute()"
           @click="closeModal"
@@ -54,14 +54,14 @@
 <script>
 import appConstants from "@/store/modules/app/constants";
 import { mapState } from "vuex";
-import { DASHBOARD } from "@/router/routes";
+import { INDEX } from "@/router/routes";
 import { setNoConnection } from "@/actions/appActions";
 import i18nConstants from "@/i18n/constants";
 
 export default {
   data() {
     return {
-      DASHBOARD: DASHBOARD,
+      INDEX: INDEX,
     };
   },
   computed: {
@@ -72,7 +72,7 @@ export default {
       setNoConnection(false);
     },
     checkRoute() {
-      return this.$route.name != DASHBOARD.name;
+      return this.$route.name != INDEX.name;
     },
   },
   created() {

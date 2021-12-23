@@ -7,21 +7,18 @@
     app
     color="primary"
     class="deep-purple accent-4"
-    mini-variant-width="90"
+    mini-variant-width="60"
     v-model="showDrawer"
+    clipped
   >
-    <v-list>
-      <v-list-item class="px-2">
-        <v-list-item-avatar class="d-block text-center mx-auto" size="70">
-          <v-img :src="require('@/assets/images/logo.png')"></v-img>
-        </v-list-item-avatar>
-      </v-list-item>
-    </v-list>
-
-    <v-divider></v-divider>
-
-    <v-list nav>
-      <v-list-item v-for="item in links" :key="item.text" :to="item.to" link>
+    <v-list nav class="pa-0">
+      <v-list-item
+        v-for="item in links"
+        :key="item.text"
+        :to="item.to"
+        link
+        class="my-0"
+      >
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -114,7 +111,8 @@ export default {
   },
   watch: {
     drawer() {
-      this.showDrawer = this.drawer == this.showDrawer ? !this.drawer : this.drawer;
+      this.showDrawer =
+        this.drawer == this.showDrawer ? !this.drawer : this.drawer;
     },
   },
 };
