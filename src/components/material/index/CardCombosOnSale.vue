@@ -82,7 +82,7 @@
               </v-col>
             </v-row>
             <core-pagination :page="onSalePage" @onPaging="onPaging" />
-            <material-index-filter-combos-on-sale
+            <material-index-filters-combos-on-sale
               @onFilter="onFilter"
               :loading="loading[LOADING_IDENTIFIER]"
               :filtered="filter"

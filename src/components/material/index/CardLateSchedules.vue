@@ -105,7 +105,7 @@
               </v-col>
             </v-row>
             <core-pagination :page="lateSchedulesPage" @onPaging="onPaging" />
-            <material-index-filter-late-schedules
+            <material-index-filters-late-schedules
               @onFilter="onFilter"
               :loading="loading[LOADING_IDENTIFIER]"
               :filtered="filter"

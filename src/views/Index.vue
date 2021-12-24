@@ -35,8 +35,6 @@ export default {
   created() {
     this[i18nConstants.INITIAL_MESSAGE] = i18nConstants.INITIAL_MESSAGE;
   },
-  computed: {
-    ...mapState(agendaConstants.MODULE_NAME, ["lateSchedules"]),
-  },
+  computed: {},
 };
 </script>

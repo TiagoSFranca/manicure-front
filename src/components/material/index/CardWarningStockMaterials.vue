@@ -89,7 +89,7 @@
               </v-col>
             </v-row>
             <core-pagination :page="warningStockPage" @onPaging="onPaging" />
-            <material-index-filter-warning-stock-materials
+            <material-index-filters-warning-stock-materials
               @onFilter="onFilter"
               :loading="loading[LOADING_IDENTIFIER]"
               :filtered="filter"

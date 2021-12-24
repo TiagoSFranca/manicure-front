@@ -118,7 +118,7 @@ export default {
     },
     refresh() {
       this.focus = "";
-      this.type = this.types.MONTH;
+      this.type = this.types.WEEK;
       this.searchAgenda();
     },
     showEvent({ nativeEvent, event }) {

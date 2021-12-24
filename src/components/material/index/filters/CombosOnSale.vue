@@ -1,6 +1,6 @@
 <template>
   <common-filter
-    title="$t(PRODUCT.FILTER.ON_SALE_NAME)"
+    :title="$t(COMBO.FILTER.ON_SALE_NAME)"
     :showFilter="showFilter"
     :loading="loading"
     @onCloseFilter="closeFilter"
@@ -9,13 +9,16 @@
   >
     <v-row align="start" justify="center">
       <v-col cols="12" md="3">
-        <v-text-field v-model="filter.name" label="Nome"></v-text-field>
+        <v-text-field
+          v-model="filter.name"
+          :label="$t(COMBO.FILTER.LABELS.NAME)"
+        ></v-text-field>
       </v-col>
 
       <v-col cols="12" md="3">
         <common-date-picker
           :date="filter.beginEndSale"
-          label="Fim da Promoção - Início"
+          :label="$t(COMBO.FILTER.LABELS.BEGIN_END_SALE)"
           @changeDate="(date) => changeDate(date, true)"
         />
       </v-col>
@@ -23,24 +26,28 @@
       <v-col cols="12" md="3">
         <common-date-picker
           :date="filter.endEndSale"
-          label="Fim da Promoção - Fim"
+          :label="$t(COMBO.FILTER.LABELS.END_END_SALE)"
           @changeDate="(date) => changeDate(date, false)"
         />
       </v-col>
 
       <v-col cols="auto">
-        <v-radio-group v-model="filter.active" label="Ativo">
-          <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
-          <v-radio label="Sim" value="true"></v-radio>
-          <v-radio label="Não" value="false"></v-radio>
-        </v-radio-group>
-      </v-col>
-
-      <v-col cols="auto">
-        <v-radio-group v-model="filter.onSale" label="Em Promoção">
-          <v-radio label="Todos" :value="NOT_SELECTED"></v-radio>
-          <v-radio label="Sim" value="true"></v-radio>
-          <v-radio label="Não" value="false"></v-radio>
+        <v-radio-group
+          v-model="filter.active"
+          :label="$t(COMBO.FILTER.LABELS.ACTIVE)"
+        >
+          <v-radio
+            :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.ALL)"
+            :value="NOT_SELECTED"
+          ></v-radio>
+          <v-radio
+            :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.YES)"
+            :value="true"
+          ></v-radio>
+          <v-radio
+            :label="$t(COMBO.FILTER.LABELS.ACTIVE_OPTIONS.NOT)"
+            :value="false"
+          ></v-radio>
         </v-radio-group>
       </v-col>
     </v-row>
@@ -49,7 +56,8 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import clientsConstants from "@/store/modules/clients/constants";
+import combosConstants from "@/store/modules/combos/constants";
+import i18nConstants from "@/i18n/constants";
 
 const NOT_SELECTED = "NONE";
 
@@ -65,21 +73,20 @@ export default {
         beginEndSale: "",
         endEndSale: "",
       },
-      NOT_SELECTED: NOT_SELECTED,
       source: "",
     };
   },
   computed: {
-    ...mapState(clientsConstants.MODULE_NAME, ["showFilter"]),
+    ...mapState(combosConstants.MODULE_NAME, ["showFilter"]),
   },
   watch: {
     showFilter(val) {
       if (val === true) {
-        if (this.filtered.onSale == undefined) {
+        if (this.filtered.onSale == undefined || this.filtered.onSale == "") {
           this.filtered.onSale = NOT_SELECTED;
         }
 
-        if (this.filtered.active == undefined) {
+        if (this.filtered.active == undefined || this.filtered.active == "") {
           this.filtered.active = NOT_SELECTED;
         }
 
@@ -90,11 +97,11 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(clientsConstants.MODULE_NAME, [
-      clientsConstants.MUTATION_SET_SHOW_FILTER,
+    ...mapMutations(combosConstants.MODULE_NAME, [
+      combosConstants.MUTATION_SET_SHOW_FILTER,
     ]),
     closeFilter() {
-      this[clientsConstants.MUTATION_SET_SHOW_FILTER](false);
+      this[combosConstants.MUTATION_SET_SHOW_FILTER](false);
     },
     clearFilter() {
       this.$refs.form.reset();
@@ -114,6 +121,10 @@ export default {
       if (begin) this.filter.beginEndSale = date;
       else this.filter.endEndSale = date;
     },
+  },
+  created() {
+    this.COMBO = i18nConstants.COMBO;
+    this.NOT_SELECTED = NOT_SELECTED;
   },
 };
 </script>

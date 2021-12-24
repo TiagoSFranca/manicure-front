@@ -1,13 +1,13 @@
 <template>
   <common-filter
-    :title="$t(MATERIAL.FILTER.NAME)"
+    :title="$t(MATERIAL.FILTER.WARNING_STOCK_NAME)"
     :showFilter="showFilter"
     :loading="loading"
     @onCloseFilter="closeFilter"
     @onClearFilter="clearFilter"
     @onFilter="onFilter"
   >
-    <v-row align="start" justify="center">
+    <v-row align="center" justify="center">
       <v-col cols="12" md="3">
         <v-text-field
           v-model="filter.name"

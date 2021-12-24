@@ -1,6 +1,6 @@
 <template>
   <common-filter
-    :title="$t(SCHEDULE.FILTER.NAME)"
+    :title="$t(SCHEDULE.FILTER.LATE_NAME)"
     :showFilter="showFilter"
     :loading="loading"
     @onCloseFilter="closeFilter"
@@ -21,69 +21,12 @@
           :label="$t(SCHEDULE.FILTER.LABELS.NAME)"
         ></v-text-field>
       </v-col>
-      <v-col cols="12" md="3" lg="2">
-        <common-date-picker
-          :date="filter.beginDate"
-          :label="$t(SCHEDULE.FILTER.LABELS.BEGIN_DATE)"
-          @changeDate="(date) => changeDate(date, true)"
-        />
-      </v-col>
-      <v-col cols="12" md="3" lg="2">
-        <common-date-picker
-          :date="filter.endDate"
-          :label="$t(SCHEDULE.FILTER.LABELS.END_DATE)"
-          @changeDate="(date) => changeDate(date, false)"
-        />
-      </v-col>
 
-      <v-col cols="12" md="3" lg="3">
-        <v-select
-          v-model="filter.idScheduleStatus"
-          multiple
-          :items="scheduleStatuses"
-          item-value="id"
-          item-text="name"
-          :label="$t(SCHEDULE.FILTER.LABELS.SCHEDULE_STATUS)"
-        >
-          <template v-slot:selection="{ item, index }">
-            <v-chip
-              v-if="
-                index === 0 &&
-                filter.idScheduleStatus.length !== scheduleStatuses.length
-              "
-              small
-            >
-              <span>{{ item.name }}</span>
-            </v-chip>
-            <span
-              v-if="
-                index === 1 &&
-                filter.idScheduleStatus.length !== scheduleStatuses.length
-              "
-              class="grey--text caption"
-            >
-              {{
-                $t(SCHEDULE.FILTER.LABELS.SCHEDULE_STATUS_MULTIPLE_SELECTED, {
-                  length: filter.idScheduleStatus.length - 1,
-                })
-              }}
-            </span>
-            <span
-              v-if="
-                index === scheduleStatuses.length - 1 &&
-                filter.idScheduleStatus.length === scheduleStatuses.length
-              "
-              class="grey--text caption"
-            >
-              {{ $t(SCHEDULE.FILTER.LABELS.SCHEDULE_STATUS_ALL_SELECTED) }}
-            </span>
-          </template>
-        </v-select>
-      </v-col>
       <v-col cols="auto">
         <v-radio-group
           v-model="filter.inLoco"
           :label="$t(SCHEDULE.FILTER.LABELS.IN_LOCO)"
+          row
         >
           <v-radio
             :label="$t(SCHEDULE.FILTER.LABELS.IN_LOCO_OPTIONS.ALL)"
@@ -104,11 +47,8 @@
 </template>
 
 <script>
-import scheduleStatusActions from "@/actions/scheduleStatusActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import agendaConstants from "@/store/modules/agenda/constants";
-import scheduleStatusConstants from "@/store/modules/scheduleStatus/constants";
 import i18nConstants from "@/i18n/constants";
 
 const NOT_SELECTED = "NONE";
@@ -123,7 +63,6 @@ export default {
         clientName: null,
         beginDate: null,
         endDate: null,
-        idScheduleStatus: [1, 2, 3],
         inLoco: NOT_SELECTED,
       },
       defFilter: {
@@ -131,7 +70,6 @@ export default {
         clientName: null,
         beginDate: null,
         endDate: null,
-        idScheduleStatus: [1, 2, 3],
         inLoco: NOT_SELECTED,
       },
       source: "",
@@ -139,7 +77,6 @@ export default {
   },
   computed: {
     ...mapState(agendaConstants.MODULE_NAME, ["showFilter"]),
-    ...mapState(scheduleStatusConstants.MODULE_NAME, ["scheduleStatuses"]),
   },
   watch: {
     showFilter(val) {
@@ -174,15 +111,10 @@ export default {
       if (begin) this.filter.beginDate = date;
       else this.filter.endDate = date;
     },
-    searchScheduleStatus() {
-      this.source = axiosSourceToken.obterToken();
-      scheduleStatusActions.search(this.source);
-    },
   },
   created() {
     this.SCHEDULE = i18nConstants.SCHEDULE;
     this.NOT_SELECTED = NOT_SELECTED;
-    this.searchScheduleStatus();
   },
 };
 </script>
