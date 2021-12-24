@@ -29,7 +29,7 @@
     </core-page-title>
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-materials-card-info
+        <material-materials-cards-info
           :isEdit="true"
           :isLoading="loading[LOADING_IDENTIFIER]"
           :object="material"

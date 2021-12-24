@@ -29,7 +29,7 @@
     </core-page-title>
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-combos-card-info
+        <material-combos-cards-info
           :isEdit="true"
           :isLoading="loading[LOADING_IDENTIFIER]"
           :object="combo"
@@ -95,7 +95,7 @@
 
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-combos-card-products
+        <material-combos-cards-products
           :isEdit="true"
           :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
           :products="products"
@@ -105,7 +105,7 @@
 
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-combos-card-images
+        <material-combos-cards-images
           :isEdit="true"
           :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
           :images="images"

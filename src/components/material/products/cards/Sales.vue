@@ -95,33 +95,25 @@
             >
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-data-table
-              :headers="headers"
-              :items="sales"
-              class="elevation-1"
-              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
-              hide-default-footer
-              :custom-sort="onSort"
-              :disable-pagination="true"
-              :disable-filtering="true"
-              :disable-sort="!!loading[LOADING_IDENTIFIER]"
-              :loading="loading[LOADING_IDENTIFIER] === true"
-              :multi-sort="false"
-            >
-              <template v-slot:item.date="{ item }">
-                <span>{{ formatDate(item.date) }}</span>
-              </template>
-              <template v-slot:item.createdAt="{ item }">
-                <span>{{ formatDate(item.createdAt) }}</span>
-              </template>
-              <template v-slot:item.price="{ item }">
-                <span>{{ toCurrency(item.price) }}</span>
-              </template>
-            </v-data-table>
-          </v-col>
-        </v-row>
+
+        <common-data-table
+          :headers="headers"
+          :items="sales"
+          :loading="loading[LOADING_IDENTIFIER]"
+          :sort="sort"
+          @onSort="onSort"
+        >
+          <template v-slot:item.date="{ item }">
+            <span>{{ formatDate(item.date) }}</span>
+          </template>
+          <template v-slot:item.createdAt="{ item }">
+            <span>{{ formatDate(item.createdAt) }}</span>
+          </template>
+          <template v-slot:item.price="{ item }">
+            <span>{{ toCurrency(item.price) }}</span>
+          </template>
+        </common-data-table>
+
         <core-pagination :page="salesPage" @onPaging="onPaging" />
       </v-card-text>
     </v-card>
@@ -202,24 +194,9 @@ export default {
       this.source = axiosSourceToken.obterToken();
       saleStatusActions.search(this.source);
     },
-    onSort(items, index, isDesc) {
-      let prevSort = this.sort;
-
-      if (index && index.length > 0) {
-        this.sort = {
-          orderBy: index[0],
-          asc: !isDesc[0],
-        };
-      }
-
-      if (
-        prevSort.orderBy !== this.sort.orderBy ||
-        prevSort.asc !== this.sort.asc
-      ) {
-        this.searchSales();
-      }
-
-      return items;
+    onSort(sort) {
+      this.sort = sort;
+      this.searchSales();
     },
     onPaging(pagination) {
       this.pagination = pagination;

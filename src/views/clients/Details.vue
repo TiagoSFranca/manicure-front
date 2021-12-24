@@ -17,7 +17,7 @@
 
     <v-row>
       <v-col cols="12">
-        <material-clients-card-info
+        <material-clients-cards-info
           :isLoading="loading[LOADING_IDENTIFIER]"
           :object="client"
         />
@@ -25,11 +25,11 @@
     </v-row>
 
     <v-divider />
-    <material-clients-card-graphs />
+    <material-clients-cards-graphs />
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-clients-card-schedules />
+        <material-clients-cards-schedules />
       </v-col>
     </v-row>
   </div>
@@ -67,11 +67,7 @@ export default {
     this.CLIENTS = CLIENTS;
   },
   computed: {
-    ...mapState(clientsConstants.MODULE_NAME, [
-      "client",
-      "images",
-      "search",
-    ]),
+    ...mapState(clientsConstants.MODULE_NAME, ["client", "images", "search"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
   watch: {

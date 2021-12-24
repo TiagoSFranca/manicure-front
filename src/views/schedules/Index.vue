@@ -16,83 +16,73 @@
         </v-btn>
       </v-col>
     </core-page-title>
-    <v-row>
-      <v-col cols="12">
-        <v-data-table
-          :headers="headers"
-          :items="agenda"
-          class="elevation-1"
-          :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
-          hide-default-footer
-          :custom-sort="onSort"
-          :disable-pagination="true"
-          :disable-filtering="true"
-          :disable-sort="!!loading[LOADING_IDENTIFIER]"
-          :loading="loading[LOADING_IDENTIFIER] === true"
-          :multi-sort="false"
+    <common-data-table
+      :headers="headers"
+      :items="agenda"
+      :loading="loading[LOADING_IDENTIFIER]"
+      :sort="sort"
+      @onSort="onSort"
+    >
+      <template v-slot:item.status="{ item }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              :color="getColor(item)"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              fab
+              x-small
+            >
+            </v-btn>
+          </template>
+          <span>{{ getText(item) }}</span>
+        </v-tooltip>
+      </template>
+      <template v-slot:item.id="{ item }">
+        <span>{{ "#" + item.id }}</span>
+      </template>
+      <template v-slot:item.date="{ item }">
+        <span>{{ formatDate(item.date) }}</span>
+      </template>
+      <template v-slot:item.finishDate="{ item }">
+        <span>{{ formatDate(item.finishDate) }}</span>
+      </template>
+      <template v-slot:item.cancelDate="{ item }">
+        <span>{{ formatDate(item.cancelDate) }}</span>
+      </template>
+      <template v-slot:item.inLoco="{ item }">
+        <v-simple-checkbox v-model="item.inLoco" disabled color="primary" />
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-btn
+          icon
+          :to="{
+            name: SCHEDULES_DETAILS.name,
+            params: { id: item.id },
+          }"
+          :disabled="loading[LOADING_IDENTIFIER]"
         >
-          <template v-slot:item.status="{ item }">
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  :color="getColor(item)"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                  fab
-                  x-small
-                >
-                </v-btn>
-              </template>
-              <span>{{ getText(item) }}</span>
-            </v-tooltip>
-          </template>
-          <template v-slot:item.id="{ item }">
-            <span>{{ "#" + item.id }}</span>
-          </template>
-          <template v-slot:item.date="{ item }">
-            <span>{{ formatDate(item.date) }}</span>
-          </template>
-          <template v-slot:item.finishDate="{ item }">
-            <span>{{ formatDate(item.finishDate) }}</span>
-          </template>
-          <template v-slot:item.cancelDate="{ item }">
-            <span>{{ formatDate(item.cancelDate) }}</span>
-          </template>
-          <template v-slot:item.inLoco="{ item }">
-            <v-simple-checkbox v-model="item.inLoco" disabled color="primary" />
-          </template>
-          <template v-slot:item.actions="{ item }">
-            <v-btn
-              icon
-              :to="{
-                name: SCHEDULES_DETAILS.name,
-                params: { id: item.id },
-              }"
-              :disabled="loading[LOADING_IDENTIFIER]"
-            >
-              <v-icon> mdi-eye-outline </v-icon>
-            </v-btn>
-            <v-btn
-              icon
-              color="success"
-              :to="{ name: SCHEDULES_FINISH.name, params: { id: item.id } }"
-              :disabled="loading[LOADING_IDENTIFIER] || setCancelDisabled(item)"
-            >
-              <v-icon>mdi-check</v-icon>
-            </v-btn>
-            <v-btn
-              icon
-              color="error"
-              @click="cancelItem(item)"
-              :disabled="loading[LOADING_IDENTIFIER] || setCancelDisabled(item)"
-            >
-              <v-icon>mdi-delete-outline</v-icon>
-            </v-btn>
-          </template>
-        </v-data-table>
-      </v-col>
-    </v-row>
+          <v-icon> mdi-eye-outline </v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          color="success"
+          :to="{ name: SCHEDULES_FINISH.name, params: { id: item.id } }"
+          :disabled="loading[LOADING_IDENTIFIER] || setCancelDisabled(item)"
+        >
+          <v-icon>mdi-check</v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          color="error"
+          @click="cancelItem(item)"
+          :disabled="loading[LOADING_IDENTIFIER] || setCancelDisabled(item)"
+        >
+          <v-icon>mdi-delete-outline</v-icon>
+        </v-btn>
+      </template>
+    </common-data-table>
     <core-pagination :page="page" @onPaging="onPaging" />
     <material-schedules-filter
       @onFilter="onFilter"
@@ -199,24 +189,9 @@ export default {
         this.LOADING_IDENTIFIER
       );
     },
-    onSort(items, index, isDesc) {
-      let prevSort = this.sort;
-
-      if (index && index.length > 0) {
-        this.sort = {
-          orderBy: index[0],
-          asc: !isDesc[0],
-        };
-      }
-
-      if (
-        prevSort.orderBy !== this.sort.orderBy ||
-        prevSort.asc !== this.sort.asc
-      ) {
-        this.searchAgenda();
-      }
-
-      return items;
+    onSort(sort) {
+      this.sort = sort;
+      this.searchAgenda();
     },
     onPaging(pagination) {
       this.pagination = pagination;

@@ -30,7 +30,7 @@
 
     <v-row>
       <v-col cols="12">
-        <material-combos-card-info
+        <material-combos-cards-info
           :isEdit="false"
           :isLoading="loading[LOADING_IDENTIFIER]"
           :object="combo"
@@ -38,7 +38,7 @@
         />
       </v-col>
       <v-col cols="12">
-        <material-combos-card-products
+        <material-combos-cards-products
           :isEdit="false"
           :isLoading="loading[LOADING_IDENTIFIER_PRODUCTS]"
           :products="products"
@@ -46,7 +46,7 @@
         />
       </v-col>
       <v-col cols="12">
-        <material-combos-card-images
+        <material-combos-cards-images
           :isEdit="false"
           :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
           :images="images"
@@ -57,15 +57,15 @@
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-combos-card-sales />
+        <material-combos-cards-sales />
       </v-col>
     </v-row>
     <v-divider />
-    <material-combos-card-graphs />
+    <material-combos-cards-graphs />
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-combos-card-schedules />
+        <material-combos-cards-schedules />
       </v-col>
     </v-row>
   </div>

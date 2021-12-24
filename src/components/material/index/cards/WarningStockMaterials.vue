@@ -22,72 +22,63 @@
             </v-btn>
           </v-card-title>
           <v-card-text>
-            <v-row>
-              <v-col cols="12">
-                <v-data-table
-                  :headers="headers"
-                  :items="warningStockMaterials"
-                  class="elevation-1"
-                  :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
-                  hide-default-footer
-                  :custom-sort="onSort"
-                  :disable-pagination="true"
-                  :disable-filtering="true"
-                  :disable-sort="!!loading[LOADING_IDENTIFIER]"
-                  :loading="loading[LOADING_IDENTIFIER] === true"
-                  :multi-sort="false"
+            <common-data-table
+              :headers="headers"
+              :items="warningStockMaterials"
+              :loading="loading[LOADING_IDENTIFIER]"
+              :sort="sort"
+              @onSort="onSort"
+            >
+              <template v-slot:item.status="{ item }">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :color="getColor(item)"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      fab
+                      x-small
+                    />
+                  </template>
+                  <span>{{ getText(item) }}</span>
+                </v-tooltip>
+              </template>
+              <template v-slot:item.price="{ item }">
+                <span>{{ toCurrency(item.price) }}</span>
+              </template>
+              <template v-slot:item.active="{ item }">
+                <v-simple-checkbox
+                  v-model="item.active"
+                  disabled
+                  color="primary"
+                ></v-simple-checkbox>
+              </template>
+              <template v-slot:item.actions="{ item }">
+                <v-btn
+                  icon
+                  :to="{
+                    name: MATERIALS_DETAILS.name,
+                    params: { id: item.id },
+                  }"
+                  :disabled="loading[LOADING_IDENTIFIER]"
                 >
-                  <template v-slot:item.status="{ item }">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          :color="getColor(item)"
-                          dark
-                          v-bind="attrs"
-                          v-on="on"
-                          fab
-                          x-small
-                        />
-                      </template>
-                      <span>{{ getText(item) }}</span>
-                    </v-tooltip>
-                  </template>
-                  <template v-slot:item.price="{ item }">
-                    <span>{{ toCurrency(item.price) }}</span>
-                  </template>
-                  <template v-slot:item.active="{ item }">
-                    <v-simple-checkbox
-                      v-model="item.active"
-                      disabled
-                      color="primary"
-                    ></v-simple-checkbox>
-                  </template>
-                  <template v-slot:item.actions="{ item }">
-                    <v-btn
-                      icon
-                      :to="{
-                        name: MATERIALS_DETAILS.name,
-                        params: { id: item.id },
-                      }"
-                      :disabled="loading[LOADING_IDENTIFIER]"
-                    >
-                      <v-icon>mdi-eye-outline</v-icon>
-                    </v-btn>
-                    <v-btn
-                      icon
-                      :to="{
-                        name: MATERIALS_EDIT.name,
-                        params: { id: item.id },
-                      }"
-                      :disabled="loading[LOADING_IDENTIFIER]"
-                      color="accent"
-                    >
-                      <v-icon>mdi-pencil-outline</v-icon>
-                    </v-btn>
-                  </template>
-                </v-data-table>
-              </v-col>
-            </v-row>
+                  <v-icon>mdi-eye-outline</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  :to="{
+                    name: MATERIALS_EDIT.name,
+                    params: { id: item.id },
+                  }"
+                  :disabled="loading[LOADING_IDENTIFIER]"
+                  color="accent"
+                >
+                  <v-icon>mdi-pencil-outline</v-icon>
+                </v-btn>
+              </template>
+            </common-data-table>
+
             <core-pagination :page="warningStockPage" @onPaging="onPaging" />
             <material-index-filters-warning-stock-materials
               @onFilter="onFilter"
@@ -173,24 +164,9 @@ export default {
         this.LOADING_IDENTIFIER
       );
     },
-    onSort(items, index, isDesc) {
-      let prevSort = this.sort;
-
-      if (index && index.length > 0) {
-        this.sort = {
-          orderBy: index[0],
-          asc: !isDesc[0],
-        };
-      }
-
-      if (
-        prevSort.orderBy !== this.sort.orderBy ||
-        prevSort.asc !== this.sort.asc
-      ) {
-        this.searchMaterials();
-      }
-
-      return items;
+    onSort(sort) {
+      this.sort = sort;
+      this.searchMaterials();
     },
     onPaging(pagination) {
       this.pagination = pagination;

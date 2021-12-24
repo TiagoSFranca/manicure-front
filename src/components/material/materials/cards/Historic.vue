@@ -75,46 +75,38 @@
             >
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-data-table
-              :headers="headers"
-              :items="materialStocks"
-              class="elevation-1"
-              :loading-text="$t(i18nConstants.LOADING_MESSAGE)"
-              hide-default-footer
-              :custom-sort="onSort"
-              :disable-pagination="true"
-              :disable-filtering="true"
-              :disable-sort="!!loading[LOADING_IDENTIFIER]"
-              :loading="loading[LOADING_IDENTIFIER]"
-              :multi-sort="false"
+
+        <common-data-table
+          :headers="headers"
+          :items="materialStocks"
+          :loading="loading[LOADING_IDENTIFIER]"
+          :sort="sort"
+          @onSort="onSort"
+        >
+          <template v-slot:item.createdAt="{ item }">
+            <span>{{ formatDate(item.createdAt) }}</span>
+          </template>
+          <template v-slot:item.qty="{ item }">
+            <span>{{ toCurrency(item.qty) }}</span>
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <v-btn
+              icon
+              :disabled="loading[LOADING_IDENTIFIER]"
+              @click="seeItem(item)"
             >
-              <template v-slot:item.createdAt="{ item }">
-                <span>{{ formatDate(item.createdAt) }}</span>
-              </template>
-              <template v-slot:item.qty="{ item }">
-                <span>{{ toCurrency(item.qty) }}</span>
-              </template>
-              <template v-slot:item.actions="{ item }">
-                <v-btn
-                  icon
-                  :disabled="loading[LOADING_IDENTIFIER]"
-                  @click="seeItem(item)"
-                >
-                  <v-icon>mdi-eye-outline</v-icon>
-                </v-btn>
-              </template>
-              <template v-slot:item.idSchedule="{ item }">
-                <v-simple-checkbox
-                  :value="item.idSchedule != null"
-                  disabled
-                  color="primary"
-                ></v-simple-checkbox>
-              </template>
-            </v-data-table>
-          </v-col>
-        </v-row>
+              <v-icon>mdi-eye-outline</v-icon>
+            </v-btn>
+          </template>
+          <template v-slot:item.idSchedule="{ item }">
+            <v-simple-checkbox
+              :value="item.idSchedule != null"
+              disabled
+              color="primary"
+            ></v-simple-checkbox>
+          </template>
+        </common-data-table>
+
         <core-pagination :page="materialStockPage" @onPaging="onPaging" />
       </v-card-text>
     </v-card>
@@ -129,7 +121,7 @@
 <script>
 import materialsActions from "@/actions/materialsActions";
 import axiosSourceToken from "@/utils/axiosSourceToken";
-import { mapState, mapMutations } from "vuex";
+import { mapState } from "vuex";
 import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
@@ -201,24 +193,9 @@ export default {
         this.LOADING_IDENTIFIER
       );
     },
-    onSort(items, index, isDesc) {
-      let prevSort = this.sort;
-
-      if (index && index.length > 0) {
-        this.sort = {
-          orderBy: index[0],
-          asc: !isDesc[0],
-        };
-      }
-
-      if (
-        prevSort.orderBy !== this.sort.orderBy ||
-        prevSort.asc !== this.sort.asc
-      ) {
-        this.searchMaterialStocks();
-      }
-
-      return items;
+    onSort(sort) {
+      this.sort = sort;
+      this.searchMaterialStocks();
     },
     onPaging(pagination) {
       this.pagination = pagination;

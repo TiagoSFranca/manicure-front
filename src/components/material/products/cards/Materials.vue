@@ -1,7 +1,7 @@
 <template>
   <v-card :loading="isLoading">
     <v-card-title class="d-flex align-start">
-      <span class="overline">{{ $t(COMBO.CARD_PRODUCTS.NAME) }}</span>
+      <span class="overline">{{ $t(PRODUCT.CARD_MATERIALS.NAME) }}</span>
       <v-spacer></v-spacer>
       <v-btn
         v-if="isEdit"
@@ -17,9 +17,9 @@
       </v-btn>
     </v-card-title>
 
-    <div v-if="products.length > 0">
+    <div v-if="materials.length > 0">
       <span class="overline">
-        {{ $t(COMBO.CARD_PRODUCTS.LABELS.TOTAL) }}:
+        {{ $t(PRODUCT.CARD_MATERIALS.LABELS.TOTAL) }}:
       </span>
 
       <span class="overline ml-2">{{ calcTotal() }}</span>
@@ -28,28 +28,28 @@
     <v-card-text>
       <v-row>
         <v-col
-          v-for="product in products"
-          :key="product.id"
+          v-for="material in materials"
+          :key="material.id"
           cols="12"
           sm="12"
           md="4"
-          lg="4"
+          lg="3"
         >
-          <material-combos-product-item
-            v-bind:product="product"
+          <material-products-material-item
+            v-bind:material="material"
             :showActions="isEdit"
           />
         </v-col>
       </v-row>
     </v-card-text>
-    <material-combos-product-add :showAdd="showAdd" @close="showAdd = false" />
+    <material-products-material-add
+      :showAdd="showAdd"
+      @close="showAdd = false"
+    />
   </v-card>
 </template>
 
 <script>
-import combosActions from "@/actions/combosActions";
-import { mapState } from "vuex";
-import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
 import i18nConstants from "@/i18n/constants";
 
@@ -59,14 +59,11 @@ export default {
       showAdd: false,
     };
   },
-  props: ["products", "isLoading", "isEdit"],
+  props: ["materials", "isLoading", "isEdit"],
   methods: {
-    getCurrPrice(product) {
-      return product.onSale ? product.promotionalPrice : product.price;
-    },
     calcTotal() {
-      let p = this.products.map((cur) => {
-        return cur.qty * this.getCurrPrice(cur.product);
+      let p = this.materials.map((cur) => {
+        return cur.qty * cur.material.price;
       });
 
       return ToCurrency(
@@ -77,7 +74,7 @@ export default {
     },
   },
   created() {
-    this.COMBO = i18nConstants.COMBO;
+    this.PRODUCT = i18nConstants.PRODUCT;
   },
 };
 </script>

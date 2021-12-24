@@ -29,7 +29,7 @@
     </core-page-title>
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-materials-card-info
+        <material-materials-cards-info
           :isEdit="false"
           :isLoading="loading[LOADING_IDENTIFIER]"
           :object="material"
@@ -38,11 +38,11 @@
       </v-col>
     </v-row>
     <v-divider />
-    <material-materials-card-graphs />
+    <material-materials-cards-graphs />
     <v-divider />
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-materials-card-historic />
+        <material-materials-cards-historic />
       </v-col>
     </v-row>
   </div>

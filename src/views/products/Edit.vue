@@ -29,7 +29,7 @@
     </core-page-title>
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-products-card-info
+        <material-products-cards-info
           :isEdit="true"
           :isLoading="loading[LOADING_IDENTIFIER]"
           :object="product"
@@ -98,7 +98,7 @@
 
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-products-card-materials
+        <material-products-cards-materials
           :isEdit="true"
           :isLoading="loading[LOADING_IDENTIFIER_MATERIALS]"
           :materials="materials"
@@ -108,7 +108,7 @@
 
     <v-row>
       <v-col cols="12" sm="12" lg="12" md="12">
-        <material-products-card-images
+        <material-products-cards-images
           :isEdit="true"
           :isLoading="loading[LOADING_IDENTIFIER_IMAGES]"
           :images="images"

@@ -21,9 +21,6 @@
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
-import { mapState } from "vuex";
-import appConstants from "@/store/modules/app/constants";
 import i18nConstants from "@/i18n/constants";
 
 export default {
