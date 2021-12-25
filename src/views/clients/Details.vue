@@ -37,7 +37,7 @@
 
 <script>
 import clientsActions from "@/actions/clientsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import clientsConstants from "@/store/modules/clients/constants";
@@ -47,7 +47,6 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER: "searchClient",
       LOADING_IDENTIFIER_IMAGES: "searchClientImages",
       LOADING_IDENTIFIER_COMBOS: "searchClientCombos",
@@ -57,8 +56,7 @@ export default {
   methods: {
     searchClient() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      clientsActions.get(id, this.source, this.LOADING_IDENTIFIER);
+      clientsActions.get(id, this.LOADING_IDENTIFIER);
     },
   },
   created() {
@@ -74,10 +72,6 @@ export default {
     search() {
       this.searchClient();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

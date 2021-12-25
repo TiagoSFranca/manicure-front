@@ -165,7 +165,7 @@
 <script>
 import productsActions from "@/actions/productsActions";
 import scheduleStatusActions from "@/actions/scheduleStatusActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import {
   formatDate,
@@ -181,7 +181,6 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      source: "",
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
         {
@@ -240,12 +239,10 @@ export default {
   },
   methods: {
     searchSchedules() {
-      this.source = axiosSourceToken.obterToken();
       let id = this.$route.params.id;
 
       productsActions.searchSchedules(
         id,
-        this.source,
         this.filter,
         this.pagination,
         this.sort,
@@ -253,8 +250,7 @@ export default {
       );
     },
     searchScheduleStatus() {
-      this.source = axiosSourceToken.obterToken();
-      scheduleStatusActions.search(this.source);
+      scheduleStatusActions.search();
     },
     onSort(sort) {
       this.sort = sort;
@@ -292,10 +288,6 @@ export default {
     ...mapState(productsConstants.MODULE_NAME, ["schedules", "schedulesPage"]),
     ...mapState(scheduleStatusConstants.MODULE_NAME, ["scheduleStatuses"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

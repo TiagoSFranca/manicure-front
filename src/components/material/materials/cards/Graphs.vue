@@ -103,7 +103,7 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
@@ -115,7 +115,6 @@ import { randomColor } from "@/utils/methods";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER_YEARS: "searchMaterialYears",
       LOADING_IDENTIFIER_REPORT_REGISTER: "searchMaterialReportRegister",
       LOADING_IDENTIFIER_REPORT_REMOVE: "searchMaterialReportRemove",
@@ -145,8 +144,7 @@ export default {
     ]),
     searchYears() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      materialsActions.getYears(id, this.source, this.LOADING_IDENTIFIER_YEARS);
+      materialsActions.getYears(id, this.LOADING_IDENTIFIER_YEARS);
     },
     searchReports() {
       this.searchReportRegisterYear();
@@ -154,22 +152,18 @@ export default {
     },
     searchReportRegisterYear() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       materialsActions.getReportRegisterYear(
         id,
         this.yearSelected,
-        this.source,
         this.LOADING_IDENTIFIER_REPORT_REGISTER,
         true
       );
     },
     searchReportRemoveYear() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       materialsActions.getReportRemoveYear(
         id,
         this.yearSelected,
-        this.source,
         this.LOADING_IDENTIFIER_REPORT_REMOVE,
         false
       );
@@ -210,10 +204,6 @@ export default {
     yearSelected() {
       this.searchReports();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

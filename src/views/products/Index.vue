@@ -119,7 +119,7 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
@@ -135,7 +135,6 @@ export default {
       title: "",
       message: "",
       productSelected: {},
-      source: "",
       headers: [
         {
           text: this.$t(i18nConstants.PRODUCT.LIST.NAME),
@@ -183,9 +182,7 @@ export default {
       this[productsConstants.MUTATION_SET_SHOW_FILTER](true);
     },
     searchProducts() {
-      this.source = axiosSourceToken.obterToken();
       productsActions.search(
-        this.source,
         this.filter,
         this.pagination,
         this.sort,
@@ -242,10 +239,6 @@ export default {
       "page",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   watch: {
     search() {

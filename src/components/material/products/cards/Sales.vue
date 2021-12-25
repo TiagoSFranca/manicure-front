@@ -123,7 +123,7 @@
 <script>
 import productsActions from "@/actions/productsActions";
 import saleStatusActions from "@/actions/saleStatusActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import { formatDate, ToCurrency } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
@@ -134,7 +134,6 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      source: "",
       headers: [
         {
           text: this.$t(i18nConstants.PRODUCT.CARD_SALES.LIST.SALE_STATUS_NAME),
@@ -178,12 +177,10 @@ export default {
   },
   methods: {
     searchSales() {
-      this.source = axiosSourceToken.obterToken();
       let id = this.$route.params.id;
 
       productsActions.searchSales(
         id,
-        this.source,
         this.filter,
         this.pagination,
         this.sort,
@@ -191,8 +188,7 @@ export default {
       );
     },
     searchSaleStatus() {
-      this.source = axiosSourceToken.obterToken();
-      saleStatusActions.search(this.source);
+      saleStatusActions.search();
     },
     onSort(sort) {
       this.sort = sort;
@@ -226,10 +222,6 @@ export default {
     ...mapState(productsConstants.MODULE_NAME, ["sales", "salesPage"]),
     ...mapState(saleStatusConstants.MODULE_NAME, ["saleStatuses"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

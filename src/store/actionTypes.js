@@ -7,6 +7,8 @@ import agenda from './modules/agenda/constants'
 
 // APP
 export const APP_LOADING = `${app.MODULE_NAME}/${app.ACTION_LOADING}`;
+export const APP_ADD_CANCEL_TOKEN = `${app.MODULE_NAME}/${app.ACTION_ADD_CANCEL_TOKEN}`;
+export const APP_CANCEL_PENDING_REQUESTS = `${app.MODULE_NAME}/${app.ACTION_CLEAR_PENDING_REQUESTS}`;
 
 // PRODUCTS
 export const PRODUCTS_SET_PRODUCTS = `${products.MODULE_NAME}/${products.ACTION_SET_PRODUCTS}`;
@@ -35,6 +37,8 @@ export const AGENDA_SET_LATE_SCHEDULES = `${agenda.MODULE_NAME}/${agenda.ACTION_
 
 export default {
   APP_LOADING,
+  APP_ADD_CANCEL_TOKEN,
+  APP_CANCEL_PENDING_REQUESTS,
 
   PRODUCTS_SET_PRODUCTS,
   PRODUCTS_SET_ON_SALE_PRODUCTS,

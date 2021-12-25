@@ -10,6 +10,7 @@ axios.interceptors.request.use(
     } else {
       config.headers.authorization = ''
     }
+
     return config;
   },
   error => Promise.reject(error)

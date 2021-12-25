@@ -1,4 +1,5 @@
 import axios from 'axios'
+import base from './baseHttp'
 
 const RESOURCE_NAME = '/combos'
 const PRODUCTS = "/products"
@@ -6,11 +7,10 @@ const IMAGES = "/images"
 const SCHEDULES = "/schedules"
 const SALES = "/sale"
 
-export const search = (query, source) => {
+export const search = (query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}`, {
+    return base.get(`${RESOURCE_NAME}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
@@ -33,21 +33,17 @@ export const edit = (id, object) => {
   })
 }
 
-export const get = (id, source) => {
+export const get = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 };
 
-export const getImages = (id, source) => {
+export const getImages = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${IMAGES}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${IMAGES}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -85,11 +81,9 @@ export const addProduct = (id, object) => {
   })
 };
 
-export const getProducts = (id, source) => {
+export const getProducts = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${PRODUCTS}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${PRODUCTS}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -111,31 +105,26 @@ export const editProduct = (id, idProduct, object) => {
   })
 };
 
-export const getScheduleYears = (id, source) => {
+export const getScheduleYears = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getReportScheduleYear = (id, year, source, isFinish) => {
+export const getReportScheduleYear = (id, year, isFinish) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const searchSchedules = (id, query, source) => {
+export const searchSchedules = (id, query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
@@ -158,11 +147,10 @@ export const changeSale = (id, object) => {
   })
 }
 
-export const searchSales = (id, query, source) => {
+export const searchSales = (id, query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SALES}`, {
+    return base.get(`${RESOURCE_NAME}/${id}${SALES}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import base from './baseHttp'
 
 const RESOURCE_NAME = '/agenda'
 const MATERIALS = '/materials'
@@ -21,11 +22,10 @@ export const add = (object) => {
   })
 }
 
-export const search = (query, source) => {
+export const search = (query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}`, {
+    return base.get(`${RESOURCE_NAME}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
@@ -40,21 +40,17 @@ export const cancel = (id, object) => {
   })
 }
 
-export const get = (id, source) => {
+export const get = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 };
 
-export const getMaterials = (id, source) => {
+export const getMaterials = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${MATERIALS}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${MATERIALS}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -68,21 +64,17 @@ export const finish = (id, object) => {
   })
 }
 
-export const getProducts = (id, source) => {
+export const getProducts = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${PRODUCTS}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${PRODUCTS}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getCombos = (id, source) => {
+export const getCombos = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${COMBOS}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${COMBOS}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })

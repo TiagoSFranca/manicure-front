@@ -122,7 +122,7 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import {
   ToCurrency,
@@ -142,7 +142,6 @@ export default {
       title: "",
       message: "",
       materialSelected: {},
-      source: "",
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
         {
@@ -200,9 +199,7 @@ export default {
       this[materialsConstants.MUTATION_SET_SHOW_FILTER](true);
     },
     searchMaterials() {
-      this.source = axiosSourceToken.obterToken();
       materialsActions.search(
-        this.source,
         this.filter,
         this.pagination,
         this.sort,
@@ -262,10 +259,6 @@ export default {
       "page",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   watch: {
     search() {

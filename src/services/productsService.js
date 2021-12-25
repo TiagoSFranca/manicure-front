@@ -1,4 +1,5 @@
 import axios from 'axios'
+import base from './baseHttp'
 
 const RESOURCE_NAME = '/products'
 const MATERIALS = "/materials"
@@ -7,11 +8,10 @@ const COMBOS = "/combos"
 const SCHEDULES = "/schedules"
 const SALES = "/sale"
 
-export const search = (query, source) => {
+export const search = (query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}`, {
-      params: query,
-      cancelToken: source.token
+    return base.get(`${RESOURCE_NAME}`, {
+      params: query
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
@@ -34,21 +34,17 @@ export const edit = (id, object) => {
   })
 }
 
-export const get = (id, source) => {
+export const get = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 };
 
-export const getImages = (id, source) => {
+export const getImages = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${IMAGES}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${IMAGES}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -78,11 +74,9 @@ export const addImage = (id, file) => {
   })
 };
 
-export const getCombos = (id, source) => {
+export const getCombos = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${COMBOS}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${COMBOS}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -96,11 +90,9 @@ export const addMaterial = (id, object) => {
   })
 };
 
-export const getMaterials = (id, source) => {
+export const getMaterials = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${MATERIALS}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${MATERIALS}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -122,31 +114,26 @@ export const editMaterial = (id, idMaterial, object) => {
   })
 };
 
-export const getScheduleYears = (id, source) => {
+export const getScheduleYears = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getReportScheduleYear = (id, year, source, isFinish) => {
+export const getReportScheduleYear = (id, year, isFinish) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const searchSchedules = (id, query, source) => {
+export const searchSchedules = (id, query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
@@ -169,11 +156,10 @@ export const changeSale = (id, object) => {
   })
 }
 
-export const searchSales = (id, query, source) => {
+export const searchSales = (id, query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SALES}`, {
+    return base.get(`${RESOURCE_NAME}/${id}${SALES}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));

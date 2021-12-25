@@ -53,7 +53,6 @@ export default {
         name: "",
         active: true,
       },
-      source: "",
       NOT_SELECTED: NOT_SELECTED,
     };
   },

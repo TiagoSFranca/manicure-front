@@ -50,7 +50,7 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
@@ -60,7 +60,6 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER: "searchMaterial",
       MATERIALS: MATERIALS,
       MATERIALS_EDIT: MATERIALS_EDIT,
@@ -73,8 +72,7 @@ export default {
     ]),
     searchMaterial() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      materialsActions.get(id, this.source, this.LOADING_IDENTIFIER);
+      materialsActions.get(id, this.LOADING_IDENTIFIER);
     },
   },
   created() {
@@ -89,10 +87,6 @@ export default {
     search(val) {
       if (val) this.searchMaterial();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

@@ -82,7 +82,7 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import i18nConstants from "@/i18n/constants";
@@ -95,7 +95,6 @@ export default {
       visible: false,
       menu: false,
       showDialog: false,
-      source: "",
       object: {
         price: null,
         date: null,
@@ -160,9 +159,6 @@ export default {
       }
     },
   },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
-  },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
@@ -177,10 +173,6 @@ export default {
     type() {
       this.setDate();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   created() {
     this.PRODUCT = i18nConstants.PRODUCT;

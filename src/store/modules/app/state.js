@@ -10,5 +10,6 @@ export default {
   },
   progressBar: false,
   loading: {},
-  noConnection: false
+  noConnection: false,
+  cancelTokens: []
 }

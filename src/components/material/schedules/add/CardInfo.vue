@@ -86,7 +86,7 @@
 
 <script>
 import clientsActions from "@/actions/clientsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import clientsConstants from "@/store/modules/clients/constants";
@@ -98,7 +98,6 @@ export default {
   data() {
     return {
       showAdd: false,
-      source: "",
       LOADING_IDENTIFIER_SEARCH_CLIENTS: "searchClientsAsync",
       object: { date: "", idClient: "", inLoco: false },
       minLength: 3,
@@ -116,7 +115,6 @@ export default {
       }
 
       clientsActions.search(
-        this.source,
         { name: term },
         null,
         null,
@@ -139,10 +137,6 @@ export default {
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
     ...mapState(clientsConstants.MODULE_NAME, ["clients"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   watch: {
     object: {

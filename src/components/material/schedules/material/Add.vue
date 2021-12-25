@@ -77,7 +77,7 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
@@ -89,7 +89,6 @@ export default {
     return {
       minLength: 3,
       visible: false,
-      source: "",
       object: {
         idMaterial: "",
         qtyUsed: 1,
@@ -129,7 +128,6 @@ export default {
       }
 
       materialsActions.search(
-        this.source,
         { name: term },
         null,
         null,
@@ -141,9 +139,6 @@ export default {
       this.materialSelected = val;
     },
   },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
-  },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
     ...mapState(materialsConstants.MODULE_NAME, ["materials"]),
@@ -153,10 +148,6 @@ export default {
       if (this.showAdd && !this.visible) this.show();
       else if (!this.showAdd && this.visible) this.hide();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   created() {
     this.SCHEDULE = i18nConstants.SCHEDULE;

@@ -120,7 +120,7 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
@@ -131,7 +131,6 @@ import { MATERIAL_SCHEDULE_STATUS } from "@/utils/constants";
 export default {
   data() {
     return {
-      source: "",
       headers: [
         {
           text: this.$t(i18nConstants.MATERIAL.CARD_HISTORIC.LIST.DATE),
@@ -181,12 +180,10 @@ export default {
   },
   methods: {
     searchMaterialStocks() {
-      this.source = axiosSourceToken.obterToken();
       let id = this.$route.params.id;
 
       materialsActions.searchMaterialStocks(
         id,
-        this.source,
         this.filter,
         this.pagination,
         this.sort,
@@ -229,10 +226,6 @@ export default {
       "materialStockPage",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

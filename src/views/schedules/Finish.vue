@@ -78,7 +78,6 @@
 
 <script>
 import agendaActions from "@/actions/agendaActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
@@ -93,7 +92,6 @@ import toastr from "@/utils/toastr";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER: "searchSchedule",
       LOADING_IDENTIFIER_MATERIALS: "searchScheduleMaterials",
       SCHEDULES: SCHEDULES,
@@ -118,17 +116,11 @@ export default {
     },
     searchSchedule() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      agendaActions.get(id, this.source, this.LOADING_IDENTIFIER);
+      agendaActions.get(id, this.LOADING_IDENTIFIER);
     },
     getMaterials() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      agendaActions.getMaterials(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_MATERIALS
-      );
+      agendaActions.getMaterials(id, this.LOADING_IDENTIFIER_MATERIALS);
     },
     checkStatus() {
       if (checkDisabledCancelScheduleFromStatus(this.schedule.status)) {
@@ -146,13 +138,6 @@ export default {
       "search",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
-  },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
   },
   created() {
     this.searchSchedule();

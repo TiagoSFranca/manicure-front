@@ -110,7 +110,6 @@
 
 <script>
 import clientsActions from "@/actions/clientsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import clientsConstants from "@/store/modules/clients/constants";
@@ -122,7 +121,6 @@ import { randomColor } from "@/utils/methods";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER_YEARS: "searchScheduleYears",
       LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED:
         "searchReportScheduleFinished",
@@ -152,12 +150,7 @@ export default {
     ]),
     searchYears() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      clientsActions.getScheduleYears(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_YEARS
-      );
+      clientsActions.getScheduleYears(id, this.LOADING_IDENTIFIER_YEARS);
     },
     searchReports() {
       this.searchReportScheduleFinishedYear();
@@ -165,22 +158,18 @@ export default {
     },
     searchReportScheduleFinishedYear() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       clientsActions.getReportScheduleFinishedYear(
         id,
         this.yearSelected,
-        this.source,
         this.LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED,
         true
       );
     },
     searchReportScheduleCanceledYear() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       clientsActions.getReportScheduleCanceledYear(
         id,
         this.yearSelected,
-        this.source,
         this.LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED,
         false
       );
@@ -225,10 +214,6 @@ export default {
     yearSelected() {
       this.searchReports();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

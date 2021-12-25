@@ -3,11 +3,11 @@ import { startLoading, endLoading } from '@/utils/methods'
 import scheduleStatusService from '@/services/scheduleStatusService'
 import mutationTypes from '@/store/mutationTypes'
 
-export const search = (source, LOADING_IDENTIFIER = '') => {
+export const search = (LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   scheduleStatusService
-    .search(source)
+    .search()
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.SCHEDULE_STATUS_SET_SCHEDULE_STATUS, data);

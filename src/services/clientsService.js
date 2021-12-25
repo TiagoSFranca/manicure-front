@@ -1,13 +1,13 @@
 import axios from 'axios'
+import base from './baseHttp'
 
 const RESOURCE_NAME = '/clients'
 const SCHEDULES = "/schedules"
 
-export const search = (query, source) => {
+export const search = (query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}`, {
+    return base.get(`${RESOURCE_NAME}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
@@ -30,41 +30,35 @@ export const edit = (id, object) => {
   })
 }
 
-export const get = (id, source) => {
+export const get = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}`, {
-      cancelToken: source.token
+    return base.get(`${RESOURCE_NAME}/${id}`, {
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 };
 
-export const getScheduleYears = (id, source) => {
+export const getScheduleYears = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getReportScheduleYear = (id, year, source, isFinish) => {
+export const getReportScheduleYear = (id, year, isFinish) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const searchSchedules = (id, query, source) => {
+export const searchSchedules = (id, query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));

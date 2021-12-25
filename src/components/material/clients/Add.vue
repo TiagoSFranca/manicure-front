@@ -230,7 +230,6 @@
 <script>
 import clientsActions from "@/actions/clientsActions";
 import addressActions from "@/actions/addressActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import addressConstants from "@/store/modules/address/constants";
@@ -243,7 +242,6 @@ export default {
       visible: false,
       menu: false,
       showDialog: false,
-      source: "",
       object: {
         name: "",
         sex: "f",
@@ -285,26 +283,16 @@ export default {
       this.object.birthday = date;
     },
     searchCountries() {
-      addressActions.searchCountries(
-        this.source,
-        this.LOADING_IDENTIFIER_COUNTRIES
-      );
+      addressActions.searchCountries(this.LOADING_IDENTIFIER_COUNTRIES);
     },
     searchCities() {
       let idCountry = this.object.address.idCountry;
       if (idCountry) {
-        addressActions.searchCities(
-          idCountry,
-          this.source,
-          this.LOADING_IDENTIFIER_CITIES
-        );
+        addressActions.searchCities(idCountry, this.LOADING_IDENTIFIER_CITIES);
       } else {
         this[addressConstants.MUTATION_CLEAR_CITIES]();
       }
     },
-  },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
   },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
@@ -318,10 +306,6 @@ export default {
     "object.address.idCountry"() {
       this.searchCities();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   created() {
     this.CLIENT = i18nConstants.CLIENT;

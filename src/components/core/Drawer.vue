@@ -11,7 +11,7 @@
     v-model="showDrawer"
     clipped
   >
-    <v-list nav class="pa-0">
+    <v-list outlined class="pa-0">
       <v-list-item
         v-for="item in links"
         :key="item.text"

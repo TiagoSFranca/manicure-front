@@ -1,12 +1,10 @@
-import axios from 'axios'
+import base from './baseHttp'
 
 const RESOURCE_NAME = '/saleStatuses'
 
-export const search = (source) => {
+export const search = () => {
   return new Promise((resolve, reject) => {
-    return axios.get(RESOURCE_NAME, {
-      cancelToken: source.token
-    })
+    return base.get(RESOURCE_NAME)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })

@@ -73,7 +73,6 @@ export default {
         beginEndSale: "",
         endEndSale: "",
       },
-      source: "",
     };
   },
   computed: {

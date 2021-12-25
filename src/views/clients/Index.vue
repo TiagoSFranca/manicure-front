@@ -77,7 +77,7 @@
 
 <script>
 import clientsActions from "@/actions/clientsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import { ToCurrency, formatDate, format } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
@@ -91,7 +91,6 @@ export default {
       showAdd: false,
       showEdit: false,
       clientSelected: {},
-      source: "",
       headers: [
         {
           text: this.$t(i18nConstants.CLIENT.LIST.NAME),
@@ -139,9 +138,7 @@ export default {
       this[clientsConstants.MUTATION_SET_SHOW_FILTER](true);
     },
     searchClients() {
-      this.source = axiosSourceToken.obterToken();
       clientsActions.search(
-        this.source,
         this.filter,
         this.pagination,
         this.sort,
@@ -195,10 +192,6 @@ export default {
       "page",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   watch: {
     search() {

@@ -6,14 +6,14 @@ import combosService from '@/services/combosService'
 import actionTypes from '@/store/actionTypes'
 import mutationTypes from '@/store/mutationTypes'
 
-export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const search = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .search(query, source)
+    .search(query)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.COMBOS_SET_COMBOS, data);
@@ -24,7 +24,7 @@ export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = ''
     })
 };
 
-export const searchOnSale = (source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const searchOnSale = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
 
   filter = {
     ...filter,
@@ -36,7 +36,7 @@ export const searchOnSale = (source, filter, pagination, sort, LOADING_IDENTIFIE
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .search(query, source)
+    .search(query)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.COMBOS_SET_ON_SALE_COMBOS, data);
@@ -63,12 +63,12 @@ export const add = (object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const get = (id, source, LOADING_IDENTIFIER = '') => {
+export const get = (id, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .get(id, source)
+    .get(id)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_COMBO, data);
@@ -93,11 +93,11 @@ export const edit = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getImages = (id, source, LOADING_IDENTIFIER = '') => {
+export const getImages = (id, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .getImages(id, source)
+    .getImages(id)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_IMAGES, data);
@@ -136,11 +136,11 @@ export const addImage = (id, file, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getCombos = (id, source, LOADING_IDENTIFIER = '') => {
+export const getCombos = (id, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .getCombos(id, source)
+    .getCombos(id)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_COMBOS, data);
@@ -166,11 +166,11 @@ export const addProduct = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getProducts = (id, source, LOADING_IDENTIFIER = '') => {
+export const getProducts = (id, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .getProducts(id, source)
+    .getProducts(id)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_PRODUCTS, data);
@@ -209,12 +209,12 @@ export const editProduct = (id, idProduct, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getScheduleYears = (id, source, LOADING_IDENTIFIER = '') => {
+export const getScheduleYears = (id, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .getScheduleYears(id, source)
+    .getScheduleYears(id)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_YEARS, data);
@@ -224,12 +224,12 @@ export const getScheduleYears = (id, source, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getReportScheduleFinishedYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+export const getReportScheduleFinishedYear = (id, year, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .getReportScheduleYear(id, year, source, true)
+    .getReportScheduleYear(id, year, true)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_REPORT_SCHEDULE_FINISHED_YEAR, data);
@@ -239,12 +239,12 @@ export const getReportScheduleFinishedYear = (id, year, source, LOADING_IDENTIFI
     })
 }
 
-export const getReportScheduleCanceledYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+export const getReportScheduleCanceledYear = (id, year, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .getReportScheduleYear(id, year, source, false)
+    .getReportScheduleYear(id, year, false)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.COMBOS_SET_REPORT_SCHEDULE_CANCELED_YEAR, data);
@@ -254,14 +254,14 @@ export const getReportScheduleCanceledYear = (id, year, source, LOADING_IDENTIFI
     })
 }
 
-export const searchSchedules = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const searchSchedules = (id, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .searchSchedules(id, query, source)
+    .searchSchedules(id, query)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.COMBOS_SET_SCHEDULES, data);
@@ -301,14 +301,14 @@ export const changeSale = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const searchSales = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const searchSales = (id, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   combosService
-    .searchSales(id, query, source)
+    .searchSales(id, query)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.COMBOS_SET_SALES, data);

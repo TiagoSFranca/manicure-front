@@ -117,7 +117,6 @@
 
 <script>
 import agendaActions from "@/actions/agendaActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import agendaConstants from "@/store/modules/agenda/constants";
@@ -131,7 +130,6 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER: "searchSchedule",
       LOADING_IDENTIFIER_MATERIALS: "searchScheduleMaterials",
       LOADING_IDENTIFIER_PRODUCTS: "searchScheduleProducts",
@@ -147,31 +145,23 @@ export default {
     },
     searchSchedule() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      agendaActions.get(id, this.source, this.LOADING_IDENTIFIER);
+      agendaActions.get(id, this.LOADING_IDENTIFIER);
     },
     getMaterials() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       agendaActions.getMaterials(
         id,
-        this.source,
+
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },
     getProducts() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      agendaActions.getProducts(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_PRODUCTS
-      );
+      agendaActions.getProducts(id, this.LOADING_IDENTIFIER_PRODUCTS);
     },
     getCombos() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      agendaActions.getCombos(id, this.source, this.LOADING_IDENTIFIER_COMBOS);
+      agendaActions.getCombos(id, this.LOADING_IDENTIFIER_COMBOS);
     },
     cancel() {
       this.showCancel = true;
@@ -190,13 +180,6 @@ export default {
       "combos",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
-  },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
   },
   created() {
     this.searchSchedule();

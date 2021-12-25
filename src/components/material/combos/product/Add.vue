@@ -83,7 +83,6 @@
 <script>
 import combosActions from "@/actions/combosActions";
 import productsActions from "@/actions/productsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
@@ -95,7 +94,6 @@ export default {
     return {
       minLength: 3,
       visible: false,
-      source: "",
       object: {
         idProduct: "",
         qty: "",
@@ -134,7 +132,6 @@ export default {
       }
 
       productsActions.search(
-        this.source,
         { name: term, active: true },
         null,
         null,
@@ -145,9 +142,6 @@ export default {
       this.object.idProduct = val ? val.id : null;
     },
   },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
-  },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
     ...mapState(productsConstants.MODULE_NAME, ["products"]),
@@ -157,10 +151,6 @@ export default {
       if (this.showAdd && !this.visible) this.show();
       else if (!this.showAdd && this.visible) this.hide();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   created() {
     this.COMBO = i18nConstants.COMBO;

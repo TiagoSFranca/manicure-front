@@ -94,7 +94,7 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import i18nConstants from "@/i18n/constants";
@@ -105,7 +105,6 @@ export default {
     return {
       visible: false,
       menu: false,
-      source: "",
       object: {
         name: "",
         price: "",
@@ -136,9 +135,6 @@ export default {
       this.object.endSale = date;
     },
   },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
-  },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
@@ -147,10 +143,6 @@ export default {
       if (this.showAdd && !this.visible) this.show();
       else if (!this.showAdd && this.visible) this.hide();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   created() {
     this.MATERIAL = i18nConstants.MATERIAL;

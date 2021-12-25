@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
+import axiosSourceToken from '@/utils/axiosSourceToken'
 
 // Routes
 import paths from './paths'
@@ -55,6 +56,8 @@ function nextFactory(context, middleware, index) {
 }
 
 router.beforeEach((to, from, next) => {
+  axiosSourceToken.cancelTokens();
+
   if (to.meta.middleware) {
     const middleware = Array.isArray(to.meta.middleware)
       ? to.meta.middleware
@@ -70,6 +73,7 @@ router.beforeEach((to, from, next) => {
 
     return middleware[0]({ ...context, next: nextMiddleware })
   }
+
   return next()
 })
 

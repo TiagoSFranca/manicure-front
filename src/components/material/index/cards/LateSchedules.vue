@@ -115,7 +115,6 @@
 
 <script>
 import agendaActions from "@/actions/agendaActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState, mapMutations } from "vuex";
 import {
   formatDate,
@@ -137,7 +136,6 @@ export default {
     return {
       showCancel: false,
       scheduleToCancel: {},
-      source: "",
       headers: [
         { text: "", value: "status", sortable: false, align: "center" },
         {
@@ -180,9 +178,7 @@ export default {
       this[agendaConstants.MUTATION_SET_SHOW_FILTER](true);
     },
     searchAgenda() {
-      this.source = axiosSourceToken.obterToken();
       agendaActions.searchLateSchedules(
-        this.source,
         this.filter,
         this.pagination,
         this.sort,
@@ -227,10 +223,6 @@ export default {
       "lateSchedulesPage",
     ]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   watch: {
     search() {

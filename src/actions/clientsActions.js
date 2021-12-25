@@ -6,14 +6,14 @@ import clientsService from '@/services/clientsService'
 import actionTypes from '@/store/actionTypes'
 import mutationTypes from '@/store/mutationTypes'
 
-export const search = (source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const search = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   clientsService
-    .search(query, source)
+    .search(query)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.CLIENTS_SET_CLIENTS, data);
@@ -40,12 +40,12 @@ export const add = (object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const get = (id, source, LOADING_IDENTIFIER = '') => {
+export const get = (id, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   clientsService
-    .get(id, source)
+    .get(id)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.CLIENTS_SET_CLIENT, data);
@@ -71,12 +71,12 @@ export const edit = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getScheduleYears = (id, source, LOADING_IDENTIFIER = '') => {
+export const getScheduleYears = (id, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   clientsService
-    .getScheduleYears(id, source)
+    .getScheduleYears(id)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.CLIENTS_SET_YEARS, data);
@@ -86,12 +86,12 @@ export const getScheduleYears = (id, source, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getReportScheduleFinishedYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+export const getReportScheduleFinishedYear = (id, year, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   clientsService
-    .getReportScheduleYear(id, year, source, true)
+    .getReportScheduleYear(id, year, true)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.CLIENTS_SET_REPORT_SCHEDULE_FINISHED_YEAR, data);
@@ -101,12 +101,12 @@ export const getReportScheduleFinishedYear = (id, year, source, LOADING_IDENTIFI
     })
 }
 
-export const getReportScheduleCanceledYear = (id, year, source, LOADING_IDENTIFIER = '') => {
+export const getReportScheduleCanceledYear = (id, year, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   clientsService
-    .getReportScheduleYear(id, year, source, false)
+    .getReportScheduleYear(id, year, false)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.CLIENTS_SET_REPORT_SCHEDULE_CANCELED_YEAR, data);
@@ -116,14 +116,14 @@ export const getReportScheduleCanceledYear = (id, year, source, LOADING_IDENTIFI
     })
 }
 
-export const searchSchedules = (id, source, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const searchSchedules = (id, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   clientsService
-    .searchSchedules(id, query, source)
+    .searchSchedules(id, query)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.CLIENTS_SET_SCHEDULES, data);

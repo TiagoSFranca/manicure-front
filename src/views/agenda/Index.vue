@@ -100,7 +100,6 @@
 
 <script>
 import agendaActions from "@/actions/agendaActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import { getScheduleStatusColor, getScheduleStatusText } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
@@ -111,7 +110,6 @@ import { AGENDA_TYPES, SCHEDULE_STATUS } from "@/utils/constants";
 
 export default {
   data: () => ({
-    source: "",
     focus: "",
     type: AGENDA_TYPES.MONTH,
     selectedEvent: {},
@@ -199,9 +197,7 @@ export default {
       return this.getStart(item);
     },
     searchAgenda() {
-      this.source = axiosSourceToken.obterToken();
       agendaActions.search(
-        this.source,
         { beginDate: this.beginDate, endDate: this.endDate },
         this.pagination,
         this.sort,
@@ -231,10 +227,6 @@ export default {
   computed: {
     ...mapState(agendaConstants.MODULE_NAME, ["agenda", "search"]),
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   watch: {
     agenda() {

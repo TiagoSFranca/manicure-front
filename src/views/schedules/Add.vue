@@ -93,7 +93,6 @@
 
 <script>
 import agendaActions from "@/actions/agendaActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { SCHEDULES } from "@/router/routes";
@@ -105,7 +104,6 @@ export default {
   data() {
     return {
       showError: false,
-      source: "",
       LOADING_IDENTIFIER: "searchCombo",
       object: {},
       products: [],
@@ -207,13 +205,6 @@ export default {
   },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
-  },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
   },
   created() {
     this.SCHEDULE = i18nConstants.SCHEDULE;

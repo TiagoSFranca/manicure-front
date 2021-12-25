@@ -1,13 +1,13 @@
 import axios from 'axios'
+import base from './baseHttp'
 
 const RESOURCE_NAME = '/materials'
 const STOCK = "/stock"
 
-export const search = (query, source) => {
+export const search = (query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}`, {
+    return base.get(`${RESOURCE_NAME}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));
@@ -22,11 +22,9 @@ export const add = (object) => {
   })
 }
 
-export const get = (id, source) => {
+export const get = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -48,31 +46,26 @@ export const updateStock = (id, object) => {
   })
 }
 
-export const getYears = (id, source) => {
+export const getYears = (id) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}/years`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${STOCK}/years`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getReportYear = (id, year, source, isRegister) => {
+export const getReportYear = (id, year, isRegister) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}/report/${year}?isRegister=${isRegister}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}/${id}${STOCK}/report/${year}?isRegister=${isRegister}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const searchMaterialStocks = (id, query, source) => {
+export const searchMaterialStocks = (id, query) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}/${id}${STOCK}`, {
+    return base.get(`${RESOURCE_NAME}/${id}${STOCK}`, {
       params: query,
-      cancelToken: source.token
     })
       .then((e) => resolve(e))
       .catch((error) => reject(error));

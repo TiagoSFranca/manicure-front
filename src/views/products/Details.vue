@@ -77,7 +77,7 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
@@ -87,7 +87,6 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER: "searchProduct",
       LOADING_IDENTIFIER_IMAGES: "searchProductImages",
       LOADING_IDENTIFIER_COMBOS: "searchProductCombos",
@@ -97,33 +96,29 @@ export default {
   methods: {
     searchProduct() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      productsActions.get(id, this.source, this.LOADING_IDENTIFIER);
+      productsActions.get(id, this.LOADING_IDENTIFIER);
     },
     getImages() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       productsActions.getImages(
         id,
-        this.source,
+
         this.LOADING_IDENTIFIER_IMAGES
       );
     },
     getCombos() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       productsActions.getCombos(
         id,
-        this.source,
+
         this.LOADING_IDENTIFIER_COMBOS
       );
     },
     getMaterials() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
       productsActions.getMaterials(
         id,
-        this.source,
+
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },
@@ -159,10 +154,6 @@ export default {
     searchMaterials() {
       this.getMaterials();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

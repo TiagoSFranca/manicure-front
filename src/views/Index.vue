@@ -29,23 +29,10 @@
 </template>
 
 <script>
-import i18nConstants from "@/i18n/constants";
-import axiosSourceToken from "@/utils/axiosSourceToken";
-
 export default {
   data() {
-    return {
-      source: "",
-    };
+    return {};
   },
   computed: {},
-  created() {
-    this.source = axiosSourceToken.obterToken();
-  },
-  beforeRouteLeave(to, from, next) {
-    console.log("cancel")
-    this.source.cancel();
-    next();
-  },
 };
 </script>

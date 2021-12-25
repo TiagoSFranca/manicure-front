@@ -1,24 +1,20 @@
-import axios from 'axios'
+import base from './baseHttp'
 
 const RESOURCE_NAME = '/address'
 const COUNTRIES = "/countries"
 const CITIES = "/cities"
 
-export const searchCountries = (source) => {
+export const searchCountries = () => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}${COUNTRIES}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}${COUNTRIES}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 };
 
-export const searchCities = (idCountry, source) => {
+export const searchCities = (idCountry) => {
   return new Promise((resolve, reject) => {
-    return axios.get(`${RESOURCE_NAME}${CITIES}?idCountry=${idCountry}`, {
-      cancelToken: source.token
-    })
+    return base.get(`${RESOURCE_NAME}${CITIES}?idCountry=${idCountry}`)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })

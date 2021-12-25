@@ -66,7 +66,6 @@ export default {
         endEndSale: "",
       },
       NOT_SELECTED: NOT_SELECTED,
-      source: "",
     };
   },
   computed: {

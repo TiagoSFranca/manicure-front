@@ -101,7 +101,7 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { PRODUCTS_EDIT } from "@/router/routes";
@@ -114,7 +114,6 @@ export default {
       visible: false,
       menu: false,
       showDialog: false,
-      source: "",
       object: {
         name: "",
         price: "",
@@ -153,9 +152,6 @@ export default {
       this.object.endSale = date;
     },
   },
-  mounted() {
-    this.source = axiosSourceToken.obterToken();
-  },
   computed: {
     ...mapState(appConstants.MODULE_NAME, ["loading"]),
   },
@@ -164,10 +160,6 @@ export default {
       if (this.showAdd && !this.visible) this.show();
       else if (!this.showAdd && this.visible) this.hide();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
   created() {
     this.PRODUCT = i18nConstants.PRODUCT;

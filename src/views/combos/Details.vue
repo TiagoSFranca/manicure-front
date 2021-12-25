@@ -73,7 +73,7 @@
 
 <script>
 import combosActions from "@/actions/combosActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import combosConstants from "@/store/modules/combos/constants";
@@ -83,7 +83,6 @@ import i18nConstants from "@/i18n/constants";
 export default {
   data() {
     return {
-      source: "",
       LOADING_IDENTIFIER: "searchCombo",
       LOADING_IDENTIFIER_IMAGES: "searchComboImages",
       LOADING_IDENTIFIER_COMBOS: "searchComboCombos",
@@ -93,22 +92,15 @@ export default {
   methods: {
     searchCombo() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      combosActions.get(id, this.source, this.LOADING_IDENTIFIER);
+      combosActions.get(id, this.LOADING_IDENTIFIER);
     },
     getImages() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      combosActions.getImages(id, this.source, this.LOADING_IDENTIFIER_IMAGES);
+      combosActions.getImages(id, this.LOADING_IDENTIFIER_IMAGES);
     },
     getProducts() {
       let id = this.$route.params.id;
-      this.source = axiosSourceToken.obterToken();
-      combosActions.getProducts(
-        id,
-        this.source,
-        this.LOADING_IDENTIFIER_PRODUCTS
-      );
+      combosActions.getProducts(id, this.LOADING_IDENTIFIER_PRODUCTS);
     },
   },
   created() {
@@ -140,10 +132,6 @@ export default {
     searchProducts() {
       this.getProducts();
     },
-  },
-  beforeRouteLeave(to, from, next) {
-    this.source.cancel();
-    next();
   },
 };
 </script>

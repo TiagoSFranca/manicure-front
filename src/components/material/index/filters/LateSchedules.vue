@@ -72,7 +72,6 @@ export default {
         endDate: null,
         inLoco: NOT_SELECTED,
       },
-      source: "",
     };
   },
   computed: {

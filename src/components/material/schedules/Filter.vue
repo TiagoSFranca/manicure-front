@@ -105,7 +105,7 @@
 
 <script>
 import scheduleStatusActions from "@/actions/scheduleStatusActions";
-import axiosSourceToken from "@/utils/axiosSourceToken";
+
 import { mapState, mapMutations } from "vuex";
 import agendaConstants from "@/store/modules/agenda/constants";
 import scheduleStatusConstants from "@/store/modules/scheduleStatus/constants";
@@ -134,7 +134,6 @@ export default {
         idScheduleStatus: [1, 2, 3],
         inLoco: NOT_SELECTED,
       },
-      source: "",
     };
   },
   computed: {
@@ -175,8 +174,7 @@ export default {
       else this.filter.endDate = date;
     },
     searchScheduleStatus() {
-      this.source = axiosSourceToken.obterToken();
-      scheduleStatusActions.search(this.source);
+      scheduleStatusActions.search();
     },
   },
   created() {
