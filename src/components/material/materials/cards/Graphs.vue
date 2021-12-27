@@ -103,7 +103,6 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
@@ -111,6 +110,7 @@ import { MATERIALS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import moment from "moment";
 import { randomColor } from "@/utils/methods";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -144,7 +144,7 @@ export default {
     ]),
     searchYears() {
       let id = this.$route.params.id;
-      materialsActions.getYears(id, this.LOADING_IDENTIFIER_YEARS);
+      materialsActions.getYears(id, uuidv4(), this.LOADING_IDENTIFIER_YEARS);
     },
     searchReports() {
       this.searchReportRegisterYear();
@@ -155,8 +155,8 @@ export default {
       materialsActions.getReportRegisterYear(
         id,
         this.yearSelected,
-        this.LOADING_IDENTIFIER_REPORT_REGISTER,
-        true
+        uuidv4(),
+        this.LOADING_IDENTIFIER_REPORT_REGISTER
       );
     },
     searchReportRemoveYear() {
@@ -164,8 +164,8 @@ export default {
       materialsActions.getReportRemoveYear(
         id,
         this.yearSelected,
-        this.LOADING_IDENTIFIER_REPORT_REMOVE,
-        false
+        uuidv4(),
+        this.LOADING_IDENTIFIER_REPORT_REMOVE
       );
     },
     getRegisters() {

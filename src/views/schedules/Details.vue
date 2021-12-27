@@ -126,6 +126,7 @@ import {
   checkDisabledCancelScheduleFromStatus,
 } from "@/utils/methods";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -145,23 +146,23 @@ export default {
     },
     searchSchedule() {
       let id = this.$route.params.id;
-      agendaActions.get(id, this.LOADING_IDENTIFIER);
+      agendaActions.get(id, uuidv4(), this.LOADING_IDENTIFIER);
     },
     getMaterials() {
       let id = this.$route.params.id;
       agendaActions.getMaterials(
         id,
-
+        uuidv4(),
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },
     getProducts() {
       let id = this.$route.params.id;
-      agendaActions.getProducts(id, this.LOADING_IDENTIFIER_PRODUCTS);
+      agendaActions.getProducts(id, uuidv4(), this.LOADING_IDENTIFIER_PRODUCTS);
     },
     getCombos() {
       let id = this.$route.params.id;
-      agendaActions.getCombos(id, this.LOADING_IDENTIFIER_COMBOS);
+      agendaActions.getCombos(id, uuidv4(), this.LOADING_IDENTIFIER_COMBOS);
     },
     cancel() {
       this.showCancel = true;

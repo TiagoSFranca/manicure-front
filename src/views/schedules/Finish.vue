@@ -88,6 +88,7 @@ import {
 } from "@/utils/methods";
 import i18nConstants from "@/i18n/constants";
 import toastr from "@/utils/toastr";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -116,11 +117,15 @@ export default {
     },
     searchSchedule() {
       let id = this.$route.params.id;
-      agendaActions.get(id, this.LOADING_IDENTIFIER);
+      agendaActions.get(id, uuidv4(), this.LOADING_IDENTIFIER);
     },
     getMaterials() {
       let id = this.$route.params.id;
-      agendaActions.getMaterials(id, this.LOADING_IDENTIFIER_MATERIALS);
+      agendaActions.getMaterials(
+        id,
+        uuidv4(),
+        this.LOADING_IDENTIFIER_MATERIALS
+      );
     },
     checkStatus() {
       if (checkDisabledCancelScheduleFromStatus(this.schedule.status)) {

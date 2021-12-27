@@ -51,9 +51,6 @@
 </template>
 
 <script>
-import combosActions from "@/actions/combosActions";
-import { mapState } from "vuex";
-import appConstants from "@/store/modules/app/constants";
 import { ToCurrency } from "@/utils/methods";
 import toastr from "@/utils/toastr";
 import i18nConstants from "@/i18n/constants";

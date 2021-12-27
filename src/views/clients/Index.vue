@@ -77,13 +77,13 @@
 
 <script>
 import clientsActions from "@/actions/clientsActions";
-
 import { mapState, mapMutations } from "vuex";
 import { ToCurrency, formatDate, format } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import clientsConstants from "@/store/modules/clients/constants";
 import { CLIENTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -142,6 +142,7 @@ export default {
         this.filter,
         this.pagination,
         this.sort,
+        uuidv4(),
         this.LOADING_IDENTIFIER
       );
     },

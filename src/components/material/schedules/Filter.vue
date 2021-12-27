@@ -105,11 +105,11 @@
 
 <script>
 import scheduleStatusActions from "@/actions/scheduleStatusActions";
-
 import { mapState, mapMutations } from "vuex";
 import agendaConstants from "@/store/modules/agenda/constants";
 import scheduleStatusConstants from "@/store/modules/scheduleStatus/constants";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 const NOT_SELECTED = "NONE";
 
@@ -174,7 +174,7 @@ export default {
       else this.filter.endDate = date;
     },
     searchScheduleStatus() {
-      scheduleStatusActions.search();
+      scheduleStatusActions.search(uuidv4());
     },
   },
   created() {

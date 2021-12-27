@@ -77,11 +77,12 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import i18nConstants from "@/i18n/constants";
+import axiosSourceToken from "@/utils/axiosSourceToken";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   props: ["showAdd"],
@@ -99,6 +100,7 @@ export default {
       },
       productSelected: {},
       LOADING_IDENTIFIER_SEARCH_PRODUCTS: "searchProductsAsync",
+      prevRequest: "",
     };
   },
   methods: {
@@ -127,10 +129,21 @@ export default {
         return;
       }
 
+      if (this.prevRequest) {
+        axiosSourceToken.cancelToken(this.prevRequest);
+        this.prevRequest = "";
+      }
+
+      this.prevRequest = uuidv4();
+
+      this.LOADING_IDENTIFIER_SEARCH_PRODUCTS =
+        this.LOADING_IDENTIFIER_SEARCH_PRODUCTS + `(${this.prevRequest})`;
+
       productsActions.search(
         { name: term, active: true },
         null,
         null,
+        this.prevRequest,
         this.LOADING_IDENTIFIER_SEARCH_PRODUCTS
       );
     },

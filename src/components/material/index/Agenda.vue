@@ -90,6 +90,7 @@ import agendaConstants from "@/store/modules/agenda/constants";
 import { SCHEDULES_ADD } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import { AGENDA_TYPES, SCHEDULE_STATUS } from "@/utils/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data: () => ({
@@ -171,6 +172,7 @@ export default {
         { beginDate: this.beginDate, endDate: this.endDate },
         this.pagination,
         this.sort,
+        uuidv4(),
         this.LOADING_IDENTIFIER
       );
 

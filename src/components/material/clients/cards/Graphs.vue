@@ -117,6 +117,7 @@ import { CLIENTS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import moment from "moment";
 import { randomColor } from "@/utils/methods";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -150,7 +151,11 @@ export default {
     ]),
     searchYears() {
       let id = this.$route.params.id;
-      clientsActions.getScheduleYears(id, this.LOADING_IDENTIFIER_YEARS);
+      clientsActions.getScheduleYears(
+        id,
+        uuidv4(),
+        this.LOADING_IDENTIFIER_YEARS
+      );
     },
     searchReports() {
       this.searchReportScheduleFinishedYear();
@@ -161,8 +166,8 @@ export default {
       clientsActions.getReportScheduleFinishedYear(
         id,
         this.yearSelected,
-        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED,
-        true
+        uuidv4(),
+        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED
       );
     },
     searchReportScheduleCanceledYear() {
@@ -170,8 +175,8 @@ export default {
       clientsActions.getReportScheduleCanceledYear(
         id,
         this.yearSelected,
-        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED,
-        false
+        uuidv4(),
+        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED
       );
     },
     getRegisters() {

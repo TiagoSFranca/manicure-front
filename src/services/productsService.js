@@ -8,11 +8,11 @@ const COMBOS = "/combos"
 const SCHEDULES = "/schedules"
 const SALES = "/sale"
 
-export const search = (query) => {
+export const search = (query, requestKey) => {
   return new Promise((resolve, reject) => {
     return base.get(`${RESOURCE_NAME}`, {
       params: query
-    })
+    }, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -34,17 +34,17 @@ export const edit = (id, object) => {
   })
 }
 
-export const get = (id) => {
+export const get = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}`)
+    return base.get(`${RESOURCE_NAME}/${id}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 };
 
-export const getImages = (id) => {
+export const getImages = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${IMAGES}`)
+    return base.get(`${RESOURCE_NAME}/${id}${IMAGES}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -74,9 +74,9 @@ export const addImage = (id, file) => {
   })
 };
 
-export const getCombos = (id) => {
+export const getCombos = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${COMBOS}`)
+    return base.get(`${RESOURCE_NAME}/${id}${COMBOS}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -90,9 +90,9 @@ export const addMaterial = (id, object) => {
   })
 };
 
-export const getMaterials = (id) => {
+export const getMaterials = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${MATERIALS}`)
+    return base.get(`${RESOURCE_NAME}/${id}${MATERIALS}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -114,27 +114,28 @@ export const editMaterial = (id, idMaterial, object) => {
   })
 };
 
-export const getScheduleYears = (id) => {
+export const getScheduleYears = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`)
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/years`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getReportScheduleYear = (id, year, isFinish) => {
+export const getReportScheduleYear = (id, year, isFinish, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`)
+    return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}/report/${year}?isFinish=${isFinish}`,
+      null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const searchSchedules = (id, query) => {
+export const searchSchedules = (id, query, requestKey) => {
   return new Promise((resolve, reject) => {
     return base.get(`${RESOURCE_NAME}/${id}${SCHEDULES}`, {
       params: query,
-    })
+    }, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -156,11 +157,11 @@ export const changeSale = (id, object) => {
   })
 }
 
-export const searchSales = (id, query) => {
+export const searchSales = (id, query, requestKey) => {
   return new Promise((resolve, reject) => {
     return base.get(`${RESOURCE_NAME}/${id}${SALES}`, {
       params: query,
-    })
+    }, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })

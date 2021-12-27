@@ -165,7 +165,6 @@
 <script>
 import productsActions from "@/actions/productsActions";
 import scheduleStatusActions from "@/actions/scheduleStatusActions";
-
 import { mapState } from "vuex";
 import {
   formatDate,
@@ -177,6 +176,7 @@ import productsConstants from "@/store/modules/products/constants";
 import scheduleStatusConstants from "@/store/modules/scheduleStatus/constants";
 import { SCHEDULES_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -246,11 +246,12 @@ export default {
         this.filter,
         this.pagination,
         this.sort,
+        uuidv4(),
         this.LOADING_IDENTIFIER
       );
     },
     searchScheduleStatus() {
-      scheduleStatusActions.search();
+      scheduleStatusActions.search(uuidv4());
     },
     onSort(sort) {
       this.sort = sort;

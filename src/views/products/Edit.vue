@@ -129,13 +129,13 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS, PRODUCTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import { SALE_STATUS } from "@/utils/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -150,15 +150,19 @@ export default {
   methods: {
     searchProduct() {
       let id = this.$route.params.id;
-      productsActions.get(id, this.LOADING_IDENTIFIER);
+      productsActions.get(id, uuidv4(), this.LOADING_IDENTIFIER);
     },
     getImages() {
       let id = this.$route.params.id;
-      productsActions.getImages(id, this.LOADING_IDENTIFIER_IMAGES);
+      productsActions.getImages(id, uuidv4(), this.LOADING_IDENTIFIER_IMAGES);
     },
     getMaterials() {
       let id = this.$route.params.id;
-      productsActions.getMaterials(id, this.LOADING_IDENTIFIER_MATERIALS);
+      productsActions.getMaterials(
+        id,
+        uuidv4(),
+        this.LOADING_IDENTIFIER_MATERIALS
+      );
     },
     onShowChangeSale(type) {
       this.showChangeSale = true;

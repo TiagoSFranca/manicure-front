@@ -101,7 +101,6 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import { PRODUCTS_EDIT } from "@/router/routes";

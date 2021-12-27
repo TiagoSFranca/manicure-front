@@ -74,12 +74,12 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import { MATERIALS, MATERIALS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -94,7 +94,7 @@ export default {
   methods: {
     searchMaterial() {
       let id = this.$route.params.id;
-      materialsActions.get(id, this.LOADING_IDENTIFIER);
+      materialsActions.get(id, uuidv4(), this.LOADING_IDENTIFIER);
     },
     onShowUpdateStock(isAdd) {
       this.showUpdateStock = true;

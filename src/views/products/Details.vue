@@ -77,12 +77,12 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS, PRODUCTS_EDIT } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -96,29 +96,21 @@ export default {
   methods: {
     searchProduct() {
       let id = this.$route.params.id;
-      productsActions.get(id, this.LOADING_IDENTIFIER);
+      productsActions.get(id, uuidv4(), this.LOADING_IDENTIFIER);
     },
     getImages() {
       let id = this.$route.params.id;
-      productsActions.getImages(
-        id,
-
-        this.LOADING_IDENTIFIER_IMAGES
-      );
+      productsActions.getImages(id, uuidv4(), this.LOADING_IDENTIFIER_IMAGES);
     },
     getCombos() {
       let id = this.$route.params.id;
-      productsActions.getCombos(
-        id,
-
-        this.LOADING_IDENTIFIER_COMBOS
-      );
+      productsActions.getCombos(id, uuidv4(), this.LOADING_IDENTIFIER_COMBOS);
     },
     getMaterials() {
       let id = this.$route.params.id;
       productsActions.getMaterials(
         id,
-
+        uuidv4(),
         this.LOADING_IDENTIFIER_MATERIALS
       );
     },

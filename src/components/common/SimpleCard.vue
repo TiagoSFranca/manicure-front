@@ -10,10 +10,6 @@
 </template>
 
 <script>
-import productsActions from "@/actions/productsActions";
-import { mapState } from "vuex";
-import appConstants from "@/store/modules/app/constants";
-
 export default {
   props: ["isLoading", "title"],
 };

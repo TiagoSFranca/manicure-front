@@ -73,12 +73,12 @@
 
 <script>
 import combosActions from "@/actions/combosActions";
-
 import { mapState } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import combosConstants from "@/store/modules/combos/constants";
 import { COMBOS, COMBOS_EDIT } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -92,15 +92,15 @@ export default {
   methods: {
     searchCombo() {
       let id = this.$route.params.id;
-      combosActions.get(id, this.LOADING_IDENTIFIER);
+      combosActions.get(id, uuidv4(), this.LOADING_IDENTIFIER);
     },
     getImages() {
       let id = this.$route.params.id;
-      combosActions.getImages(id, this.LOADING_IDENTIFIER_IMAGES);
+      combosActions.getImages(id, uuidv4(), this.LOADING_IDENTIFIER_IMAGES);
     },
     getProducts() {
       let id = this.$route.params.id;
-      combosActions.getProducts(id, this.LOADING_IDENTIFIER_PRODUCTS);
+      combosActions.getProducts(id, uuidv4(), this.LOADING_IDENTIFIER_PRODUCTS);
     },
   },
   created() {

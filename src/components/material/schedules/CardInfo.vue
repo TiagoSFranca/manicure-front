@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
 import { CLIENTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 

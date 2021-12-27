@@ -36,14 +36,14 @@ export const add = (object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const search = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const search = (filter, pagination, sort, requestKey, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   agendaService
-    .search(query)
+    .search(query, requestKey)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.AGENDA_SET_AGENDA, data);
@@ -54,7 +54,7 @@ export const search = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
     })
 };
 
-export const searchLateSchedules = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const searchLateSchedules = (filter, pagination, sort, requestKey, LOADING_IDENTIFIER = '') => {
 
   filter = {
     ...filter,
@@ -67,7 +67,7 @@ export const searchLateSchedules = (filter, pagination, sort, LOADING_IDENTIFIER
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   agendaService
-    .search(query)
+    .search(query, requestKey)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.AGENDA_SET_LATE_SCHEDULES, data);
@@ -95,12 +95,12 @@ export const cancel = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const get = (id, LOADING_IDENTIFIER = '') => {
+export const get = (id, requestKey, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   agendaService
-    .get(id)
+    .get(id, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.AGENDA_SET_SCHEDULE, data);
@@ -110,11 +110,11 @@ export const get = (id, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getMaterials = (id, LOADING_IDENTIFIER = '') => {
+export const getMaterials = (id, requestKey, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   agendaService
-    .getMaterials(id)
+    .getMaterials(id, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.AGENDA_SET_MATERIALS, data);
@@ -141,11 +141,11 @@ export const finish = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getProducts = (id, LOADING_IDENTIFIER = '') => {
+export const getProducts = (id, requestKey, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   agendaService
-    .getProducts(id)
+    .getProducts(id, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.AGENDA_SET_PRODUCTS, data);
@@ -155,11 +155,11 @@ export const getProducts = (id, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getCombos = (id, LOADING_IDENTIFIER = '') => {
+export const getCombos = (id, requestKey, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   agendaService
-    .getCombos(id)
+    .getCombos(id, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.AGENDA_SET_COMBOS, data);

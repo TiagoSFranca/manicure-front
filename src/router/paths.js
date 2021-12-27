@@ -1,5 +1,5 @@
 // Middlewares
-import auth from '@/middleware/auth'
+// import auth from '@/middleware/auth'
 import guest from '@/middleware/guest'
 import routes from './routes'
 

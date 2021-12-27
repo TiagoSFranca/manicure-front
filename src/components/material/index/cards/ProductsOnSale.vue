@@ -87,13 +87,13 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-
 import { mapState, mapMutations } from "vuex";
 import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import { PRODUCTS_EDIT, PRODUCTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -149,6 +149,7 @@ export default {
         this.filter,
         this.pagination,
         this.sort,
+        uuidv4(),
         this.LOADING_IDENTIFIER
       );
     },

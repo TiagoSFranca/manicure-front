@@ -3,11 +3,11 @@ import { startLoading, endLoading } from '@/utils/methods'
 import addressService from '@/services/addressService'
 import mutationTypes from '@/store/mutationTypes'
 
-export const searchCountries = (LOADING_IDENTIFIER = '') => {
+export const searchCountries = (requestKey, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   addressService
-    .searchCountries()
+    .searchCountries(requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.ADDRESS_SET_COUNTRIES, data);
@@ -17,11 +17,11 @@ export const searchCountries = (LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const searchCities = (idCountry, LOADING_IDENTIFIER = '') => {
+export const searchCities = (idCountry, requestKey, LOADING_IDENTIFIER = '') => {
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   addressService
-    .searchCities(idCountry)
+    .searchCities(idCountry, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.ADDRESS_SET_CITIES, data);

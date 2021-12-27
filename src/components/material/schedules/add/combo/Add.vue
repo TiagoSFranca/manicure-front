@@ -77,11 +77,12 @@
 
 <script>
 import combosActions from "@/actions/combosActions";
-
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import combosConstants from "@/store/modules/combos/constants";
 import i18nConstants from "@/i18n/constants";
+import axiosSourceToken from "@/utils/axiosSourceToken";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   props: ["showAdd"],
@@ -99,6 +100,7 @@ export default {
       },
       comboSelected: {},
       LOADING_IDENTIFIER_SEARCH_COMBOS: "searchCombosAsync",
+      prevRequest: "",
     };
   },
   methods: {
@@ -127,10 +129,21 @@ export default {
         return;
       }
 
+      if (this.prevRequest) {
+        axiosSourceToken.cancelToken(this.prevRequest);
+        this.prevRequest = "";
+      }
+
+      this.prevRequest = uuidv4();
+
+      this.LOADING_IDENTIFIER_SEARCH_COMBOS =
+        this.LOADING_IDENTIFIER_SEARCH_COMBOS + `(${this.prevRequest})`;
+
       combosActions.search(
         { name: term, active: true },
         null,
         null,
+        this.prevRequest,
         this.LOADING_IDENTIFIER_SEARCH_COMBOS
       );
     },

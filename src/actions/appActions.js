@@ -10,17 +10,30 @@ export const toggleDrawer = () => {
   store.commit(mutationTypes.APP_TOGGLE_DRAWER)
 }
 
-export const addCancelToken = (token) => {
-  store.dispatch(actionTypes.APP_ADD_CANCEL_TOKEN, token)
+const getTokenData = (token, requestKey) => {
+  return {
+    token: token,
+    requestKey: requestKey
+  }
+}
+
+export const addCancelToken = (token, requestKey) => {
+  let data = getTokenData(token, requestKey)
+  store.dispatch(actionTypes.APP_ADD_CANCEL_TOKEN, data)
 }
 
 export const cancelPendingRequests = () => {
-  store.dispatch(actionTypes.APP_CANCEL_PENDING_REQUESTS)
+  store.dispatch(actionTypes.APP_CANCEL_ALL_PENDING_REQUEST)
+}
+
+export const cancelToken = (requestKey) => {
+  store.dispatch(actionTypes.APP_CANCEL_PENDING_REQUEST, requestKey)
 }
 
 export default {
   setNoConnection,
   toggleDrawer,
   addCancelToken,
-  cancelPendingRequests
+  cancelPendingRequests,
+  cancelToken
 }

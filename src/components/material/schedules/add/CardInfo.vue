@@ -86,12 +86,13 @@
 
 <script>
 import clientsActions from "@/actions/clientsActions";
-
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import clientsConstants from "@/store/modules/clients/constants";
 import { CLIENTS_DETAILS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import axiosSourceToken from "@/utils/axiosSourceToken";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   props: ["isLoading", "disabled"],
@@ -102,6 +103,7 @@ export default {
       object: { date: "", idClient: "", inLoco: false },
       minLength: 3,
       selected: {},
+      prevRequest: "",
     };
   },
   methods: {
@@ -114,10 +116,21 @@ export default {
         return;
       }
 
+      if (this.prevRequest) {
+        axiosSourceToken.cancelToken(this.prevRequest);
+        this.prevRequest = "";
+      }
+
+      this.prevRequest = uuidv4();
+
+      this.LOADING_IDENTIFIER_SEARCH_CLIENTS =
+        this.LOADING_IDENTIFIER_SEARCH_CLIENTS + `(${this.prevRequest})`;
+
       clientsActions.search(
         { name: term },
         null,
         null,
+        this.prevRequest,
         this.LOADING_IDENTIFIER_SEARCH_CLIENTS
       );
     },

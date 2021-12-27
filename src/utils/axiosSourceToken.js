@@ -1,17 +1,19 @@
-import axios from 'axios'
 import appActions from "@/actions/appActions"
 
-const getCancelToken = () => {
+const getCancelToken = (requestKey) => {
   let controller = new AbortController();
 
-  appActions.addCancelToken(controller);
+  appActions.addCancelToken(controller, requestKey);
 
   return controller;
 }
 
-const cancelTokens = () => appActions.cancelPendingRequests();
+const cancelPendingTokens = () => appActions.cancelPendingRequests();
+
+const cancelToken = (requestKey) => appActions.cancelToken(requestKey);
 
 export default {
   getCancelToken,
-  cancelTokens
+  cancelPendingTokens,
+  cancelToken
 };

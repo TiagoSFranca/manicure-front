@@ -50,12 +50,12 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import { MATERIALS, MATERIALS_EDIT } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -72,7 +72,7 @@ export default {
     ]),
     searchMaterial() {
       let id = this.$route.params.id;
-      materialsActions.get(id, this.LOADING_IDENTIFIER);
+      materialsActions.get(id, uuidv4(), this.LOADING_IDENTIFIER);
     },
   },
   created() {

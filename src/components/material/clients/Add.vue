@@ -234,6 +234,7 @@ import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import addressConstants from "@/store/modules/address/constants";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   props: ["showAdd"],
@@ -283,12 +284,19 @@ export default {
       this.object.birthday = date;
     },
     searchCountries() {
-      addressActions.searchCountries(this.LOADING_IDENTIFIER_COUNTRIES);
+      addressActions.searchCountries(
+        uuidv4(),
+        this.LOADING_IDENTIFIER_COUNTRIES
+      );
     },
     searchCities() {
       let idCountry = this.object.address.idCountry;
       if (idCountry) {
-        addressActions.searchCities(idCountry, this.LOADING_IDENTIFIER_CITIES);
+        addressActions.searchCities(
+          idCountry,
+          uuidv4(),
+          this.LOADING_IDENTIFIER_CITIES
+        );
       } else {
         this[addressConstants.MUTATION_CLEAR_CITIES]();
       }

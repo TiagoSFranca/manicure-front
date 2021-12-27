@@ -4,11 +4,11 @@ import base from './baseHttp'
 const RESOURCE_NAME = '/materials'
 const STOCK = "/stock"
 
-export const search = (query) => {
+export const search = (query, requestKey) => {
   return new Promise((resolve, reject) => {
     return base.get(`${RESOURCE_NAME}`, {
       params: query,
-    })
+    }, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -22,9 +22,9 @@ export const add = (object) => {
   })
 }
 
-export const get = (id) => {
+export const get = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}`)
+    return base.get(`${RESOURCE_NAME}/${id}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -46,27 +46,28 @@ export const updateStock = (id, object) => {
   })
 }
 
-export const getYears = (id) => {
+export const getYears = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${STOCK}/years`)
+    return base.get(`${RESOURCE_NAME}/${id}${STOCK}/years`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getReportYear = (id, year, isRegister) => {
+export const getReportYear = (id, year, isRegister, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${STOCK}/report/${year}?isRegister=${isRegister}`)
+    return base.get(`${RESOURCE_NAME}/${id}${STOCK}/report/${year}?isRegister=${isRegister}`,
+      null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const searchMaterialStocks = (id, query) => {
+export const searchMaterialStocks = (id, query, requestKey) => {
   return new Promise((resolve, reject) => {
     return base.get(`${RESOURCE_NAME}/${id}${STOCK}`, {
       params: query,
-    })
+    }, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })

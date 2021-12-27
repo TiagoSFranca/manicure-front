@@ -6,14 +6,14 @@ import materialsService from '@/services/materialsService'
 import actionTypes from '@/store/actionTypes'
 import mutationTypes from '@/store/mutationTypes'
 
-export const search = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const search = (filter, pagination, sort, requestKey, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .search(query)
+    .search(query, requestKey)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.MATERIALS_SET_MATERIALS, data);
@@ -24,7 +24,7 @@ export const search = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
     })
 };
 
-export const searchWarningStock = (filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const searchWarningStock = (filter, pagination, sort, requestKey, LOADING_IDENTIFIER = '') => {
 
   filter = {
     ...filter,
@@ -36,7 +36,7 @@ export const searchWarningStock = (filter, pagination, sort, LOADING_IDENTIFIER 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .search(query)
+    .search(query, requestKey)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.MATERIALS_SET_WARNING_STOCK_MATERIALS, data);
@@ -63,12 +63,12 @@ export const add = (object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const get = (id, LOADING_IDENTIFIER = '') => {
+export const get = (id, requestKey, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .get(id)
+    .get(id, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.MATERIALS_SET_MATERIAL, data);
@@ -109,12 +109,12 @@ export const updateStock = (id, object, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getYears = (id, LOADING_IDENTIFIER = '') => {
+export const getYears = (id, requestKey, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .getYears(id)
+    .getYears(id, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.MATERIALS_SET_YEARS, data);
@@ -124,12 +124,12 @@ export const getYears = (id, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getReportRegisterYear = (id, year, LOADING_IDENTIFIER = '') => {
+export const getReportRegisterYear = (id, year, requestKey, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .getReportYear(id, year, true)
+    .getReportYear(id, year, true, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.MATERIALS_SET_REPORT_REGISTER_YEAR, data);
@@ -139,12 +139,12 @@ export const getReportRegisterYear = (id, year, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const getReportRemoveYear = (id, year, LOADING_IDENTIFIER = '') => {
+export const getReportRemoveYear = (id, year, requestKey, LOADING_IDENTIFIER = '') => {
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .getReportYear(id, year, false)
+    .getReportYear(id, year, false, requestKey)
     .then((response) => {
       let data = response.data
       store.commit(mutationTypes.MATERIALS_SET_REPORT_REMOVE_YEAR, data);
@@ -154,14 +154,14 @@ export const getReportRemoveYear = (id, year, LOADING_IDENTIFIER = '') => {
     })
 }
 
-export const searchMaterialStocks = (id, filter, pagination, sort, LOADING_IDENTIFIER = '') => {
+export const searchMaterialStocks = (id, filter, pagination, sort, requestKey, LOADING_IDENTIFIER = '') => {
 
   let query = { ...filter, ...pagination, ...sort }
 
   store.dispatch(startLoading(LOADING_IDENTIFIER));
 
   materialsService
-    .searchMaterialStocks(id, query)
+    .searchMaterialStocks(id, query, requestKey)
     .then((response) => {
       let data = response.data
       store.dispatch(actionTypes.MATERIALS_SET_MATERIAL_STOCKS, data);

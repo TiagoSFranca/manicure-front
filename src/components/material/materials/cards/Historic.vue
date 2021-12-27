@@ -120,13 +120,13 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-
 import { mapState } from "vuex";
 import { ToCurrency, formatDate } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import i18nConstants from "@/i18n/constants";
 import { MATERIAL_SCHEDULE_STATUS } from "@/utils/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -187,6 +187,7 @@ export default {
         this.filter,
         this.pagination,
         this.sort,
+        uuidv4(),
         this.LOADING_IDENTIFIER
       );
     },

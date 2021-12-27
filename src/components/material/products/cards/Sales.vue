@@ -123,13 +123,13 @@
 <script>
 import productsActions from "@/actions/productsActions";
 import saleStatusActions from "@/actions/saleStatusActions";
-
 import { mapState } from "vuex";
 import { formatDate, ToCurrency } from "@/utils/methods";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
 import saleStatusConstants from "@/store/modules/saleStatus/constants";
 import i18nConstants from "@/i18n/constants";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -184,11 +184,12 @@ export default {
         this.filter,
         this.pagination,
         this.sort,
+        uuidv4(),
         this.LOADING_IDENTIFIER
       );
     },
     searchSaleStatus() {
-      saleStatusActions.search();
+      saleStatusActions.search(uuidv4());
     },
     onSort(sort) {
       this.sort = sort;

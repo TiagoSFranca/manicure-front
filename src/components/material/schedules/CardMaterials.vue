@@ -69,8 +69,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import appConstants from "@/store/modules/app/constants";
 import toastr from "@/utils/toastr";
 import i18nConstants from "@/i18n/constants";
 

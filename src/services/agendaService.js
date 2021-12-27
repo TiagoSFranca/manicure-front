@@ -22,11 +22,11 @@ export const add = (object) => {
   })
 }
 
-export const search = (query) => {
+export const search = (query, requestKey) => {
   return new Promise((resolve, reject) => {
     return base.get(`${RESOURCE_NAME}`, {
       params: query,
-    })
+    }, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -40,17 +40,17 @@ export const cancel = (id, object) => {
   })
 }
 
-export const get = (id) => {
+export const get = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}`)
+    return base.get(`${RESOURCE_NAME}/${id}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 };
 
-export const getMaterials = (id) => {
+export const getMaterials = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${MATERIALS}`)
+    return base.get(`${RESOURCE_NAME}/${id}${MATERIALS}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
@@ -64,17 +64,17 @@ export const finish = (id, object) => {
   })
 }
 
-export const getProducts = (id) => {
+export const getProducts = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${PRODUCTS}`)
+    return base.get(`${RESOURCE_NAME}/${id}${PRODUCTS}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })
 }
 
-export const getCombos = (id) => {
+export const getCombos = (id, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}/${id}${COMBOS}`)
+    return base.get(`${RESOURCE_NAME}/${id}${COMBOS}`, null, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })

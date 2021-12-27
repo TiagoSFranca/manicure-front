@@ -56,7 +56,7 @@ function nextFactory(context, middleware, index) {
 }
 
 router.beforeEach((to, from, next) => {
-  axiosSourceToken.cancelTokens();
+  axiosSourceToken.cancelPendingTokens();
 
   if (to.meta.middleware) {
     const middleware = Array.isArray(to.meta.middleware)

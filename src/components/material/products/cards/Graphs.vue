@@ -110,7 +110,6 @@
 
 <script>
 import productsActions from "@/actions/productsActions";
-
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import productsConstants from "@/store/modules/products/constants";
@@ -118,6 +117,7 @@ import { PRODUCTS } from "@/router/routes";
 import i18nConstants from "@/i18n/constants";
 import moment from "moment";
 import { randomColor } from "@/utils/methods";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   data() {
@@ -151,7 +151,11 @@ export default {
     ]),
     searchYears() {
       let id = this.$route.params.id;
-      productsActions.getScheduleYears(id, this.LOADING_IDENTIFIER_YEARS);
+      productsActions.getScheduleYears(
+        id,
+        uuidv4(),
+        this.LOADING_IDENTIFIER_YEARS
+      );
     },
     searchReports() {
       this.searchReportScheduleFinishedYear();
@@ -162,8 +166,8 @@ export default {
       productsActions.getReportScheduleFinishedYear(
         id,
         this.yearSelected,
-        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED,
-        true
+        uuidv4(),
+        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_FINISHED
       );
     },
     searchReportScheduleCanceledYear() {
@@ -171,8 +175,8 @@ export default {
       productsActions.getReportScheduleCanceledYear(
         id,
         this.yearSelected,
-        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED,
-        false
+        uuidv4(),
+        this.LOADING_IDENTIFIER_REPORT_SCHEDULE_CANCELED
       );
     },
     getRegisters() {

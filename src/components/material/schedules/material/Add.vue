@@ -77,11 +77,12 @@
 
 <script>
 import materialsActions from "@/actions/materialsActions";
-
 import { mapState, mapMutations } from "vuex";
 import appConstants from "@/store/modules/app/constants";
 import materialsConstants from "@/store/modules/materials/constants";
 import i18nConstants from "@/i18n/constants";
+import axiosSourceToken from "@/utils/axiosSourceToken";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   props: ["showAdd"],
@@ -99,6 +100,7 @@ export default {
       },
       materialSelected: {},
       LOADING_IDENTIFIER_SEARCH_MATERIALS: "searchMaterialsAsync",
+      prevRequest: "",
     };
   },
   methods: {
@@ -127,10 +129,21 @@ export default {
         return;
       }
 
+      if (this.prevRequest) {
+        axiosSourceToken.cancelToken(this.prevRequest);
+        this.prevRequest = "";
+      }
+
+      this.prevRequest = uuidv4();
+
+      this.LOADING_IDENTIFIER_SEARCH_MATERIALS =
+        this.LOADING_IDENTIFIER_SEARCH_MATERIALS + `(${this.prevRequest})`;
+
       materialsActions.search(
         { name: term },
         null,
         null,
+        this.prevRequest,
         this.LOADING_IDENTIFIER_SEARCH_MATERIALS
       );
     },

@@ -74,14 +74,14 @@ export default {
           text: this.$tc(i18nConstants.SCHEDULE.NAME, 2),
         },
         {
-          to: routes.PRODUCTS,
-          icon: routes.PRODUCTS.icon,
-          text: this.$tc(i18nConstants.PRODUCT.NAME, 2),
-        },
-        {
           to: routes.COMBOS,
           icon: routes.COMBOS.icon,
           text: this.$tc(i18nConstants.COMBO.NAME, 2),
+        },
+        {
+          to: routes.PRODUCTS,
+          icon: routes.PRODUCTS.icon,
+          text: this.$tc(i18nConstants.PRODUCT.NAME, 2),
         },
         {
           to: routes.MATERIALS,
