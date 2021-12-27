@@ -15,7 +15,12 @@
         :multi-sort="false"
         :no-data-text="$t(i18nConstants.DATA_NOT_FOUND)"
       >
-        <slot />
+        <template
+          v-for="(x, slotName) in $scopedSlots"
+          v-slot:[slotName]="context"
+        >
+          <slot :name="slotName" v-bind="context" />
+        </template>
       </v-data-table>
     </v-col>
   </v-row>
