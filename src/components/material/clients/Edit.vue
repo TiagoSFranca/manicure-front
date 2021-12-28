@@ -170,18 +170,17 @@
                 </v-col>
                 <v-col cols="4">
                   <validation-provider rules="required" v-slot="{ errors }">
-                    <v-autocomplete
-                      clearable
-                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.CITY)"
-                      v-model="object.address.idCity"
-                      :error-messages="errors"
-                      :items="cities"
-                      item-text="name"
-                      item-value="id"
+                    <common-autocomplete-remote
                       :loading="loading[LOADING_IDENTIFIER_CITIES]"
-                      hide-no-data
-                      hide-selected
-                    ></v-autocomplete>
+                      :items="cities"
+                      :errors="errors"
+                      :label="$t(CLIENT.EDIT.LABELS.ADDRESS.CITY)"
+                      option-text="name"
+                      option-value="id"
+                      @search="searchCities"
+                      @select="selectCities"
+                      v-model="object.address.idCity"
+                    />
                   </validation-provider>
                 </v-col>
               </v-row>
@@ -235,6 +234,7 @@ import appConstants from "@/store/modules/app/constants";
 import addressConstants from "@/store/modules/address/constants";
 import clientsConstants from "@/store/modules/clients/constants";
 import i18nConstants from "@/i18n/constants";
+import axiosSourceToken from "@/utils/axiosSourceToken";
 import { v4 as uuidv4 } from "uuid";
 
 export default {
@@ -254,6 +254,7 @@ export default {
         sex: "f",
         address: {},
       },
+      cityName: "",
       LOADING_IDENTIFIER: "addClient",
       LOADING_IDENTIFIER_COUNTRIES: "searchCountries",
       LOADING_IDENTIFIER_CITIES: "searchCities",
@@ -292,17 +293,31 @@ export default {
         this.LOADING_IDENTIFIER_COUNTRIES
       );
     },
-    searchCities() {
+    searchCities(term) {
       let idCountry = this.object.address.idCountry;
-      if (idCountry) {
-        addressActions.searchCities(
-          idCountry,
-          uuidv4(),
-          this.LOADING_IDENTIFIER_CITIES
-        );
-      } else {
+      if (!idCountry) {
         this[addressConstants.MUTATION_CLEAR_CITIES]();
+        return;
       }
+
+      if (this.prevRequest) {
+        axiosSourceToken.cancelToken(this.prevRequest);
+        this.prevRequest = "";
+      }
+
+      this.prevRequest = uuidv4();
+
+      this.LOADING_IDENTIFIER_CITIES =
+        this.LOADING_IDENTIFIER_CITIES + `(${this.prevRequest})`;
+
+      addressActions.searchCities(
+        { idCountry: idCountry, name: term },
+        uuidv4(),
+        this.LOADING_IDENTIFIER_CITIES
+      );
+    },
+    selectCities(val) {
+      this.object.address.idCity = val ? val.id : null;
     },
     getClient() {
       clientsActions.get(this.id, uuidv4(), this.LOADING_IDENTIFIER);
@@ -319,7 +334,8 @@ export default {
       else if (!this.showEdit && this.visible) this.hide();
     },
     "object.address.idCountry"() {
-      this.searchCities();
+      this.searchCities(this.cityName || "");
+      this.cityName = ""
     },
     id() {
       if (this.id) {
@@ -330,6 +346,7 @@ export default {
       if (this.client) {
         this.object = this.client;
         this.object.address.idCountry = this.client.address.city.idCountry;
+        this.cityName = this.client.address.city.name;
         this.object.sex = this.client.sex.toLowerCase();
       }
     },

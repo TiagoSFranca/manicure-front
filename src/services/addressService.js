@@ -12,9 +12,11 @@ export const searchCountries = (requestKey) => {
   })
 };
 
-export const searchCities = (idCountry, requestKey) => {
+export const searchCities = (query, requestKey) => {
   return new Promise((resolve, reject) => {
-    return base.get(`${RESOURCE_NAME}${CITIES}?idCountry=${idCountry}`, null, requestKey)
+    return base.get(`${RESOURCE_NAME}${CITIES}`, {
+      params: query,
+    }, requestKey)
       .then((e) => resolve(e))
       .catch((error) => reject(error));
   })

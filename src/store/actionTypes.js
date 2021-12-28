@@ -4,6 +4,7 @@ import materials from './modules/materials/constants'
 import combos from './modules/combos/constants'
 import clients from './modules/clients/constants'
 import agenda from './modules/agenda/constants'
+import address from './modules/address/constants'
 
 // APP
 export const APP_LOADING = `${app.MODULE_NAME}/${app.ACTION_LOADING}`;
@@ -32,6 +33,9 @@ export const COMBOS_SET_SALES = `${combos.MODULE_NAME}/${combos.ACTION_SET_SALES
 export const CLIENTS_SET_CLIENTS = `${clients.MODULE_NAME}/${clients.ACTION_SET_CLIENTS}`;
 export const CLIENTS_SET_SCHEDULES = `${clients.MODULE_NAME}/${clients.ACTION_SET_SCHEDULES}`;
 
+// ADDRESS
+export const ADDRESS_SET_CITIES = `${address.MODULE_NAME}/${address.ACTION_SET_CITIES}`;
+
 // AGENDA
 export const AGENDA_SET_AGENDA = `${agenda.MODULE_NAME}/${agenda.ACTION_SET_AGENDA}`;
 export const AGENDA_SET_LATE_SCHEDULES = `${agenda.MODULE_NAME}/${agenda.ACTION_SET_LATE_SCHEDULES}`;
@@ -58,6 +62,8 @@ export default {
 
   CLIENTS_SET_CLIENTS,
   CLIENTS_SET_SCHEDULES,
+
+  ADDRESS_SET_CITIES,
 
   AGENDA_SET_AGENDA,
   AGENDA_SET_LATE_SCHEDULES
