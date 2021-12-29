@@ -21,7 +21,7 @@
               {{ $refs.calendar.title }}
             </v-toolbar-title>
             <v-spacer />
-            <material-agenda-month-picker
+            <common-month-picker
               @changeDate="changeDate"
               color="accent"
             />
